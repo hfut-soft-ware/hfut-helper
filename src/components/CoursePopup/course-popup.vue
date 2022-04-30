@@ -1,6 +1,5 @@
 <script lang='ts' setup>
 import { reactive } from 'vue'
-import type { ICourse } from '@/store/courseList.store'
 import { getTeacherName } from '@/shared/utils'
 import type { Lessons } from '@/shared/types/course'
 
@@ -67,7 +66,6 @@ function onClose() {
   emit('close')
 }
 
-console.log(data)
 </script>
 
 <template>
@@ -138,5 +136,6 @@ console.log(data)
       @apply flex justify-between;
     }
   }
+
 }
 </style>
