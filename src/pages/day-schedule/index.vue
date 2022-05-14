@@ -5,6 +5,7 @@ import { getRandomQAQ } from 'qaq-font'
 import Header from './Header.vue'
 import CardList from './card-list.vue'
 import { useCourseRequest } from './use-courseRequest'
+import { isEmptyObject } from '@/shared/utils'
 
 const { isLoading, error, state } = useCourseRequest()
 
@@ -16,6 +17,12 @@ watchEffect(() => {
   }
   if (error.value) {
     Toast.fail(`糟糕，没有拿到最新的课程信息\n ${getRandomQAQ('sadness')[0]}`)
+  }
+
+  if (!isEmptyObject(state.value)) {
+    Toast.success({
+      message: `获取最新课表成功啦\n${getRandomQAQ('happy')[0]}`,
+    })
   }
 })
 </script>

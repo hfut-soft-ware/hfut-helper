@@ -1,5 +1,5 @@
 <script lang='ts' setup>
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import type { GetCourseByHourIndexReturn } from '@/store/courseList.store'
 import { getTeachers, useCourseListStore } from '@/store/courseList.store'
@@ -7,6 +7,7 @@ import { dayHours } from '@/shared/constant'
 import CoursePopup from '@/components/CoursePopup/course-popup.vue'
 
 const store = useCourseListStore()
+
 const { todayCourse } = storeToRefs(store)
 
 const cardsColor = reactive([
@@ -16,6 +17,11 @@ const cardsColor = reactive([
   'yellow',
   'purple',
 ])
+
+const courseList = computed(() => dayHours.map(hour => ({
+  time: hour,
+  course: store.getCourseByHourIndex(hour.index),
+})))
 
 const show = ref(false)
 
@@ -39,48 +45,46 @@ function onClose() {
     <template v-if="todayCourse?.length">
       <div class="card-list-container">
         <div
-          v-for="hour in dayHours"
-          :key="hour.start"
+          v-for="list in courseList"
+          :key="list.time.start"
           class="card-container"
         >
           <div class="time">
-            {{ hour.start }}
+            {{ list.time.start }}
           </div>
-          <template v-if="hour.start !== '22:00'">
-            <template v-if="hour.start === '12:00'">
+          <template v-if="list.time.start !== '22:00'">
+            <template v-if="list.time.start === '12:00'">
               <div class="lunch-card" style="flex: 6">
                 午休
               </div>
             </template>
             <template v-else>
-              <template v-for="(item, idx) in [store.getCourseByHourIndex(hour.index)]" :key="item?.course?.startTime || idx">
-                <template v-if="item.course">
-                  <div
-                    :key="item.course.startTime"
-                    :class="`card ${cardsColor[item.course.index]} ${item.course.wholePoint ? 'mt-2': 'mt-4'}`"
-                    @click="handleCourseClick(item)"
-                  >
-                    <div class="card-flex">
-                      <div class="flex justify-between py-2 items-center">
-                        <div class="text-xs">
-                          {{ item.course.startTime }} - {{ item.course.endTime }}
-                        </div>
-                        <div class="text-sm">
-                          {{ getTeachers(item.detail.detailInfo.teachers) }}
-                        </div>
-                      </div>
-                      <div class="font-bold text-base">
-                        {{ item.detail.courseName }}
-                      </div>
+              <template v-if="list.course.course">
+                <div
+                  :key="list.course.course.startTime"
+                  :class="`card ${cardsColor[list.course.course.index - 1]} ${list.course.course.wholePoint ? 'mt-2': 'mt-4'}`"
+                  @click="handleCourseClick(list.course)"
+                >
+                  <div class="card-flex">
+                    <div class="flex justify-between py-2 items-center">
                       <div class="text-xs">
-                        {{ item.course.room }}
+                        {{ list.course.course.startTime }} - {{ list.course.course.endTime }}
+                      </div>
+                      <div class="text-sm">
+                        {{ getTeachers(list.course.detail.detailInfo.teachers) }}
                       </div>
                     </div>
+                    <div class="font-bold text-base">
+                      {{ list.course.detail.courseName }}
+                    </div>
+                    <div class="text-xs">
+                      {{ list.course.course.room }}
+                    </div>
                   </div>
-                </template>
-                <template v-else>
-                  <div class="h-20" />
-                </template>
+                </div>
+              </template>
+              <template v-else>
+                <div class="h-20" />
               </template>
             </template>
           </template>
