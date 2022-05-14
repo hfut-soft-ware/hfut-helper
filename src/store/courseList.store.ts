@@ -6,7 +6,6 @@ import { isNullOrUndefined } from '@/shared/utils/'
 type VisibleSchedule = Partial<{
   weekIdx: number
   dayIdx: number
-
 }>
 
 type GetDateProp = {
