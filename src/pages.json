@@ -1,6 +1,9 @@
 {
   "pages": [
     {
+      "path": "pages/week-schedule/index"
+    },
+    {
       "path": "pages/day-schedule/index",
       "style": {
         "backgroundColorTop": "#F6F8FA",
@@ -8,9 +11,6 @@
         "backgroundColor": "#F6F8FA",
         "navigationBarTextStyle":"black"
       }
-    },
-    {
-      "path": "pages/week-schedule/index"
     },
     {
       "path": "pages/login/login",
@@ -25,11 +25,11 @@
     "fontsize": "16px",
     "list": [
       {
-        "text": "今日课表",
+        "text": "日程",
         "pagePath": "pages/day-schedule/index"
       },
       {
-        "text": "当周课表",
+        "text": "课表",
         "pagePath": "pages/week-schedule/index"
       },
       {

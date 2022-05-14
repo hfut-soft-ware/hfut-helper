@@ -15,15 +15,18 @@ type GetDateProp = {
 }
 
 type ScheduleVisibleWeek = {
-  week: { date: Date[]; active: boolean }
-  course: ISchedule[]
+  week: { date: Date[]; active: boolean }[]
+  course: ISchedule[][]
 }
+
+type ScheduleName = 'weekSchedule' | 'daySchedule'
 
 type State = {
   list: ICourse
   currentWeekIdx: number
   daySchedule: VisibleSchedule
   weekSchedule: VisibleSchedule
+  alreadyLoaded: boolean
 }
 
 type Getters = {
@@ -32,6 +35,7 @@ type Getters = {
   currentWeekCourse: (state: State) => ISchedule[][]
   todayCourse: (state: State) => ISchedule[]
   dayScheduleVisibleWeek: (state: State) => ScheduleVisibleWeek
+  weekScheduleVisibleWeek: (state: State) => ScheduleVisibleWeek
 }
 
 export type GetCourseByHourIndexReturn = { course?: ISchedule; detail?: ILesson }
@@ -42,6 +46,38 @@ type Actions = {
   setWeekSchedule: (weekSchedule: VisibleSchedule) => void
   getCourseDetailByIdx: (idx?: number) => ILesson | undefined
   getCourseByHourIndex: (hourIndex: number) => GetCourseByHourIndexReturn
+}
+
+function createSetSchedule(name: ScheduleName, _this: State) {
+  return function(payload: VisibleSchedule) {
+    if (isNullOrUndefined(payload.dayIdx)) {
+      payload.dayIdx = _this[name].dayIdx
+    }
+    if (isNullOrUndefined(payload.weekIdx)) {
+      payload.weekIdx = _this[name].weekIdx
+    }
+
+    _this[name] = payload
+  }
+}
+
+function createScheduleVisibleWeek(name: ScheduleName) {
+  return function(state: State) {
+    const weekIdx = state[name].weekIdx!
+    const startTime = state.list.mainInfo.semesterStartDate
+
+    return {
+      week: Array.from(
+        { length: 7 },
+        (_, i) => ({
+          date: getCourseDate(
+            { week: weekIdx, day: i, startTime }),
+          active: state[name].dayIdx === i,
+        }),
+      ),
+      course: state.list.schedule[weekIdx],
+    } as unknown as ScheduleVisibleWeek
+  }
 }
 
 export const useCourseListStore = defineStore<'courseList', State, Getters, Actions>('courseList', {
@@ -66,6 +102,7 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
       weekIdx: 0,
       dayIdx: 0,
     },
+    alreadyLoaded: false,
   }),
 
   getters: {
@@ -77,44 +114,36 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
     todayCourse(state: State) {
       return this.course.schedule[state.daySchedule.weekIdx!][state.daySchedule.dayIdx!]
     },
-    dayScheduleVisibleWeek(state: State) {
-      const weekIdx = state.daySchedule.weekIdx!
-      const startTime = this.mainInfo.semesterStartDate
-      return {
-        week: Array.from(
-          { length: 7 },
-          (_, i) => ({
-            date: getCourseDate(
-              { week: weekIdx, day: i, startTime }),
-            active: this.daySchedule.dayIdx === i,
-          }),
-        ),
-        course: state.list.schedule[weekIdx],
-      } as unknown as ScheduleVisibleWeek
-    },
-    weekScheduleVisibleWeek(state: State) {
-      return {
-        course: state.list.schedule[state.weekSchedule.weekIdx!],
-      }
-    },
+    dayScheduleVisibleWeek: createScheduleVisibleWeek('daySchedule'),
+    weekScheduleVisibleWeek: createScheduleVisibleWeek('weekSchedule'),
   },
 
   actions: {
-    async getCourseList() {
-      await getCourseListRequest().then((res) => {
-        const data = res.data.data
-        this.list = data
+    async getCourseList(forceRefresh = false) {
+      const fetchData = async() => {
+        await getCourseListRequest().then((res) => {
+          const data = res.data.data
+          this.list = data
 
-        this.currentWeekIdx = data.mainInfo.curWeek - 1
-        const scheduleIdx = {
-          weekIdx: this.currentWeekIdx,
-          dayIdx: data.mainInfo.curDayIndex - 1,
-        }
-        this.daySchedule = scheduleIdx
-        this.daySchedule = scheduleIdx
-      }).catch((err) => {
-        throw new Error(err)
-      })
+          this.currentWeekIdx = data.mainInfo.curWeek - 1
+          const scheduleIdx = {
+            weekIdx: this.currentWeekIdx,
+            dayIdx: data.mainInfo.curDayIndex - 1,
+          }
+          this.daySchedule = scheduleIdx
+          this.weekSchedule = scheduleIdx
+
+          this.alreadyLoaded = true
+        }).catch((err) => {
+          throw new Error(err)
+        })
+      }
+
+      if (!this.alreadyLoaded) {
+        await fetchData()
+      } else if (forceRefresh) {
+        await fetchData()
+      }
 
       return this.list
     },
@@ -151,17 +180,4 @@ export function getCourseDate(date: GetDateProp) {
 
 export function getTeachers(teachers: string[]) {
   return teachers.join('/')
-}
-
-function createSetSchedule(name: 'weekSchedule' | 'daySchedule', _this: State) {
-  return function(payload: VisibleSchedule) {
-    if (isNullOrUndefined(payload.dayIdx)) {
-      payload.dayIdx = _this[name].dayIdx
-    }
-    if (isNullOrUndefined(payload.weekIdx)) {
-      payload.weekIdx = _this[name].weekIdx
-    }
-
-    _this[name] = payload
-  }
 }
