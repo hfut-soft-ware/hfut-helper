@@ -1,12 +1,20 @@
-import { request } from '@/server/base'
+import { createInstance, createRequest } from '../base'
+import { requestConfig } from '../../shared/config/request'
 
-export function loginRequest({ username, password }: { username: string; password: string }) {
-  return request({
+const instance = createInstance({
+  baseURL: requestConfig.baseURL,
+})
+
+const authRequest = createRequest()
+
+export function loginRequest({ studentId, password }: { studentId: string; password: string }) {
+  return authRequest({
     url: '/login',
     method: 'GET',
     params: {
-      username,
+      studentId,
       password,
     },
-  })
+    header: { authRequest: true },
+  }, instance)
 }

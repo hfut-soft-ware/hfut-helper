@@ -1,11 +1,11 @@
 <script lang='ts' setup>
-import { reactive } from 'vue'
-import { getTeacherName } from '@/shared/utils'
-import type { Lessons } from '@/shared/types/course'
+import { computed, reactive } from 'vue'
+import type { GetCourseByHourIndexReturn } from '@/store/courseList.store'
+import { getTeachers } from '@/store/courseList.store'
 
 interface Props {
   show: boolean
-  data: { lessonDetail: Lessons; startTime: string; endTime: string }
+  data: GetCourseByHourIndexReturn
 }
 
 interface Emits {
@@ -18,49 +18,50 @@ const emit = defineEmits<Emits>()
 const headerInfo = reactive([
   {
     title: '老师',
-    value: getTeacherName(data.lessonDetail.teacherAssignmentList as any[]),
+    value: getTeachers(data.detail!.detailInfo.teachers),
   },
   {
     title: '上课时间',
-    value: `${data.startTime} - ${data.endTime}`,
+    value: `${data.course!.startTime} - ${data.course!.endTime}`,
   },
 ])
 
-const { lessonDetail } = data
+const lessonDetailList = computed(() => {
+  const detail = data.detail!
+  return [
+    {
+      icon: 'bookmark-o',
+      title: '学分',
+      value: detail.detailInfo.credits,
+    },
+    {
+      icon: 'bookmark-o',
+      title: '上课班级',
+      value: detail.detailInfo.adminClass,
+    },
+    {
+      icon: 'notes-o',
+      title: '上课周数',
+      value: detail.detailInfo.weeks,
+    },
 
-const lessonDetailList = reactive([
-  {
-    icon: 'bookmark-o',
-    title: '学分',
-    value: lessonDetail.course.credits,
-  },
-  {
-    icon: 'bookmark-o',
-    title: '上课班级',
-    value: lessonDetail.nameZh,
-  },
-  {
-    icon: 'notes-o',
-    title: '上课周数',
-    value: lessonDetail.suggestScheduleWeeksInfo,
-  },
-
-  {
-    icon: 'friends-o',
-    title: '上课人数',
-    value: lessonDetail.stdCount,
-  },
-  {
-    icon: 'apps-o',
-    title: '课程类型',
-    value: lessonDetail.courseType.nameZh,
-  },
-  {
-    icon: 'coupon-o',
-    title: '课程代码',
-    value: lessonDetail.code,
-  },
-])
+    {
+      icon: 'friends-o',
+      title: '上课人数',
+      value: detail.detailInfo.studentCount,
+    },
+    {
+      icon: 'apps-o',
+      title: '课程类型',
+      value: detail.detailInfo.courseTypeName,
+    },
+    {
+      icon: 'coupon-o',
+      title: '课程代码',
+      value: detail.detailInfo.code,
+    },
+  ]
+})
 
 function onClose() {
   emit('close')
@@ -83,7 +84,7 @@ function onClose() {
         <div class="courseName">
           <div class="line" />
           <p class="text-lg font-medium">
-            {{ data.lessonDetail.course.nameZh }}
+            {{ data.detail?.courseName }}
           </p>
         </div>
         <div class="info w-[85%] mx-auto mt-3">

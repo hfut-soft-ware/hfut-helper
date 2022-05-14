@@ -1,8 +1,8 @@
 <script lang='ts' setup>
-import { reactive, ref, watchEffect } from 'vue'
+import { reactive, ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useCourseListStore } from '@/store/courseList.store'
-import { existProperty, getTeacherName } from '@/shared/utils'
+import type { GetCourseByHourIndexReturn } from '@/store/courseList.store'
+import { getTeachers, useCourseListStore } from '@/store/courseList.store'
 import { dayHours } from '@/shared/constant'
 import CoursePopup from '@/components/CoursePopup/course-popup.vue'
 
@@ -19,10 +19,10 @@ const cardsColor = reactive([
 
 const show = ref(false)
 
-const courseData = ref([])
+const courseData = ref<GetCourseByHourIndexReturn>()
 
-function handleCourseClick(course: any) {
-  courseData.value = course.course
+function handleCourseClick(course: GetCourseByHourIndexReturn) {
+  courseData.value = course
 
   show.value = true
 }
@@ -31,67 +31,66 @@ function onClose() {
   show.value = false
 }
 
-watchEffect(() => {
-  console.log('todayCourse', todayCourse.value)
-})
-
 </script>
 
 <template>
   <course-popup v-if="show" :show="show" :data="courseData" @close="onClose" />
-  <view class="course-list-cards">
+  <div class="course-list-cards">
     <template v-if="todayCourse?.length">
-      <view class="card-list-container">
-        <view
+      <div class="card-list-container">
+        <div
           v-for="hour in dayHours"
           :key="hour.start"
           class="card-container"
         >
-          <view class="time">
+          <div class="time">
             {{ hour.start }}
-          </view>
+          </div>
           <template v-if="hour.start !== '22:00'">
             <template v-if="hour.start === '12:00'">
-              <view class="lunch-card" style="flex: 6">
+              <div class="lunch-card" style="flex: 6">
                 午休
-              </view>
+              </div>
             </template>
             <template v-else>
-              <template v-if="hour.index && existProperty(todayCourse[hour.index - 1].course)">
-                <view
-                  :class="`card ${cardsColor[hour.index - 1]} ${hour.index % 2 === 0 ? 'mt-3' : 'mt-2'}`"
-                  @click="handleCourseClick(todayCourse[hour.index - 1])"
-                >
-                  <view class="card-flex">
-                    <view class="header">
-                      <view class="text-xs">
-                        {{ todayCourse[hour.index - 1].startTimeText }} - {{ todayCourse[hour.index - 1].endTimeText }}
-                      </view>
-                      <view class="text-sm">
-                        {{ existProperty(todayCourse[hour.index - 1].course) ? getTeacherName(todayCourse[hour.index - 1].course.teachers): '' }}
-                      </view>
-                    </view>
-                    <view class="font-bold text-base">
-                      {{ todayCourse[hour.index - 1].course.lessonDetail.course.nameZh }}
-                    </view>
-                    <view class="text-xs">
-                      {{ todayCourse[hour.index - 1].course.room.nameZh }}
-                    </view>
-                  </view>
-                </view>
-              </template>
-              <template v-else>
-                <view class="h-20" />
+              <template v-for="(item, idx) in [store.getCourseByHourIndex(hour.index)]" :key="item?.course?.startTime || idx">
+                <template v-if="item.course">
+                  <div
+                    :key="item.course.startTime"
+                    :class="`card ${cardsColor[item.course.index]} ${item.course.wholePoint ? 'mt-2': 'mt-4'}`"
+                    @click="handleCourseClick(item)"
+                  >
+                    <div class="card-flex">
+                      <div class="flex justify-between py-2 items-center">
+                        <div class="text-xs">
+                          {{ item.course.startTime }} - {{ item.course.endTime }}
+                        </div>
+                        <div class="text-sm">
+                          {{ getTeachers(item.detail.detailInfo.teachers) }}
+                        </div>
+                      </div>
+                      <div class="font-bold text-base">
+                        {{ item.detail.courseName }}
+                      </div>
+                      <div class="text-xs">
+                        {{ item.course.room }}
+                      </div>
+                    </div>
+                  </div>
+                </template>
+                <template v-else>
+                  <div class="h-20" />
+                </template>
               </template>
             </template>
           </template>
-        </view>
-      </view>
+        </div>
+      </div>
     </template>
     <template v-else>
       <van-empty description="今天没课噢，放松一下吧♪（＾∀＾●）ﾉｼ" />
     </template>
-  </view>
+  </div>
 </template>
 
 <style lang='scss' scoped>
@@ -140,9 +139,6 @@ watchEffect(() => {
         @apply flex-[6] flex gap-3 p-2 rounded-lg h-24;
         &-flex {
           @apply flex flex-col gap-2 w-full;
-          .header {
-            @apply flex justify-between py-2;
-          }
         }
 
       }

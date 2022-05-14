@@ -1,13 +1,16 @@
 {
   "pages": [
     {
-      "path": "pages/schedule/schedule",
+      "path": "pages/day-schedule/index",
       "style": {
         "backgroundColorTop": "#F6F8FA",
         "navigationStyle": "custom",
         "backgroundColor": "#F6F8FA",
         "navigationBarTextStyle":"black"
       }
+    },
+    {
+      "path": "pages/week-schedule/index"
     },
     {
       "path": "pages/login/login",
@@ -22,12 +25,16 @@
     "fontsize": "16px",
     "list": [
       {
-        "text": "登录",
-        "pagePath": "pages/login/login"
+        "text": "今日课表",
+        "pagePath": "pages/day-schedule/index"
       },
       {
-        "text": "日程课表",
-        "pagePath": "pages/schedule/schedule"
+        "text": "当周课表",
+        "pagePath": "pages/week-schedule/index"
+      },
+      {
+        "text": "登录",
+        "pagePath": "pages/login/login"
       }
     ]
   },

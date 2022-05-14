@@ -1,3 +1,3 @@
 export const requestConfig = {
-  baseURL: 'http://localhost:8082/',
+  baseURL: 'http://110.40.157.12:8008/',
 }

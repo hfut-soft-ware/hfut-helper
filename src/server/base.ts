@@ -1,9 +1,9 @@
-import type { AjaxInstance, AjaxRequestConfig } from 'uni-ajax'
+import type { AjaxInstance, AjaxRequestConfig, AjaxResponse, Request } from 'uni-ajax'
 import ajax from 'uni-ajax'
 import { requestConfig } from '@/shared/config/request'
 
 const headers = {
-  cookie: 'wengine_vpn_ticketwebvpn_hfut_edu_cn=34f22e1461ba1999',
+  authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyIkdXNlcklkIjoyMDIxMjE3OTg2LCJzdWIiOiJ1c2VyIiwibmFtZSI6IuW4uOePgua0gSIsImlhdCI6MTY1MjQyNzAxNn0.TUA0ByxDHTgD7t0W9jOlVZC8R5flojNre9TX0CXEiQg',
 }
 
 export function createInstance(config: AjaxRequestConfig) {
@@ -17,26 +17,23 @@ const baseInstance = createInstance({
 baseInstance.interceptors.request.use((config: AjaxRequestConfig) => {
   config.header = {
     ...config.header,
-    cookie: headers.cookie,
+    authorization: headers.authorization,
   }
   return config
 })
 
-baseInstance.interceptors.response.use((res) => {
-  const cookies = res.cookies
-  cookies.forEach((cookie) => {
-    if (cookies.includes('wengine_vpn_ticketwebvpn_hfut_edu_cn')) {
-      headers.cookie = cookie
-    } else {
-      headers.cookie = cookie
+export function createRequest<T>() {
+  return function(config: AjaxRequestConfig, instance: AjaxInstance<any> = baseInstance) {
+    if (!config.method) {
+      config.method = 'GET'
     }
-  })
-  return res
-})
+    return instance(config)
+  }
+}
 
-export function request(config: AjaxRequestConfig, instance: AjaxInstance<any> = baseInstance) {
+export function request<T>(config: AjaxRequestConfig, instance: AjaxInstance<any> = baseInstance) {
   if (!config.method) {
     config.method = 'GET'
   }
-  return instance(config)
+  return instance<T>(config)
 }

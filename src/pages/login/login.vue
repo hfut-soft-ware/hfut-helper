@@ -19,7 +19,7 @@ async function onLogin() {
     })
 
     const { state, error } = await useAsync(loginRequest({
-      username: form.username,
+      studentId: form.username,
       password: form.password,
     }) as any)
 
@@ -35,7 +35,7 @@ async function onLogin() {
         message: '登录成功',
       })
       uni.switchTab({
-        url: '/views/home/home',
+        url: '/pages/home/home',
       })
     }
   }
@@ -46,15 +46,15 @@ async function onLogin() {
 <template>
   <van-toast id="van-toast" />
   <van-notify id="van-notify" />
-  <view class="login-page">
-    <view class="login-page-header">
+  <div class="login-page">
+    <div class="login-page-header">
       <img class="logo" :src="img">
-    </view>
+    </div>
 
     <div class="tip">
       <Tip :type="'info'" :content="'忘记密码的话可以去信息门户重置一下噢'" />
     </div>
-    <view class="form">
+    <div class="form">
       <div class="username">
         <van-field
           clearable
@@ -75,11 +75,11 @@ async function onLogin() {
         />
       </div>
 
-      <view class="login-btn" @click="onLogin">
+      <div class="login-btn" @click="onLogin">
         <BaseButton />
-      </view>
-    </view>
-  </view>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style lang='scss' scoped>
