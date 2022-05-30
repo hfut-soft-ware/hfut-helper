@@ -79,13 +79,13 @@ function onClose() {
           <div
             v-for="index in 10"
             :key="index"
-            class="border-slate-200 h-[60px] px-[2px] py-[4px] border-r-[1px]"
+            class="border-slate-200 h-[60px] px-[2px] py-[3px] border-r-[1px]"
             :class="isOdd(index) ? '' : 'evenBorder'"
             @click="handleCourseClick(findCourse(item.schedule, isOdd(index) ? index : index - 1))"
           >
             <div
               v-if="findCourse(item.schedule, index)"
-              class="h-[120px] z-[1] mt-[1px] rounded-md px-1 pt-1 text-xs flex flex-col gap-3 p-1"
+              class="h-[120px] mt-[1px] rounded-md px-1 text-xs flex flex-col gap-2 pt-1 text-center"
               :class="cardsColor[(Math.ceil(index / 2)) - 1]"
             >
               <template
@@ -95,7 +95,7 @@ function onClose() {
                 <p class="font-bold">
                   {{ currentCourse.detail.courseName }}
                 </p>
-                <p class="text-center">
+                <p class="text-[11px]">
                   {{ currentCourse.course.room }}
                 </p>
               </template>
