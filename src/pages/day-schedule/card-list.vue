@@ -1,7 +1,7 @@
 <script lang='ts' setup>
 import { computed, reactive, ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import type { GetCourseByHourIndexReturn } from '@/store/courseList.store'
+import type { CourseData } from '@/store/courseList.store'
 import { getTeachers, useCourseListStore } from '@/store/courseList.store'
 import { dayHours } from '@/shared/constant'
 import CoursePopup from '@/components/CoursePopup/course-popup.vue'
@@ -25,9 +25,9 @@ const courseList = computed(() => dayHours.map(hour => ({
 
 const show = ref(false)
 
-const courseData = ref<GetCourseByHourIndexReturn>()
+const courseData = ref<CourseData>()
 
-function handleCourseClick(course: GetCourseByHourIndexReturn) {
+function handleCourseClick(course: CourseData) {
   courseData.value = course
 
   show.value = true
@@ -100,26 +100,26 @@ function onClose() {
 <style lang='scss' scoped>
 // 针对小程序对于JS的JIT支持不好的问题
 @mixin generateCardStyle($color) {
-  background-color: rgba($color, .15);
+  background-color: rgba($color, 0.15);
   color: $color;
-  border: 1px solid rgba($color, .2);
+  border: 1px solid rgba($color, 0.2);
   border-left: 2px solid $color;
 }
 .yellow {
-  @include generateCardStyle(#F8A043);
+  @include generateCardStyle(#f8a043);
 }
 .red {
-  @include generateCardStyle(#F88C8E);
+  @include generateCardStyle(#f88c8e);
 }
 
 .green {
-  @include generateCardStyle(#3EB770);
+  @include generateCardStyle(#3eb770);
 }
 .blue {
-  @include generateCardStyle(#63B1EF);
+  @include generateCardStyle(#63b1ef);
 }
 .purple {
-  @include generateCardStyle(#9A88C6);
+  @include generateCardStyle(#9a88c6);
 }
 
 .course-list-cards {

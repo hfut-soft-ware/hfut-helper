@@ -14,5 +14,4 @@ onHide(() => {
 <template />
 <style lang="scss">
 @import "./components/wxcomponents/vant/common/index.wxss";
-
 </style>

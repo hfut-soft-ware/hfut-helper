@@ -6,6 +6,7 @@ import Header from './Header.vue'
 import CardList from './card-list.vue'
 import { useCourseRequest } from './use-courseRequest'
 import { isEmptyObject } from '@/shared/utils'
+import StatusBar from '@/components/status-bar/status-bar.vue'
 
 const { isLoading, error, state } = useCourseRequest()
 
@@ -28,7 +29,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div class="status-bar" />
+  <StatusBar />
   <div class="w-screen bg-[#F6F8FA] pt-5">
     <template v-if="state && !isLoading">
       <div class="w-[100vw]">
@@ -39,10 +40,3 @@ watchEffect(() => {
     <van-toast id="van-toast" />
   </div>
 </template>
-
-<style scoped>
-.status-bar {
-  height: var(--status-bar-height);
-  background-color: #F6F8FA;
-}
-</style>

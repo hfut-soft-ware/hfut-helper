@@ -1,7 +1,12 @@
 {
   "pages": [
     {
-      "path": "pages/week-schedule/index"
+      "path": "pages/week-schedule/index",
+      "style": {
+        "backgroundColorTop": "#F6F8FA",
+        "navigationStyle": "custom",
+        "backgroundColor": "#F6F8FA"
+      }
     },
     {
       "path": "pages/day-schedule/index",

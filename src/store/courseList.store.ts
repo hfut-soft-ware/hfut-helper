@@ -40,6 +40,8 @@ type Getters = {
 
 export type GetCourseByHourIndexReturn = { course?: ISchedule; detail?: ILesson }
 
+export type CourseData = GetCourseByHourIndexReturn
+
 type Actions = {
   getCourseList: () => Promise<ICourse>
   setDaySchedule: (daySchedule: VisibleSchedule) => void

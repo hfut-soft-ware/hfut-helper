@@ -1,11 +1,11 @@
 <script lang='ts' setup>
 import { computed, reactive } from 'vue'
-import type { GetCourseByHourIndexReturn } from '@/store/courseList.store'
+import type { CourseData } from '@/store/courseList.store'
 import { getTeachers } from '@/store/courseList.store'
 
 interface Props {
   show: boolean
-  data: GetCourseByHourIndexReturn
+  data: CourseData
 }
 
 interface Emits {

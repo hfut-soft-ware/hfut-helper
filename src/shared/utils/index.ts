@@ -12,3 +12,5 @@ export const isNullOrUndefined = (val: unknown) =>
   isNull(val) || isUndefined(val)
 
 export const hasProp = <T extends object, K extends keyof T>(obj: T, key: K) => !isNullOrUndefined(obj) && !isEmptyObject(obj) && Reflect.has(obj, key)
+
+export const isOdd = (num: number) => num % 2 !== 0
