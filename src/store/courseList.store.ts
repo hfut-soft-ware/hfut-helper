@@ -82,6 +82,8 @@ function createScheduleVisibleWeek(name: ScheduleName) {
   }
 }
 
+export type TCourseListStore = ReturnType<typeof useCourseListStore>
+
 export const useCourseListStore = defineStore<'courseList', State, Getters, Actions>('courseList', {
   state: () => ({
     list: {

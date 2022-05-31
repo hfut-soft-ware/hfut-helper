@@ -4,8 +4,11 @@ import { format } from 'date-fns'
 import { computed } from 'vue'
 import { getCourseDate, useCourseListStore } from '@/store/courseList.store'
 import IconButton from '@/components/base/IconButton.vue'
+import { useSelectCourseList } from '@/shared/hooks/use-selectCourseList'
 
 const store = useCourseListStore()
+
+const { onPrev, onNext } = useSelectCourseList(store)
 
 const { mainInfo, daySchedule, todayCourse, dayScheduleVisibleWeek } = storeToRefs(store)
 
@@ -18,23 +21,6 @@ const visibleDate = computed(() => {
     startTime: mainInfo.value.semesterStartDate,
   }), 'MM月dd号')
 })
-
-function onPrev() {
-  const dayVal = daySchedule.value
-  if (dayVal.weekIdx === 0) {
-    store.setDaySchedule({ weekIdx: 19 })
-  } else {
-    store.setDaySchedule({ weekIdx: dayVal.weekIdx! - 1 })
-  }
-}
-function onNext() {
-  const dayVal = daySchedule.value
-  if (dayVal.weekIdx === 19) {
-    store.setDaySchedule({ weekIdx: 0 })
-  } else {
-    store.setDaySchedule({ weekIdx: dayVal.weekIdx! + 1 })
-  }
-}
 
 function handleActiveChange(idx: number) {
   store.setDaySchedule({ dayIdx: idx })

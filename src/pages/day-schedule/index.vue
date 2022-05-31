@@ -7,8 +7,14 @@ import CardList from './card-list.vue'
 import { useCourseRequest } from './use-courseRequest'
 import { isEmptyObject } from '@/shared/utils'
 import StatusBar from '@/components/status-bar/status-bar.vue'
+import { useTouchInteractive } from '@/shared/hooks/useTouchInteractive'
+import { useCourseListStore } from '@/store/courseList.store'
 
 const { isLoading, error, state } = useCourseRequest()
+
+const store = useCourseListStore()
+
+const { onTouchStart, onTouchMove, onTouchEnd } = useTouchInteractive(store)
 
 watchEffect(() => {
   if (isLoading.value) {
@@ -30,7 +36,13 @@ watchEffect(() => {
 
 <template>
   <StatusBar />
-  <div class="w-screen bg-[#F6F8FA] pt-5">
+  <div
+    class="w-screen bg-[#F6F8FA] pt-5"
+    @touchstart="onTouchStart"
+    @touchmove="onTouchMove"
+    @touchend="onTouchEnd"
+  >
+    >
     <template v-if="state && !isLoading">
       <div class="w-[100vw]">
         <Header />
