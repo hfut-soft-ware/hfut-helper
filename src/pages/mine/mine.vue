@@ -14,7 +14,7 @@ function onActiveChange(event: any) {
 </script>
 
 <template>
-  <div class="relative w-[95vw] mx-[2.5vw]">
+  <div class="relative w-[95vw] mx-[2.5vw] pb-5">
     <Header />
     <div class="mt-10 flex flex-col gap-5">
       <div class="border-box overflow-hidden rounded-xl shadow-lg">
@@ -32,7 +32,7 @@ function onActiveChange(event: any) {
             </p>
           </div>
         </div>
-        <div class="bg-white w-full flex">
+        <div class="bg-white w-full flex pt-1">
           <van-tabs class="w-full" :active="active" @change="onActiveChange">
             <van-tab title="常用服务" name="commonServices" />
             <van-tab title="账号设置" name="settings" />

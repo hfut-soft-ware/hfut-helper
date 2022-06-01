@@ -10,6 +10,10 @@ import '@/assets/icons/score.png'
 import '@/assets/icons/score-active.png'
 import '@/assets/icons/mine.png'
 import '@/assets/icons/mine-active.png'
+import '@/assets/icons/explore-planet.png'
+import '@/assets/icons/galaxy.png'
+import '@/assets/icons/star-moon.png'
+import '@/assets/icons/telescope.png'
 
 export function createApp() {
   const app = createSSRApp(App)

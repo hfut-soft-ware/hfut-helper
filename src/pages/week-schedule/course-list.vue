@@ -5,7 +5,6 @@ import { isOdd, isUndefined } from '@/shared/utils'
 import type { CourseData } from '@/store/courseList.store'
 import { formatCourseName, formatRoom, useCourseListStore } from '@/store/courseList.store'
 import CoursePopup from '@/components/CoursePopup/course-popup.vue'
-
 import { useTouchInteractive } from '@/shared/hooks/useTouchInteractive'
 import { WEEK_SCHEDULE_CARD_HEIGHT } from '@/pages/week-schedule/constant'
 
@@ -56,7 +55,7 @@ function onClose() {
 <template>
   <course-popup v-if="show" :show="show" :data="courseData" @close="onClose" />
   <div
-    class="w-screen mt-[150px] overflow-hidden flex relative"
+    class="w-screen mt-[100px] overflow-hidden flex relative"
     @touchstart="onTouchStart"
     @touchend="onTouchEnd"
   >
@@ -73,7 +72,7 @@ function onClose() {
       >
         <template v-if="course?.detail">
           <div
-            class="rounded-md px-1 text-xs flex flex-col gap-2 pt-1 text-center"
+            class="rounded-md px-1 text-xs flex flex-col gap-2 pt-1"
             :class="course.detail?.color"
             :style="{height: `${course.course.height}px`}"
             @click="handleCourseClick(course)"
@@ -89,7 +88,7 @@ function onClose() {
         <template v-else />
       </div>
     </div>
-    <div class="fixed bottom-3 w-screen">
+    <div class="fixed bottom-3 w-screen z-[1]">
       <div class="flex justify-between w-screen">
         <div class="arrow" @click="onPrev">
           <van-icon name="arrow-left" />

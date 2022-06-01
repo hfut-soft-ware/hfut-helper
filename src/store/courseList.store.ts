@@ -3,6 +3,7 @@ import type { ICourse, ILesson, IMainInfo, ISchedule } from '@/shared/types/resp
 import { getCourseListRequest } from '@/server/api/user'
 import { isNull, isNullOrUndefined, isUndefined } from '@/shared/utils/'
 import { CARD_COLORS, COURSE_KEY } from '@/shared/constant'
+import { ellipsisString } from '@/shared/utils/ellipsisString'
 
 type VisibleSchedule = Partial<{
   weekIdx: number
@@ -86,17 +87,17 @@ function createScheduleVisibleWeek(name: ScheduleName) {
 export type TCourseListStore = ReturnType<typeof useCourseListStore>
 
 // TODO room类型问题
-export function formatRoom(room: string | null) {
+export function formatRoom(room: string) {
   if (room === 'null') {
     return '暂未安排教室'
   } else {
-    return room
+    return ellipsisString(room, 12)
   }
 }
 
 // 课程长度最长为十个长度
 export function formatCourseName(courseName: string) {
-  return `${courseName.split('').slice(0, 10).join('')}${courseName.length > 10 ? '...' : ''}`
+  return ellipsisString(courseName, 10)
 }
 
 export const useCourseListStore = defineStore<'courseList', State, Getters, Actions>('courseList', {

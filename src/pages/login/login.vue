@@ -2,7 +2,6 @@
 import Toast from '@vant/weapp/dist/toast/toast'
 import img from '@/pages/login/img.png'
 import BaseButton from '@/components/base/BaseButton.vue'
-import Tip from '@/components/base/Tip.vue'
 import { useFormValidate } from '@/pages/login/use-formValidate'
 import { useAuthStore } from '@/store/auth.store'
 

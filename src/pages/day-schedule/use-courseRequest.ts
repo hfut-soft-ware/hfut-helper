@@ -20,11 +20,13 @@ export function useCourseRequest(forceRefresh = false) {
   watchEffect(() => {
     if (isLoading.value) {
       Toast.loading({
+        duration: 0,
         message: `正在获取最新的课程信息，请稍等一下\n${getRandomQAQ('happy')[0]}`,
       })
     }
     if (error.value) {
       Toast.fail(`糟糕，没有拿到最新的课程信息\n ${getRandomQAQ('sadness')[0]}`)
+      uni.stopPullDownRefresh()
       firstUpdateCourseData = false
     }
 
@@ -33,6 +35,7 @@ export function useCourseRequest(forceRefresh = false) {
         message: `获取最新课表成功啦\n${getRandomQAQ('happy')[0]}`,
       })
       firstUpdateCourseData = false
+      uni.stopPullDownRefresh()
     }
   })
 

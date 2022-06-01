@@ -3,6 +3,7 @@ import Header from './header.vue'
 import CourseList from '@/pages/week-schedule/course-list.vue'
 import { useCourseRequest } from '@/pages/day-schedule/use-courseRequest'
 import { usePullDownUpdateCourse } from '@/shared/hooks/use-PullDownUpdateCourse'
+import Settings from '@/pages/week-schedule/settings.vue'
 
 const { isLoading, state } = useCourseRequest()
 usePullDownUpdateCourse()
@@ -17,6 +18,8 @@ usePullDownUpdateCourse()
       <div class="absolute z-1">
         <CourseList />
       </div>
+
+      <Settings />
     </div>
   </template>
 </template>
