@@ -1,14 +1,14 @@
 <script lang='ts' setup>
 import Toast from '@vant/weapp/dist/toast/toast'
-import type { AjaxResponse } from 'uni-ajax'
 import img from '@/pages/login/img.png'
 import BaseButton from '@/components/base/BaseButton.vue'
 import Tip from '@/components/base/Tip.vue'
-import { loginRequest } from '@/server/api/auth'
-import { useAsync } from '@/shared/hooks/use-async'
 import { useFormValidate } from '@/pages/login/use-formValidate'
+import { useAuthStore } from '@/store/auth.store'
 
 const { validate, form } = useFormValidate()
+
+const store = useAuthStore()
 
 async function onLogin() {
   if (validate()) {
@@ -18,26 +18,7 @@ async function onLogin() {
       forbidClick: true,
     })
 
-    const { state, error } = await useAsync(loginRequest({
-      studentId: form.username,
-      password: form.password,
-    }) as any)
-
-    if (error.value) {
-      Toast.fail({
-        message: (error.value as AjaxResponse).data.msg,
-      })
-      return
-    }
-
-    if (state.value) {
-      Toast.success({
-        message: '登录成功',
-      })
-      uni.switchTab({
-        url: '/pages/home/home',
-      })
-    }
+    store.login({ studentId: form.username, password: form.password })
   }
 }
 
@@ -52,7 +33,13 @@ async function onLogin() {
     </div>
 
     <div class="tip">
-      <Tip :type="'info'" :content="'忘记密码的话可以去信息门户重置一下噢'" />
+      <van-notice-bar
+        wrapable
+        color="#1989fa"
+        background="#ecf9ff"
+        left-icon="info-o"
+        text="忘记密码的话可以去信息门户重置一下噢"
+      />
     </div>
     <div class="form">
       <div class="username">

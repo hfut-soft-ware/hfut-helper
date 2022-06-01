@@ -1,15 +1,30 @@
 <script setup lang="ts">
-import { onHide, onLaunch, onShow } from '@dcloudio/uni-app'
+// import { onHide, onLaunch, onShow } from '@dcloudio/uni-app'
+import { AuthStatus, useAuthStore } from '@/store/auth.store'
 
-onLaunch(() => {
+const authStore = useAuthStore()
 
-})
-onShow(() => {
-  console.log('App Show')
-})
-onHide(() => {
-  console.log('App Hide')
-})
+const { auth } = authStore
+
+if (auth.status === AuthStatus.LOGIN_IN) {
+  uni.switchTab({
+    url: '/pages/mine/mine',
+  })
+} else {
+  uni.switchTab({
+    url: '/pages/login/login',
+  })
+}
+
+// onLaunch(() => {
+//
+// })
+// onShow(() => {
+//
+// })
+// onHide(() => {
+//
+// })
 
 </script>
 

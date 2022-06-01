@@ -59,5 +59,6 @@ export interface ISchedule {
   period: number
   wholePoint: boolean
   room: string
+  lessonStartIndex: number
   lessonIndex: number
 }

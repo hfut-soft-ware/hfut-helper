@@ -1,61 +1,44 @@
 <script lang='ts' setup>
 import { storeToRefs } from 'pinia'
-import { format } from 'date-fns'
-import { computed, reactive, ref } from 'vue'
-import { isUndefined } from 'lodash'
+import { computed, ref } from 'vue'
+import { isOdd, isUndefined } from '@/shared/utils'
 import type { CourseData } from '@/store/courseList.store'
-import { useCourseListStore } from '@/store/courseList.store'
+import { formatCourseName, formatRoom, useCourseListStore } from '@/store/courseList.store'
 import CoursePopup from '@/components/CoursePopup/course-popup.vue'
-import { isOdd } from '@/shared/utils'
+
 import { useTouchInteractive } from '@/shared/hooks/useTouchInteractive'
+import { WEEK_SCHEDULE_CARD_HEIGHT } from '@/pages/week-schedule/constant'
 
 const store = useCourseListStore()
 const { weekScheduleVisibleWeek } = storeToRefs(store)
 
-const { onTouchStart, onTouchEnd, onTouchMove } = useTouchInteractive(store, 'week')
+const { onTouchStart, onTouchEnd, onPrev, onNext } = useTouchInteractive(store, 'week')
 
-// TODO: 用computed处理好结构
-const courseList = computed<{
-  time: Date[]
-  active: boolean
-  schedule: CourseData[]
-}[]>(() => {
+const courseList = computed<CourseData[][]>(() => {
   const weekVal = weekScheduleVisibleWeek.value
 
-  return weekVal.week.map((item, idx) => ({
-    time: item.date,
-    active: item.active,
-    schedule: isUndefined(weekVal.course)
-      ? []
-      : weekVal.course[idx].map((course) => {
-        return {
-          course,
-          detail: store.getCourseDetailByIdx(course.lessonIndex),
-        }
-      }),
-  }))
-})
+  return Array.from({ length: 7 }, (_, weekday) => {
+    const todayCourse = weekVal.course[weekday]
+    return Array.from({ length: 11 }, (_, lessonIdx) => {
+      const course = todayCourse.find(course => course.lessonStartIndex === lessonIdx + 1)
 
-const cardsColor = reactive([
-  'red',
-  'blue',
-  'green',
-  'yellow',
-  'purple',
-])
+      if (isUndefined(course)) {
+        return undefined
+      }
+
+      return {
+        detail: store.getCourseDetailByIdx(course.lessonIndex),
+        course: {
+          ...course,
+          height: course.period * WEEK_SCHEDULE_CARD_HEIGHT,
+        },
+      }
+    })
+  }) as CourseData[][]
+})
 
 const show = ref(false)
 const courseData = ref<CourseData>()
-
-function findCourse(currentCourse: CourseData[], index: number) {
-  if (index % 2 !== 0) {
-    index = Math.ceil(index / 2)
-  } else {
-    return
-  }
-
-  return currentCourse.find(item => item.course!.index === index)
-}
 
 function handleCourseClick(clickedCourse: CourseData) {
   if (clickedCourse) {
@@ -73,52 +56,46 @@ function onClose() {
 <template>
   <course-popup v-if="show" :show="show" :data="courseData" @close="onClose" />
   <div
-    class="w-screen mt-[120px] overflow-hidden"
+    class="w-screen mt-[150px] overflow-hidden flex relative"
     @touchstart="onTouchStart"
-    @touchmove="onTouchMove"
     @touchend="onTouchEnd"
   >
-    <div class="grid grid-cols-7 h-screen">
+    <div
+      v-for="(courses, weekday) in courseList"
+      :key="weekday"
+      class="flex-1"
+    >
       <div
-        v-for="item in courseList"
-        :key="item.time"
+        v-for="(course, index) in courses"
+        :key="`${course?.course?.lessonStartIndex}-${course?.detail?.id}${index}`"
+        class="h-[62px] border-r-[1px] border-slate-200 px-[2px]"
+        :class="isOdd(index + 1) ? 'oddBorder' : 'evenBorder'"
       >
-        <div
-          class="text-center flex flex-col text-xs bg-white/40"
-          :class="`${item.active ? 'active-day' : ''}`"
-        >
-          <p>{{ format(item.time, 'EEE.') }}</p>
-          <p class="text-[10px]">
-            {{ format(item.time, 'MM/dd') }}
-          </p>
-        </div>
-        <div class="course-list">
+        <template v-if="course?.detail">
           <div
-            v-for="index in 11"
-            :key="index"
-            class="border-slate-200 h-[60px] px-[2px] py-[3px] border-r-[1px]"
-            :class="`${isOdd(index) ? '' : 'evenBorder'} `"
-            @click="handleCourseClick(findCourse(item.schedule, isOdd(index) ? index : index - 1))"
+            class="rounded-md px-1 text-xs flex flex-col gap-2 pt-1 text-center"
+            :class="course.detail?.color"
+            :style="{height: `${course.course.height}px`}"
+            @click="handleCourseClick(course)"
           >
-            <template
-              v-for="currentCourse in [findCourse(item.schedule, index)]"
-              :key="currentCourse?.detail?.courseName"
-            >
-              <div
-                v-if="currentCourse"
-                class="mt-[1px] rounded-md px-1 text-xs flex flex-col gap-2 pt-1 text-center"
-                :class="cardsColor[(Math.ceil(index / 2)) - 1]"
-                :style="{height: `${currentCourse.course.period * 60}px`}"
-              >
-                <p class="font-bold">
-                  {{ currentCourse.detail?.courseName }}
-                </p>
-                <p class="text-[11px]">
-                  {{ currentCourse.course?.room }}
-                </p>
-              </div>
-            </template>
+            <p class="font-bold">
+              {{ formatCourseName(course.detail?.courseName) }}
+            </p>
+            <p class="text-[11px]">
+              {{ formatRoom(course.course?.room) }}
+            </p>
           </div>
+        </template>
+        <template v-else />
+      </div>
+    </div>
+    <div class="fixed bottom-3 w-screen">
+      <div class="flex justify-between w-screen">
+        <div class="arrow" @click="onPrev">
+          <van-icon name="arrow-left" />
+        </div>
+        <div class="arrow" @click="onNext">
+          <van-icon name="arrow" />
         </div>
       </div>
     </div>
@@ -128,7 +105,15 @@ function onClose() {
 <style lang='scss' scoped>
 // 偶数行的边框，写在此处是为了解决JIT问题
 .evenBorder {
-  @apply  border-b-[1px];
+  @apply border-b-[1px] pb-[1px];
+}
+
+.oddBorder {
+  @apply pt-[1px];
+}
+
+.arrow {
+  @apply w-[75px] h-[75px] rounded-full bg-gray-300/70 text-black/60 flex justify-center items-center;
 }
 
 @mixin generateCardStyle($bgColor, $textColor) {
@@ -152,7 +137,5 @@ function onClose() {
 .purple {
   @include generateCardStyle(#FAECFF, #B569DD);
 }
-.active-day {
-  @apply text-[#217DD2] font-bold;
-}
+
 </style>

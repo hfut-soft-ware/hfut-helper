@@ -44,7 +44,7 @@
     "@dcloudio/uni-mp-toutiao": "3.0.0-alpha-3040420220402002",
     "@dcloudio/uni-mp-weixin": "3.0.0-alpha-3040420220402002",
     "@dcloudio/uni-quickapp-webview": "3.0.0-alpha-3040420220402002",
-    "@vant/weapp": "^1.10.2",
+    "@vant/weapp": "^1.10.3",
     "@vueuse/core": "^8.2.5",
     "date-fns": "^2.28.0",
     "lodash": "^4.17.21",

@@ -1,6 +1,15 @@
 {
   "pages": [
     {
+      "path": "pages/login/login",
+      "style": {
+        "navigationBarTitleText": "登录",
+        "enablePullDownRefresh": false,
+        "navigationStyle": "custom",
+        "backgroundColorTop": "#ffffff"
+      }
+    },
+    {
       "path": "pages/week-schedule/index",
       "style": {
         "backgroundColorTop": "#F6F8FA",
@@ -18,28 +27,46 @@
       }
     },
     {
-      "path": "pages/login/login",
+      "path": "pages/score/score"
+    },
+    {
+      "path": "pages/mine/mine",
       "style": {
-        "navigationBarTitleText": "登录",
-        "enablePullDownRefresh": false
+        "backgroundColorTop": "#ffffff",
+        "navigationStyle": "custom",
+        "backgroundColor": "#ffffff"
       }
     }
+
   ],
   "tabBar": {
     "height": "20px",
     "fontsize": "16px",
+    "selectedColor": "#63b1ef",
     "list": [
       {
         "text": "日程",
-        "pagePath": "pages/day-schedule/index"
+        "pagePath": "pages/day-schedule/index",
+        "iconPath": "./assets/icons/todo.png",
+        "selectedIconPath": "./assets/icons/todo-active.png"
       },
       {
         "text": "课表",
-        "pagePath": "pages/week-schedule/index"
+        "pagePath": "pages/week-schedule/index",
+        "iconPath": "./assets/icons/week.png",
+        "selectedIconPath": "./assets/icons/week-active.png"
       },
       {
-        "text": "登录",
-        "pagePath": "pages/login/login"
+        "text": "成绩",
+        "pagePath": "pages/score/score",
+        "iconPath": "./assets/icons/score.png",
+        "selectedIconPath": "./assets/icons/score-active.png"
+      },
+      {
+        "text": "Mine",
+        "pagePath": "pages/mine/mine",
+        "iconPath": "./assets/icons/mine.png",
+        "selectedIconPath": "./assets/icons/mine-active.png"
       }
     ]
   },
@@ -101,8 +128,6 @@
       "van-sidebar-item": "./components/wxcomponents/vant/sidebar-item/index",
       "van-skeleton": "./components/wxcomponents/vant/skeleton/index",
       "van-slider": "./components/wxcomponents/vant/slider/index",
-      "van-stepper": "./components/wxcomponents/vant/stepper/index",
-      "van-steps": "./components/wxcomponents/vant/steps/index",
       "van-sticky": "./components/wxcomponents/vant/sticky/index",
       "van-submit-bar": "./components/wxcomponents/vant/submit-bar/index",
       "van-swipe-cell": "./components/wxcomponents/vant/swipe-cell/index",

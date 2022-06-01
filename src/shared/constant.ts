@@ -1,3 +1,7 @@
+export const TOKEN_KEY = '__TOKEN__'
+
+export const COURSE_KEY = '__COURSE__'
+
 export const dayHours = Array.from({ length: 8 }, (_, idx) => {
   let index: any = idx + 1
   let start
@@ -17,3 +21,11 @@ export const dayHours = Array.from({ length: 8 }, (_, idx) => {
     index,
   }
 })
+
+export const CARD_COLORS = [
+  'red',
+  'blue',
+  'green',
+  'yellow',
+  'purple',
+]

@@ -1,5 +1,5 @@
 import { createInstance, createRequest } from '../base'
-import { requestConfig } from '../../shared/config/request'
+import { requestConfig } from '@/shared/config/request'
 
 const instance = createInstance({
   baseURL: requestConfig.baseURL,

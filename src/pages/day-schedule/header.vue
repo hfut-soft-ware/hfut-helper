@@ -1,7 +1,7 @@
 <script lang='ts' setup>
 import { storeToRefs } from 'pinia'
 import { format } from 'date-fns'
-import { computed } from 'vue'
+import { computed, watchEffect } from 'vue'
 import { getCourseDate, useCourseListStore } from '@/store/courseList.store'
 import IconButton from '@/components/base/IconButton.vue'
 import { useSelectCourseList } from '@/shared/hooks/use-selectCourseList'

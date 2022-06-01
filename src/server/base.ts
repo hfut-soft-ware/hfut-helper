@@ -1,9 +1,14 @@
-import type { AjaxInstance, AjaxRequestConfig, AjaxResponse, Request } from 'uni-ajax'
+import type { AjaxInstance, AjaxRequestConfig } from 'uni-ajax'
 import ajax from 'uni-ajax'
 import { requestConfig } from '@/shared/config/request'
+import { TOKEN_KEY } from '@/shared/constant'
+
+const getToken = () => {
+  return uni.getStorageSync(TOKEN_KEY)
+}
 
 const headers = {
-  authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyIkdXNlcklkIjoyMDIxMjE3OTg2LCJzdWIiOiJ1c2VyIiwibmFtZSI6IuW4uOePgua0gSIsImlhdCI6MTY1MjQyNzAxNn0.TUA0ByxDHTgD7t0W9jOlVZC8R5flojNre9TX0CXEiQg',
+  authorization: `Bearer ${getToken()}`,
 }
 
 export function createInstance(config: AjaxRequestConfig) {
@@ -17,7 +22,7 @@ const baseInstance = createInstance({
 baseInstance.interceptors.request.use((config: AjaxRequestConfig) => {
   config.header = {
     ...config.header,
-    authorization: headers.authorization,
+    authorization: `Bearer ${getToken()}`,
   }
   return config
 })

@@ -2,7 +2,7 @@
 import { computed, reactive, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import type { CourseData } from '@/store/courseList.store'
-import { getTeachers, useCourseListStore } from '@/store/courseList.store'
+import { formatCourseName, formatRoom, getTeachers, useCourseListStore } from '@/store/courseList.store'
 import { dayHours } from '@/shared/constant'
 import CoursePopup from '@/components/CoursePopup/course-popup.vue'
 
@@ -71,14 +71,14 @@ function onClose() {
                         {{ list.course.course.startTime }} - {{ list.course.course.endTime }}
                       </div>
                       <div class="text-sm">
-                        {{ getTeachers(list.course.detail.detailInfo.teachers) }}
+                        {{ getTeachers(list.course.detail?.detailInfo.teachers) }}
                       </div>
                     </div>
                     <div class="font-bold text-base">
-                      {{ list.course.detail.courseName }}
+                      {{ formatCourseName(list.course.detail.courseName) }}
                     </div>
                     <div class="text-xs">
-                      {{ list.course.course.room }}
+                      {{ formatRoom(list.course.course.room) }}
                     </div>
                   </div>
                 </div>

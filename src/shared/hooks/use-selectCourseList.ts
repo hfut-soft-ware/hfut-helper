@@ -5,8 +5,8 @@ export function useSelectCourseList(store: TCourseListStore, type: 'week' | 'day
   const setAction = type === 'day' ? store.setDaySchedule : store.setWeekSchedule
   const dateSchedule = type === 'day' ? storeToRefs(store).daySchedule : storeToRefs(store).weekSchedule
 
-  const prevBoundary = type === 'day' ? 0 : 1
-  const nextBoundary = type === 'day' ? 19 : 20
+  const prevBoundary = 0
+  const nextBoundary = 19
 
   const onPrev = () => {
     if (dateSchedule.value.weekIdx === prevBoundary) {

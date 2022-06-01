@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
 import type { ICourse, ILesson, IMainInfo, ISchedule } from '@/shared/types/response/course'
 import { getCourseListRequest } from '@/server/api/user'
-import { isNullOrUndefined } from '@/shared/utils/'
+import { isNull, isNullOrUndefined, isUndefined } from '@/shared/utils/'
+import { CARD_COLORS, COURSE_KEY } from '@/shared/constant'
 
 type VisibleSchedule = Partial<{
   weekIdx: number
@@ -43,11 +44,11 @@ export type GetCourseByHourIndexReturn = { course?: ISchedule; detail?: ILesson 
 export type CourseData = GetCourseByHourIndexReturn
 
 type Actions = {
-  getCourseList: () => Promise<ICourse>
+  getCourseList: (forceRefresh: boolean) => Promise<ICourse>
   setDaySchedule: (daySchedule: VisibleSchedule) => void
   setWeekSchedule: (weekSchedule: VisibleSchedule) => void
   getCourseDetailByIdx: (idx?: number) => ILesson | undefined
-  getCourseByHourIndex: (hourIndex: number) => GetCourseByHourIndexReturn
+  getCourseByHourIndex: (hourIndex: number) => CourseData
 }
 
 function createSetSchedule(name: ScheduleName, _this: State) {
@@ -83,6 +84,20 @@ function createScheduleVisibleWeek(name: ScheduleName) {
 }
 
 export type TCourseListStore = ReturnType<typeof useCourseListStore>
+
+// TODO room类型问题
+export function formatRoom(room: string | null) {
+  if (room === 'null') {
+    return '暂未安排教室'
+  } else {
+    return room
+  }
+}
+
+// 课程长度最长为十个长度
+export function formatCourseName(courseName: string) {
+  return `${courseName.split('').slice(0, 10).join('')}${courseName.length > 10 ? '...' : ''}`
+}
 
 export const useCourseListStore = defineStore<'courseList', State, Getters, Actions>('courseList', {
   state: () => ({
@@ -125,8 +140,7 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
   actions: {
     async getCourseList(forceRefresh = false) {
       const fetchData = async() => {
-        await getCourseListRequest().then((res) => {
-          const data = res.data.data
+        const initStore = (data: ICourse) => {
           this.list = data
 
           this.currentWeekIdx = data.mainInfo.curWeek - 1
@@ -138,7 +152,16 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
           this.weekSchedule = scheduleIdx
 
           this.alreadyLoaded = true
+        }
+
+        await getCourseListRequest().then((res) => {
+          const data = res.data.data
+          // 缓存课程信息
+          uni.setStorageSync(COURSE_KEY, data)
+          initStore(data)
         }).catch((err) => {
+          const data = uni.getStorageSync(COURSE_KEY) as ICourse
+          initStore(data)
           throw new Error(err)
         })
       }
@@ -162,7 +185,7 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
         return
       }
 
-      return this.course.lessons[idx]
+      return { ...this.course.lessons[idx], color: CARD_COLORS[idx % 4] }
     },
     getCourseByHourIndex(index: number) {
       const course = this.todayCourse.find(course => course.index === index)

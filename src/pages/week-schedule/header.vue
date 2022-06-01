@@ -1,24 +1,43 @@
 <script lang='ts' setup>
 import { storeToRefs } from 'pinia'
+import { format } from 'date-fns'
 import { useCourseListStore } from '@/store/courseList.store'
 
 const store = useCourseListStore()
 
-const { weekSchedule } = storeToRefs(store)
+const { weekSchedule, weekScheduleVisibleWeek } = storeToRefs(store)
 
 </script>
 
 <template>
-  <div class="h-[120px] w-screen z-[1] bg-white/40 fixed">
-    <div class="absolute bottom-3 w-screen flex w-[95vw] mx-[2.5vw] justify-between">
-      <van-icon name="like-o" />
-
-      <p>当前是第{{ weekSchedule.weekIdx }}周</p>
-      <van-icon name="setting-o" />
+  <div class="h-[150px] w-screen z-[1] bg-white/40 fixed">
+    <div class="absolute bottom-1 w-screen flex flex-col w-[95vw]">
+      <div class="flex justify-between mx-[2.5vw]">
+        <van-icon name="setting-o" />
+        <p>当前是第{{ weekSchedule.weekIdx + 1 }}周</p>
+        <div />
+      </div>
+      <div class="flex w-screen mt-2">
+        <template v-if="weekScheduleVisibleWeek.course">
+          <div
+            v-for="weekday in weekScheduleVisibleWeek.week"
+            :key="weekday.date"
+            class="flex-1 text-xs text-center"
+            :class="`${weekday.active ? 'active-day' : ''}`"
+          >
+            <p>{{ format(weekday.date, 'EEE.') }}</p>
+            <p class="text-[10px]">
+              {{ format(weekday.date, 'MM/dd') }}
+            </p>
+          </div>
+        </template>
+      </div>
     </div>
   </div>
 </template>
 
 <style lang='scss' scoped>
-
+.active-day {
+  @apply text-[#217DD2] font-bold;
+}
 </style>
