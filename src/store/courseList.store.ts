@@ -182,9 +182,8 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
       createSetSchedule('weekSchedule', this)(payload)
     },
     getCourseDetailByIdx(idx?: number) {
-      if (!idx) {
-        return
-      }
+      // TODO 莫名其妙的bug
+      idx = idx || 0
 
       return { ...this.course.lessons[idx], color: CARD_COLORS[idx % 4] }
     },

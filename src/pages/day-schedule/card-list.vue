@@ -75,7 +75,7 @@ function onClose() {
                       </div>
                     </div>
                     <div class="font-bold text-base">
-                      {{ formatCourseName(list.course.detail.courseName) }}
+                      {{ list.course.detail?.courseName && formatCourseName(list.course.detail?.courseName) }}
                     </div>
                     <div class="text-xs">
                       {{ formatRoom(list.course.course.room) }}

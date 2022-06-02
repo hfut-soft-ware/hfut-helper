@@ -6,6 +6,7 @@ import StatusBar from '@/components/status-bar/status-bar.vue'
 import { useTouchInteractive } from '@/shared/hooks/useTouchInteractive'
 import { useCourseListStore } from '@/store/courseList.store'
 import { usePullDownUpdateCourse } from '@/shared/hooks/use-PullDownUpdateCourse'
+import { isEmptyObject } from '@/shared/utils'
 
 const { isLoading, state } = useCourseRequest()
 
@@ -24,7 +25,7 @@ usePullDownUpdateCourse()
     @touchstart="onTouchStart"
     @touchend="onTouchEnd"
   >
-    <template v-if="state && !isLoading">
+    <template v-if="!isEmptyObject(state) && !isLoading">
       <div class="w-[100vw]">
         <Header />
         <CardList />

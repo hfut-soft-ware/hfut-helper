@@ -1,24 +1,34 @@
 <script lang='ts' setup>
 import { reactive } from 'vue'
 
-const services = reactive<{ icon: string; title: string }[]>([
+const services = reactive<{ icon: string; title: string; url: string }[]>([
   {
     icon: 'telescope',
     title: '全校课表查询',
+    url: 'allCoursesSearch',
   },
   {
     icon: 'explore-planet',
     title: '一卡通',
+    url: 'cardSearch',
   },
   {
     icon: 'galaxy',
     title: '我的慕课',
+    url: 'mooc/mooc',
   },
   {
     icon: 'star-moon',
     title: '空教室查询',
+    url: 'emptyRoomSearch',
   },
 ])
+
+function onServiceClick(url: string) {
+  uni.navigateTo({
+    url: `/pages/mine/${url}`,
+  })
+}
 </script>
 
 <template>
@@ -46,8 +56,12 @@ const services = reactive<{ icon: string; title: string }[]>([
       v-for="service in services"
       :key="service.icon"
       class="card-shadow rounded-xl w-full p-5 items-center box-border flex justify-between"
+      @click="onServiceClick(service.url)"
     >
-      <img class="w-[30px] h-[30px]" :src="`../../assets/icons/${service.icon}.png`">
+      <img
+        class="w-[30px] h-[30px]"
+        :src="`../../assets/icons/${service.icon}.png`"
+      >
       <p class="font-semibold text-sm">
         {{ service.title }}
       </p>
@@ -60,7 +74,5 @@ const services = reactive<{ icon: string; title: string }[]>([
 .base-info-card {
   @apply flex flex-col items-center gap-1 flex-1;
 }
-.card-shadow {
-  box-shadow: rgb(145 158 171 / 20%) 0px 0px 2px 0px, rgb(145 158 171 / 12%) 0px 12px 24px -4px;
-}
+
 </style>

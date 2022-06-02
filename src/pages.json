@@ -36,6 +36,13 @@
         "navigationStyle": "custom",
         "backgroundColor": "#ffffff"
       }
+    },
+    {
+      "path": "pages/mine/mooc/mooc",
+      "style": {
+        "backgroundColorTop": "#ffffff",
+        "backgroundColor": "#ffffff"
+      }
     }
 
   ],
@@ -71,7 +78,7 @@
     ]
   },
   "globalStyle": {
-    "navigationBarBackgroundColor": "#F6F8FA",
+    "navigationBarBackgroundColor": "#ffffff",
     "backgroundColor": "#F6F8FA",
     "backgroundColorTop": "#F6F8FA",
     "enablePullDownRefresh": true,

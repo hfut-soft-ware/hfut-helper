@@ -10,7 +10,9 @@ const active = ref<TActive>('commonServices')
 function onActiveChange(event: any) {
   active.value = event.target.name
 }
-
+function onClick() {
+  console.log('onClicked')
+}
 </script>
 
 <template>
