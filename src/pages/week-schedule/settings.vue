@@ -1,23 +1,19 @@
 <script lang='ts' setup>
-import { ref } from 'vue'
+import { useWeekListSettingsStore } from '@/store/weekListSettings.store'
 
-const show = ref(false)
+const settingsStore = useWeekListSettingsStore()
 
-function onClose() {
-  show.value = false
+function handleOpenClick() {
+  settingsStore.setShowSettings(true)
 }
 </script>
 
 <template>
-  <van-popup
-    :show="show"
-    round
-    position="bottom"
-    custom-style="height: 20%"
-    @close="onClose"
-  />
   <div class="fixed right-0 h-screen flex items-center">
-    <div class="flex justify-center items-center text-lg w-[50px] h-[50px] settings rounded-full">
+    <div
+      class="flex bg-white/80 justify-center items-center text-lg w-[50px] h-[50px] settings rounded-full"
+      @click="handleOpenClick"
+    >
       <van-icon name="setting-o" />
     </div>
   </div>

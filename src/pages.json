@@ -14,7 +14,8 @@
       "style": {
         "backgroundColorTop": "#F6F8FA",
         "navigationStyle": "custom",
-        "backgroundColor": "#F6F8FA"
+        "backgroundColor": "#F6F8FA",
+        "navigationBarBackgroundColor": "#F6F8FA"
       }
     },
     {
@@ -40,8 +41,9 @@
     {
       "path": "pages/mine/mooc/mooc",
       "style": {
-        "backgroundColorTop": "#ffffff",
-        "backgroundColor": "#ffffff"
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false,
+        "navigationBarTextStyle":"black"
       }
     }
 

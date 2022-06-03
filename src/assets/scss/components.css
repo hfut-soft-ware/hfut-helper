@@ -1,0 +1,3 @@
+.btn {
+    @apply flex text-white justify-center items-center text-sm p-3 rounded-lg;
+}

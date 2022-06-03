@@ -3,23 +3,27 @@ import { ref } from 'vue'
 import Header from '@/pages/mine/header.vue'
 import CommonServices from '@/pages/mine/common-services.vue'
 import AccountSettings from '@/pages/mine/account-settings.vue'
+import { getUserInfo } from '@/server/api/user'
+import { useGetUserInfo } from '@/pages/mine/use-getUserInfo'
 
 type TActive = 'commonServices' | 'settings'
 const active = ref<TActive>('commonServices')
 
+const { state } = useGetUserInfo()
+
 function onActiveChange(event: any) {
   active.value = event.target.name
 }
-function onClick() {
-  console.log('onClicked')
-}
+
+getUserInfo()
 </script>
 
 <template>
   <div class="relative w-[95vw] mx-[2.5vw] pb-5">
+    <van-dialog id="van-dialog" />
     <Header />
     <div class="mt-10 flex flex-col gap-5">
-      <div class="border-box overflow-hidden rounded-xl shadow-lg">
+      <div class="border-box overflow-hidden rounded-xl card-shadow">
         <div class="relative flex justify-center items-center h-[200px] overflow-hidden">
           <img class="w-full object-cover bg" src="../../assets/imgs/mine-bg.png">
           <div class="flex absolute flex-col items-center gap-2">
@@ -27,10 +31,10 @@ function onClick() {
               <img class="w-[75px] h-[75px]" src="../../assets/imgs/avatar.png">
             </div>
             <p class="text-white text-md font-bold">
-              计算机与人工智能学院
+              {{ state.department }}
             </p>
             <p class="text-gray-400 text-xs">
-              电信科21-2班
+              {{ state.adminClass }}
             </p>
           </div>
         </div>

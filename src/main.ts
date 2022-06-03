@@ -2,6 +2,9 @@ import { createSSRApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
 import '@/assets/scss/index.css'
+import '@/assets/scss/components.css'
+
+// icons
 import '@/assets/icons/todo.png'
 import '@/assets/icons/todo-active.png'
 import '@/assets/icons/week.png'

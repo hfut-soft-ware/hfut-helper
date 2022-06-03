@@ -7,6 +7,7 @@ import { formatCourseName, formatRoom, useCourseListStore } from '@/store/course
 import CoursePopup from '@/components/CoursePopup/course-popup.vue'
 import { useTouchInteractive } from '@/shared/hooks/useTouchInteractive'
 import { WEEK_SCHEDULE_CARD_HEIGHT } from '@/pages/week-schedule/constant'
+import { useWeekListSettingsStore } from '@/store/weekListSettings.store'
 
 const store = useCourseListStore()
 const { weekScheduleVisibleWeek } = storeToRefs(store)
@@ -38,6 +39,10 @@ const courseList = computed<CourseData[][]>(() => {
 
 const show = ref(false)
 const courseData = ref<CourseData>()
+
+const settingsStore = useWeekListSettingsStore()
+
+const { settings } = storeToRefs(settingsStore)
 
 function handleCourseClick(clickedCourse: CourseData) {
   if (clickedCourse) {
@@ -74,7 +79,7 @@ function onClose() {
           <div
             class="rounded-md px-1 text-xs flex flex-col gap-2 pt-1"
             :class="course.detail?.color"
-            :style="{height: `${course.course.height}px`}"
+            :style="{height: `${course.course.height}px`, opacity: settings.alpha / 100}"
             @click="handleCourseClick(course)"
           >
             <p class="font-bold">
@@ -116,7 +121,7 @@ function onClose() {
 }
 
 @mixin generateCardStyle($bgColor, $textColor) {
-  background-color: rgba($bgColor, .8);
+  background: $bgColor;
   color: $textColor;
 }
 

@@ -21,8 +21,8 @@ const baseInstance = createInstance({
 
 baseInstance.interceptors.request.use((config: AjaxRequestConfig) => {
   config.header = {
-    ...config.header,
     authorization: `Bearer ${getToken()}`,
+    ...config.header,
   }
   return config
 })

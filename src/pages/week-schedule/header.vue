@@ -2,7 +2,6 @@
 import { storeToRefs } from 'pinia'
 import { format } from 'date-fns'
 import { useCourseListStore } from '@/store/courseList.store'
-import StatusBar from '@/components/status-bar/status-bar.vue'
 
 const store = useCourseListStore()
 
@@ -11,8 +10,7 @@ const { weekSchedule, weekScheduleVisibleWeek } = storeToRefs(store)
 </script>
 
 <template>
-  <StatusBar />
-  <div class="h-[100px] w-screen z-[1] bg-white/40 fixed">
+  <div class="h-[100px] w-screen z-[1] bg-white/30 fixed">
     <div class="absolute bottom-1 w-screen flex flex-col w-[95vw]">
       <div class="flex justify-center mx-[2.5vw]">
         <p>当前是第{{ weekSchedule.weekIdx + 1 }}周</p>

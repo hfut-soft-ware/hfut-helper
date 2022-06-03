@@ -8,7 +8,7 @@ const { auth } = authStore
 
 if (auth.status === AuthStatus.LOGIN_IN) {
   uni.switchTab({
-    url: '/pages/mine/mine',
+    url: 'pages/week-schedule/index',
   })
 } else {
   uni.switchTab({

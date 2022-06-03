@@ -1,9 +1,12 @@
-import { defineStore } from 'pinia'
+import { defineStore, storeToRefs } from 'pinia'
+import { watchEffect } from 'vue'
 import type { ICourse, ILesson, IMainInfo, ISchedule } from '@/shared/types/response/course'
 import { getCourseListRequest } from '@/server/api/user'
-import { isNull, isNullOrUndefined, isUndefined } from '@/shared/utils/'
+import { isNullOrUndefined } from '@/shared/utils/'
 import { CARD_COLORS, COURSE_KEY } from '@/shared/constant'
 import { ellipsisString } from '@/shared/utils/ellipsisString'
+import { useWeekListSettingsStore } from '@/store/weekListSettings.store'
+import { getLoverCourse, setLoverCourse, uesLoverStore } from '@/store/lover.store'
 
 type VisibleSchedule = Partial<{
   weekIdx: number
@@ -45,11 +48,13 @@ export type GetCourseByHourIndexReturn = { course?: ISchedule; detail?: ILesson 
 export type CourseData = GetCourseByHourIndexReturn
 
 type Actions = {
-  getCourseList: (forceRefresh: boolean) => Promise<ICourse>
+  getCourseList: (forceRefresh?: boolean) => Promise<ICourse>
   setDaySchedule: (daySchedule: VisibleSchedule) => void
   setWeekSchedule: (weekSchedule: VisibleSchedule) => void
   getCourseDetailByIdx: (idx?: number) => ILesson | undefined
   getCourseByHourIndex: (hourIndex: number) => CourseData
+  initStore: (data: ICourse) => void
+  changeStatus: (isLover: boolean) => void
 }
 
 function createSetSchedule(name: ScheduleName, _this: State) {
@@ -100,6 +105,11 @@ export function formatCourseName(courseName: string) {
   return ellipsisString(courseName, 10)
 }
 
+export const setWeekCourse = (data: ICourse) => uni.setStorageSync(COURSE_KEY, data)
+
+export const getWeekCourse = () => uni.getStorageSync(COURSE_KEY) as ICourse
+
+// TODO 用setupStore重构
 export const useCourseListStore = defineStore<'courseList', State, Getters, Actions>('courseList', {
   state: () => ({
     list: {
@@ -139,30 +149,25 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
   },
 
   actions: {
+    // TODO 解决token未能及时刷新问题
     async getCourseList(forceRefresh = false) {
+      const { isLover: lover } = storeToRefs(uesLoverStore())
+      const isLover = lover.value
+
       const fetchData = async() => {
-        const initStore = (data: ICourse) => {
-          this.list = data
-
-          this.currentWeekIdx = data.mainInfo.curWeek - 1
-          const scheduleIdx = {
-            weekIdx: this.currentWeekIdx,
-            dayIdx: data.mainInfo.curDayIndex - 1,
-          }
-          this.daySchedule = scheduleIdx
-          this.weekSchedule = scheduleIdx
-
-          this.alreadyLoaded = true
-        }
-
-        await getCourseListRequest().then((res) => {
+        await getCourseListRequest(isLover).then((res) => {
           const data = res.data.data
           // 缓存课程信息
-          uni.setStorageSync(COURSE_KEY, data)
-          initStore(data)
+          if (isLover) {
+            setLoverCourse(data)
+          } else {
+            setWeekCourse(data)
+          }
+
+          this.initStore(data)
         }).catch((err) => {
           const data = uni.getStorageSync(COURSE_KEY) as ICourse
-          initStore(data)
+          this.initStore(data)
           throw new Error(err)
         })
       }
@@ -175,6 +180,27 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
 
       return this.list
     },
+
+    initStore(data: ICourse) {
+      this.list = data
+
+      this.currentWeekIdx = data.mainInfo.curWeek - 1
+      const scheduleIdx = {
+        weekIdx: this.currentWeekIdx,
+        dayIdx: data.mainInfo.curDayIndex - 1,
+      }
+      this.daySchedule = scheduleIdx
+      this.weekSchedule = scheduleIdx
+
+      this.alreadyLoaded = true
+    },
+    changeStatus(isLover: boolean) {
+      if (isLover) {
+        this.initStore(getLoverCourse())
+      } else {
+        this.initStore(getWeekCourse())
+      }
+    },
     setDaySchedule(payload) {
       createSetSchedule('daySchedule', this)(payload)
     },
@@ -185,7 +211,7 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
       // TODO 莫名其妙的bug
       idx = idx || 0
 
-      return { ...this.course.lessons[idx], color: CARD_COLORS[idx % 4] }
+      return { ...this.course.lessons[idx], color: CARD_COLORS[idx % 3] }
     },
     getCourseByHourIndex(index: number) {
       const course = this.todayCourse.find(course => course.index === index)
@@ -207,4 +233,8 @@ export function getCourseDate(date: GetDateProp) {
 
 export function getTeachers(teachers: string[]) {
   return teachers.join('/')
+}
+
+export function getStorageCourse() {
+  return uni.getStorageSync(COURSE_KEY) as ICourse
 }

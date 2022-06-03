@@ -1,37 +1,84 @@
 <script lang='ts' setup>
-import { storeToRefs } from 'pinia'
-import { watchEffect } from 'vue'
-import { useCourseListStore } from '@/store/courseList.store'
+import { computed } from 'vue'
+import type { TCourseDetail } from '@/components/CourseDetail/course-detail.vue'
+import CourseDetail from '@/components/CourseDetail/course-detail.vue'
+import StatusBar from '@/components/status-bar/status-bar.vue'
+import { getStorageCourse } from '@/store/courseList.store'
 
-const store = useCourseListStore()
+const list = getStorageCourse()
 
-const { list } = storeToRefs(store)
+const moocDetailList = computed(() => {
+  const mooc = list.mooc
 
-watchEffect(() => {
-  console.log(list.value)
+  return mooc.map((item) => {
+    const detail = item.detail
+    return {
+      name: item.name,
+      detail: [
+        {
+          icon: 'bookmark-o',
+          title: '学分',
+          value: detail.credits,
+        },
+        {
+          icon: 'records',
+          title: '考试形式',
+          value: detail.examMode,
+        },
+        {
+          icon: 'bookmark-o',
+          title: '上课班级',
+          value: detail.adminClass,
+        },
+        {
+          icon: 'notes-o',
+          title: '上课周数',
+          value: detail.weeks.length > 0 ? detail.weeks : '建议前往学习通查看',
+        },
+
+        {
+          icon: 'friends-o',
+          title: '上课人数',
+          value: detail.studentCount,
+        },
+        {
+          icon: 'apps-o',
+          title: '课程类型',
+          value: detail.courseType,
+        },
+        {
+          icon: 'coupon-o',
+          title: '课程代码',
+          value: detail.code,
+        },
+      ] as TCourseDetail[],
+    }
+  })
 })
+
+function onBackClick() {
+  uni.navigateBack({
+    delta: 1,
+  })
+}
 </script>
 
 <template>
-  <div class="flex flex-col gap-3">
-    <div
-      v-for="mooc in list?.mooc"
-      :key="mooc.id"
-      class="card-shadow flex flex-col gap-2"
-    >
-      <p class="font-bold">
-        {{ mooc.name }}
-      </p>
-      <div class="flex flex-col gap-2">
-        <div class="flex">
-          <van-icon name="coupon-o" />
-          <p>学分: {{ mooc.detail.credits }}</p>
-        </div>
+  <StatusBar />
+  <div class="w-[90vw] mx-auto mt-5">
+    <van-icon name="arrow-left" class="text-xl" @click="onBackClick" />
+
+    <div class="flex flex-col gap-3 mt-10 bg-white">
+      <div
+        v-for="mooc in moocDetailList"
+        :key="mooc.id"
+        class="card-shadow flex flex-col gap-2 p-5 rounded-lg"
+      >
+        <p class="font-bold">
+          {{ mooc.name }}
+        </p>
+        <CourseDetail :detail="mooc.detail" />
       </div>
     </div>
   </div>
 </template>
-
-<style lang='scss' scoped>
-
-</style>

@@ -2,6 +2,8 @@
 import { computed, reactive } from 'vue'
 import type { CourseData } from '@/store/courseList.store'
 import { getTeachers } from '@/store/courseList.store'
+import type { TCourseDetail } from '@/components/CourseDetail/course-detail.vue'
+import CourseDetail from '@/components/CourseDetail/course-detail.vue'
 
 interface Props {
   show: boolean
@@ -26,7 +28,7 @@ const headerInfo = reactive([
   },
 ])
 
-const lessonDetailList = computed(() => {
+const lessonDetailList = computed<TCourseDetail[]>(() => {
   const detail = data.detail!
   return [
     {
@@ -35,7 +37,7 @@ const lessonDetailList = computed(() => {
       value: detail.detailInfo.credits,
     },
     {
-      icon: 'bookmark-o',
+      icon: 'fire-o',
       title: '上课班级',
       value: detail.detailInfo.adminClass,
     },
@@ -100,23 +102,7 @@ function onClose() {
         <div class="mt-5">
           <van-divider />
         </div>
-        <div
-          v-for="item in lessonDetailList"
-          :key="item.title"
-          class="main mt-5 flex gap-2"
-        >
-          <div class="relative">
-            <van-icon :name="item.icon" class="text-[#808599] mt-1" />
-          </div>
-          <div>
-            <div class="text-md font-bold text-[#464953]">
-              {{ item.title }}
-            </div>
-            <div class="text-xs text-[#808599] mt-2">
-              {{ item.value }}
-            </div>
-          </div>
-        </div>
+        <CourseDetail :detail="lessonDetailList" />
       </div>
     </div>
   </van-popup>

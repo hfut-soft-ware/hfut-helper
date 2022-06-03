@@ -1,37 +1,71 @@
 <script lang='ts' setup>
 import Toast from '@vant/weapp/dist/toast/toast'
-import img from '@/pages/login/img.png'
-import BaseButton from '@/components/base/BaseButton.vue'
+import { onLoad } from '@dcloudio/uni-app'
+import { computed, ref } from 'vue'
+import loverImg from './lover.png'
+import normalImg from '@/pages/login/img.png'
 import { useFormValidate } from '@/pages/login/use-formValidate'
 import { useAuthStore } from '@/store/auth.store'
+import StatusBar from '@/components/status-bar/status-bar.vue'
+import { uesLoverStore } from '@/store/lover.store'
 
 const { validate, form } = useFormValidate()
 
-const store = useAuthStore()
+const authStore = useAuthStore()
+const loverStore = uesLoverStore()
+
+const isLover = ref(false)
+
+onLoad((query) => {
+  isLover.value = !!query?.lover
+})
+
+const fieldProps = computed(() => (isLover.value
+  ? {
+      studentId: '请输入Ta的学号',
+      password: '请输入Ta的信息门户密码',
+    }
+  : {
+      studentId: '请输入学号',
+      password: '请输入信息门户密码',
+    }))
+
+const loverLogo = computed(() => (isLover.value ? loverImg : normalImg))
 
 async function onLogin() {
   if (validate()) {
     Toast.loading({
       duration: 0,
-      message: '第一次登录会花些时间，请耐心等待...\n(๑•̀ㅂ•́)و✧',
+      message: isLover.value ? '正在登录Ta的信息门户，不要急\n(๑•ᴗ•๑)♡' : '第一次登录会花些时间，请耐心等待...\n(๑•̀ㅂ•́)و✧',
       forbidClick: true,
     })
 
-    store.login({ studentId: form.username, password: form.password })
+    const loginDto = { studentId: form.username, password: form.password }
+
+    if (isLover.value) {
+      await loverStore.loverLogin(loginDto)
+    } else {
+      authStore.login(loginDto)
+    }
   }
 }
 
 </script>
 
 <template>
+  <StatusBar />
   <van-toast id="van-toast" />
   <van-notify id="van-notify" />
   <div class="login-page">
     <div class="login-page-header">
-      <img class="logo" :src="img">
+      <img
+        class="logo object-cover"
+        :class="isLover ? 'lover-img' : ''"
+        :src="loverLogo"
+      >
     </div>
 
-    <div class="tip">
+    <div class="mr-[15vw] mt-10">
       <van-notice-bar
         wrapable
         color="#1989fa"
@@ -46,7 +80,7 @@ async function onLogin() {
           clearable
           type="number"
           left-icon="user-circle-o"
-          placeholder="请输入学号"
+          :placeholder="fieldProps.studentId"
           :values="form.username"
           @change="(e) => form.username = e.detail"
         />
@@ -56,21 +90,21 @@ async function onLogin() {
         <van-field
           type="password"
           left-icon="shield-o"
-          placeholder="请输入信息门户密码"
+          :placeholder="fieldProps.password"
           @change="(e) => form.password = e.detail"
         />
       </div>
 
-      <div class="login-btn" @click="onLogin">
-        <BaseButton />
+      <div class="mt-5 btn bg-blue-500 shadow-lg shadow-blue-500/50" @click="onLogin">
+        登录
       </div>
     </div>
   </div>
 </template>
 
 <style lang='scss' scoped>
-.tip {
-  margin-left: -15vw;
+.lover-img {
+  @apply w-[200px] h-[200px];
 }
 .login-page {
   width: 95vw;
@@ -87,9 +121,6 @@ async function onLogin() {
     width: 100%;
     .password {
       margin-top: 15px;
-    }
-    .login-btn {
-      margin-top: 30px;
     }
   }
 }

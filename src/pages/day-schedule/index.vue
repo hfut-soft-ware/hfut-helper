@@ -1,4 +1,5 @@
 <script lang='ts' setup>
+import { onLoad } from '@dcloudio/uni-app'
 import Header from './Header.vue'
 import CardList from './card-list.vue'
 import { useCourseRequest } from './use-courseRequest'
@@ -14,14 +15,19 @@ const store = useCourseListStore()
 
 const { onTouchStart, onTouchEnd } = useTouchInteractive(store)
 
-usePullDownUpdateCourse()
+onLoad((query) => {
+  if (query.refresh) {
+    usePullDownUpdateCourse()
+  }
+})
 
+usePullDownUpdateCourse()
 </script>
 
 <template>
-  <StatusBar />
+  <StatusBar :bg-color="'#F6F8FA'" />
   <div
-    class="w-screen bg-[#F6F8FA] pt-5"
+    class="w-screen bg-[#F6F8FA] pt-5 overflow-hidden"
     @touchstart="onTouchStart"
     @touchend="onTouchEnd"
   >
