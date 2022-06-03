@@ -1,7 +1,7 @@
 export function useLoverPoem() {
   const LoverPoem = {
     canceled: [
-      '愿得一心人，白头不相离。',
+      '愿得一心人，白首不相离。',
       '只愿君心似我心，定不负相思意。',
       '两情若是久长时，又岂在朝朝暮暮。',
       '执子之手，与子偕老。',
