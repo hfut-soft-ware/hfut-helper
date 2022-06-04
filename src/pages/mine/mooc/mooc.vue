@@ -2,7 +2,6 @@
 import { computed } from 'vue'
 import type { TCourseDetail } from '@/components/CourseDetail/course-detail.vue'
 import CourseDetail from '@/components/CourseDetail/course-detail.vue'
-import StatusBar from '@/components/status-bar/status-bar.vue'
 import { getStorageCourse } from '@/store/courseList.store'
 
 const list = getStorageCourse()
@@ -55,19 +54,10 @@ const moocDetailList = computed(() => {
     }
   })
 })
-
-function onBackClick() {
-  uni.navigateBack({
-    delta: 1,
-  })
-}
 </script>
 
 <template>
-  <StatusBar />
-  <div class="w-[90vw] mx-auto mt-5">
-    <van-icon name="arrow-left" class="text-xl" @click="onBackClick" />
-
+  <div class="w-[90vw] min-h-screen mx-auto mt-10">
     <div class="flex flex-col gap-3 mt-10 bg-white">
       <div
         v-for="mooc in moocDetailList"

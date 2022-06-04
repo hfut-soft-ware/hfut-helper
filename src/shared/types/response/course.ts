@@ -39,6 +39,7 @@ export interface ILesson {
   id: number
   courseName: string
   detailInfo: DetailInfo
+  type: 'Lesson' | 'Exam'
 }
 
 export interface DetailInfo {

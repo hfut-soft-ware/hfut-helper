@@ -8,6 +8,8 @@ export const WEEK_LIST_SETTINGS = '__WEEK_LIST_SETTINGS__'
 
 export const USER_ACCOUNT_KEY = '__USER_ACCOUNT__'
 
+export const USER_CARD_BASE_INFO = '__USER_CARD_BASE_INFO__'
+
 export const dayHours = Array.from({ length: 8 }, (_, idx) => {
   let index: any = idx + 1
   let start

@@ -3,14 +3,13 @@ import { reactive } from 'vue'
 import type { AjaxResponse } from 'uni-ajax'
 import Toast from '@vant/weapp/lib/toast/toast'
 import { getRandomQAQ } from 'qaq-font'
-import { useAsyncState } from '@vueuse/core'
 import { isFunction } from 'lodash'
 import { TOKEN_KEY, USER_ACCOUNT_KEY, USER_INFO_KEY } from '@/shared/constant'
 import { loginRequest } from '@/server/api/auth'
 import { useAsync } from '@/shared/hooks/use-async'
 import type { IUserInfo } from '@/shared/types/response/userInfo'
 import { getUserInfo } from '@/server/api/user'
-import type { Noop } from '@/shared/types/utils'
+import { useSyncStorage } from '@/shared/hooks/use-syncStorage'
 
 export const enum AuthStatus {
   // eslint-disable-next-line no-unused-vars
@@ -26,13 +25,9 @@ function checkIsLogin(): AuthStatus {
 
 export type LoginDto = { studentId: string; password: string }
 
-export const getUserData = () => uni.getStorageSync(USER_INFO_KEY)
+export const [getUserData] = useSyncStorage(USER_INFO_KEY)
 
-export const setUserAccount = (userInfo: IUserInfo) => {
-  uni.setStorageSync(USER_ACCOUNT_KEY, userInfo)
-}
-
-export const getUserAccount = () => uni.getStorageSync(USER_ACCOUNT_KEY) as LoginDto
+export const [getUserAccount, setUserAccount] = useSyncStorage<LoginDto>(USER_ACCOUNT_KEY)
 
 export const useAuthStore = defineStore('authStore', () => {
   const auth = reactive<{

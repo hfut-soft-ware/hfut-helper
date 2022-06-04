@@ -13,10 +13,6 @@ const { isLoading, state } = useCourseRequest()
 const settingsStore = useWeekListSettingsStore()
 const { bgImg, imgMode } = storeToRefs(settingsStore)
 
-watchEffect(() => {
-  console.log(imgMode.value)
-})
-
 usePullDownUpdateCourse()
 </script>
 

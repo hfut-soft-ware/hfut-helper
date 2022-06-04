@@ -41,12 +41,16 @@
     {
       "path": "pages/mine/mooc/mooc",
       "style": {
-        "navigationStyle": "custom",
         "enablePullDownRefresh": false,
-        "navigationBarTextStyle":"black"
+        "navigationBarBackgroundColor": "#3173FD"
+      }
+    },
+    {
+      "path": "pages/mine/card/card",
+      "style": {
+        "navigationBarBackgroundColor": "#5D35B0"
       }
     }
-
   ],
   "tabBar": {
     "height": "20px",

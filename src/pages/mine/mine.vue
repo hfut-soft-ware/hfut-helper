@@ -22,20 +22,23 @@ getUserInfo()
   <div class="relative w-[95vw] mx-[2.5vw] pb-5">
     <van-dialog id="van-dialog" />
     <Header />
+
     <div class="mt-10 flex flex-col gap-5">
       <div class="border-box overflow-hidden rounded-xl card-shadow">
         <div class="relative flex justify-center items-center h-[200px] overflow-hidden">
-          <img class="w-full object-cover bg" src="../../assets/imgs/mine-bg.png">
+          <img mode="aspectFill" class="w-full bg" src="../../assets/imgs/mine-bg.png">
           <div class="flex absolute flex-col items-center gap-2">
             <div class="w-[75px] h-[75px] border-2 border-white/50 rounded-full overflow-hidden">
-              <img class="w-[75px] h-[75px]" src="../../assets/imgs/avatar.png">
+              <img mode="aspectFill" class="w-[75px] h-[75px]" src="../../assets/imgs/avatar.png">
             </div>
-            <p class="text-white text-md font-bold">
-              {{ state.department }}
-            </p>
-            <p class="text-gray-400 text-xs">
-              {{ state.adminClass }}
-            </p>
+            <template v-if="state">
+              <p class="text-white text-md font-bold">
+                {{ state.department }}
+              </p>
+              <p class="text-gray-400 text-xs">
+                {{ state.adminClass }}
+              </p>
+            </template>
           </div>
         </div>
         <div class="bg-white w-full flex pt-1">
@@ -46,12 +49,12 @@ getUserInfo()
         </div>
       </div>
 
-      <template v-if="active === 'commonServices'">
+      <div v-show="active === 'commonServices'">
         <CommonServices />
-      </template>
-      <template v-else>
+      </div>
+      <div v-show="active !== 'commonServices'">
         <AccountSettings />
-      </template>
+      </div>
     </div>
   </div>
 </template>

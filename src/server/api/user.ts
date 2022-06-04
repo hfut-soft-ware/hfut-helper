@@ -3,6 +3,7 @@ import type { ICourseResponse } from '@/shared/types/response/course'
 import { CourseLayout } from '@/_mock_/layout'
 import type { IUserInfo } from '@/shared/types/response/userInfo'
 import { getLoverToken } from '@/store/lover.store'
+import type { ICardBaseInfo } from '@/shared/types/response/card'
 
 export function getCourseListRequest(isLover = false) {
   const header = isLover ? { authorization: `Bearer ${getLoverToken()}` } : {}
@@ -22,5 +23,11 @@ export function getCourseListLayoutRequest() {
 export function getUserInfo() {
   return request<IUserInfo>({
     url: 'user/info',
+  })
+}
+
+export function getUserCardBaseInfo() {
+  return request<ICardBaseInfo>({
+    url: 'user/card/base',
   })
 }

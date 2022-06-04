@@ -37,28 +37,64 @@ export const SETTINGS_BACKGROUND_IMG = '__SETTINGS_BACKGROUND_IMG__'
 
 const [getBgImgStorage, setBgImgStorage, removeBgImgStorage] = useSyncStorage(SETTINGS_BACKGROUND_IMG)
 
-export type ImageMode = 'scaleToFill' | 'aspectFit' | 'aspectFill' | 'widthFix' | 'heightFix'
+export type ImageMode = 'scaleToFill' | 'aspectFit' | 'aspectFill' | 'widthFix' | 'heightFix' | 'top' | 'bottom' | 'center' | 'left' | 'right' | 'top left' | 'top right' | 'bottom left' | 'bottom right'
 
 export const ImageModes: { title: string;mode: ImageMode }[] = [
   {
-    title: '使图片的宽高完全拉伸至填满屏幕',
+    title: '拉伸至填满屏幕',
     mode: 'scaleToFill',
   },
   {
-    title: '保持纵横比缩放图片, 完整地将图片显示出来',
+    title: '完整显示图片',
     mode: 'aspectFit',
   },
   {
-    title: '保持纵横比缩放图片，只保证图片的短边能完全显示出来。',
+    title: '保证图片的短边完全显示',
     mode: 'aspectFill',
   },
   {
-    title: '宽度不变，高度自动变化，保持原图宽高比不变',
+    title: '宽度不变，高度自动变化',
     mode: 'widthFix',
   },
   {
-    title: '高度不变，宽度自动变化，保持原图宽高比不变',
+    title: '高度不变，宽度自动变化',
     mode: 'heightFix',
+  },
+  {
+    title: '居中',
+    mode: 'center',
+  },
+  {
+    title: '显示顶部',
+    mode: 'top',
+  },
+  {
+    title: '显示底部',
+    mode: 'bottom',
+  },
+  {
+    title: '显示左边',
+    mode: 'left',
+  },
+  {
+    title: '显示右边',
+    mode: 'right',
+  },
+  {
+    title: '显示左上角',
+    mode: 'top left',
+  },
+  {
+    title: '显示右上角',
+    mode: 'top right',
+  },
+  {
+    title: '显示左下角',
+    mode: 'bottom left',
+  },
+  {
+    title: '显示右下角',
+    mode: 'bottom right',
   },
 ]
 

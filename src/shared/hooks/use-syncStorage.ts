@@ -1,8 +1,8 @@
 import { isUndefined } from '@/shared/utils'
 
-export function useSyncStorage(key: string) {
+export function useSyncStorage<T = any>(key: string) {
   const setStorage = (value: any) => uni.setStorageSync(key, value)
-  const getStorage = <T = any>(initVal?: T) => {
+  const getStorage = (initVal?: T): T => {
     const data = uni.getStorageSync(key) as T
     if (!data && !isUndefined(initVal)) {
       setStorage(initVal)

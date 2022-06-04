@@ -1,11 +1,9 @@
 import { defineStore, storeToRefs } from 'pinia'
-import { watchEffect } from 'vue'
 import type { ICourse, ILesson, IMainInfo, ISchedule } from '@/shared/types/response/course'
 import { getCourseListRequest } from '@/server/api/user'
-import { isNullOrUndefined } from '@/shared/utils/'
+import { isNullOrUndefined, isObject } from '@/shared/utils/'
 import { CARD_COLORS, COURSE_KEY } from '@/shared/constant'
 import { ellipsisString } from '@/shared/utils/ellipsisString'
-import { useWeekListSettingsStore } from '@/store/weekListSettings.store'
 import { getLoverCourse, setLoverCourse, uesLoverStore } from '@/store/lover.store'
 
 type VisibleSchedule = Partial<{
@@ -41,6 +39,7 @@ type Getters = {
   todayCourse: (state: State) => ISchedule[]
   dayScheduleVisibleWeek: (state: State) => ScheduleVisibleWeek
   weekScheduleVisibleWeek: (state: State) => ScheduleVisibleWeek
+  exam: () => ILesson[]
 }
 
 export type GetCourseByHourIndexReturn = { course?: ISchedule; detail?: ILesson }
@@ -144,6 +143,9 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
     todayCourse(state: State) {
       return this.course.schedule[state.daySchedule.weekIdx!][state.daySchedule.dayIdx!]
     },
+    exam() {
+      return getWeekCourse().lessons.filter(item => item.type === 'Exam')
+    },
     dayScheduleVisibleWeek: createScheduleVisibleWeek('daySchedule'),
     weekScheduleVisibleWeek: createScheduleVisibleWeek('weekSchedule'),
   },
@@ -153,6 +155,11 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
     async getCourseList(forceRefresh = false) {
       const { isLover: lover } = storeToRefs(uesLoverStore())
       const isLover = lover.value
+
+      const cachedCourseList = getWeekCourse()
+      if (isObject(cachedCourseList)) {
+        this.initStore(cachedCourseList)
+      }
 
       const fetchData = async() => {
         await getCourseListRequest(isLover).then((res) => {
@@ -168,6 +175,7 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
         }).catch((err) => {
           const data = uni.getStorageSync(COURSE_KEY) as ICourse
           this.initStore(data)
+
           throw new Error(err)
         })
       }
