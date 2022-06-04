@@ -1,50 +1,24 @@
 <script lang='ts' setup>
 // TODO 增加每月消费的卡片
-import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
-import { isArray } from 'lodash'
-import { format } from 'date-fns'
-import { getCardBaseInfo } from '@/pages/mine/constant'
-
+import { useMineStore } from '@/store/mine.store'
+import { useRecordedList } from '@/pages/mine/card/use-recordedList'
 import { useFlowWaterStore } from '@/store/flowWater.store'
 
-import type { IFlowWaterData } from '@/shared/types/response/flowWater'
-import { set } from '@/shared/utils/object'
+const mineStore = useMineStore()
+const { cardInfo } = storeToRefs(mineStore)
 
-const baseCardInfo = getCardBaseInfo()
+const waterFlowStore = useFlowWaterStore()
+const {
+  consumeRecord,
+  handleNextPageClick,
+} = useRecordedList(waterFlowStore)
 
-const store = useFlowWaterStore()
-
-const { recordList, currentPage } = storeToRefs(store)
-
-store.getUserFlowWater(1)
-
-const consumeRecord = computed(() => {
-  const data = recordList.value
-
-  const list: Record<string, IFlowWaterData['list'] & { total: number }> = {}
-
-  data.forEach((cardItem) => {
-    cardItem.list.forEach((item) => {
-      const dateKey = format(new Date(item.time), 'yyyy-MM-dd')
-      if (!isArray(list[dateKey])) {
-        set(list, dateKey, [])
-      }
-      list[dateKey].push(item)
-    })
-  })
-
-  return list
-})
-
-function handleNextPageClick() {
-  store.getUserFlowWater(currentPage.value + 1, true)
-}
 </script>
 
 <template>
   <van-toast id="van-toast" />
-  <div class="fixed top-20 right-0 z-[999]">
+  <div class="fixed top-64 right-0 z-[999]">
     <div
       class="settings bg-[#3F51B5] w-[50px] h-[50px] flex justify-center items-center text-white rounded-l-full rounded-tr-full"
       @click="handleNextPageClick"
@@ -61,10 +35,10 @@ function handleNextPageClick() {
           <img src="./img.png" class="w-[25px] h-[25px]">
         </div>
         <h2 class="font-b text-3xl py-3">
-          {{ baseCardInfo.content }}
+          {{ cardInfo.content }}
         </h2>
         <h4 class="text-white/50 text-sm">
-          {{ baseCardInfo.title }}
+          {{ cardInfo.title }}
         </h4>
       </div>
       <div class="flex flex-col gap-5">

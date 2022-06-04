@@ -5,11 +5,16 @@ import CommonServices from '@/pages/mine/common-services.vue'
 import AccountSettings from '@/pages/mine/account-settings.vue'
 import { getUserInfo } from '@/server/api/user'
 import { useGetUserInfo } from '@/pages/mine/use-getUserInfo'
+import { useMineStore } from '@/store/mine.store'
 
 type TActive = 'commonServices' | 'settings'
 const active = ref<TActive>('commonServices')
 
 const { state } = useGetUserInfo()
+
+const mineStore = useMineStore()
+
+mineStore.getCardInfo()
 
 function onActiveChange(event: any) {
   active.value = event.target.name

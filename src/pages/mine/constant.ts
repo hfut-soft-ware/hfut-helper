@@ -1,6 +1,3 @@
-import { useSyncStorage } from '@/shared/hooks/use-syncStorage'
-import { USER_CARD_BASE_INFO } from '@/shared/constant'
-
 export const servicesList: { icon: string; title: string; url: string }[] = [
   {
     icon: 'telescope',
@@ -23,5 +20,3 @@ export const servicesList: { icon: string; title: string; url: string }[] = [
     url: 'emptyRoomSearch',
   },
 ]
-
-export const [getCardBaseInfo, setCardBaseInfo] = useSyncStorage(USER_CARD_BASE_INFO)
