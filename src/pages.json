@@ -48,7 +48,8 @@
     {
       "path": "pages/mine/card/card",
       "style": {
-        "navigationBarBackgroundColor": "#5D35B0"
+        "navigationBarBackgroundColor": "#283593",
+        "enablePullDownRefresh": false
       }
     }
   ],

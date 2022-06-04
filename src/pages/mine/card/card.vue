@@ -1,61 +1,63 @@
 <script lang='ts' setup>
 // TODO 增加每月消费的卡片
-import { computed, watch } from 'vue'
-import { format } from 'date-fns'
+import { computed } from 'vue'
+import { storeToRefs } from 'pinia'
 import { isArray } from 'lodash'
-import { onPullDownRefresh } from '@dcloudio/uni-app'
+import { format } from 'date-fns'
 import { getCardBaseInfo } from '@/pages/mine/constant'
-import { useFlorWaterQuery } from '@/pages/mine/card/use-florWaterQuery'
+
+import { useFlowWaterStore } from '@/store/flowWater.store'
+
 import type { IFlowWaterData } from '@/shared/types/response/flowWater'
 import { set } from '@/shared/utils/object'
 
 const baseCardInfo = getCardBaseInfo()
 
-const { state } = useFlorWaterQuery()
+const store = useFlowWaterStore()
 
-onPullDownRefresh(() => {
-  const { state: newState } = useFlorWaterQuery()
+const { recordList, currentPage } = storeToRefs(store)
 
-  watch(newState, (newVal) => {
-    state.value = newVal
-  })
-})
+store.getUserFlowWater(1)
 
 const consumeRecord = computed(() => {
-  const data = state.value.data.data
+  const data = recordList.value
 
   const list: Record<string, IFlowWaterData['list'] & { total: number }> = {}
 
-  data.list.forEach((item) => {
-    const dateKey = format(new Date(item.time), 'yyyy-MM-dd')
-    if (!isArray(list[dateKey])) {
-      set(list, dateKey, [])
-    }
-    list[dateKey].push(item)
-  })
-
-  Object.entries(list).forEach(([key, val]) => {
-    let total = 0
-    val.forEach((item) => {
-      const consumed = parseFloat(item.amount)
-      total += consumed
+  data.forEach((cardItem) => {
+    cardItem.list.forEach((item) => {
+      const dateKey = format(new Date(item.time), 'yyyy-MM-dd')
+      if (!isArray(list[dateKey])) {
+        set(list, dateKey, [])
+      }
+      list[dateKey].push(item)
     })
-
-    set(list[key], 'total', total)
   })
 
   return list
 })
+
+function handleNextPageClick() {
+  store.getUserFlowWater(currentPage.value + 1, true)
+}
 </script>
 
 <template>
   <van-toast id="van-toast" />
+  <div class="fixed top-20 right-0 z-[999]">
+    <div
+      class="settings bg-[#3F51B5] w-[50px] h-[50px] flex justify-center items-center text-white rounded-l-full rounded-tr-full"
+      @click="handleNextPageClick"
+    >
+      <van-icon class="animate-bounce" name="down" />
+    </div>
+  </div>
   <div class="w-screen min-h-screen bg-[#F1F2F6] pb-5">
     <div class="w-[95vw] mx-auto mt-5">
-      <div class="overflow-hidden px-4 py-5 bg-[#5D35B0] rounded-2xl flex-col text-white relative">
-        <div class="absolute top-[30px] right-[-50px] w-[210px] h-[210px] rounded-full bg-[#4527A0] opacity-50" />
-        <div class="absolute top-[-50px] right-[-50px] w-[150px] h-[150px] rounded-full bg-[#4527A0] opacity-80" />
-        <div class="p-2 rounded-lg bg-[#45289F] w-[25px] flex items-center">
+      <div class="overflow-hidden px-4 py-5 bg-[#283593] rounded-2xl flex-col text-white relative">
+        <div class="absolute top-[30px] right-[-50px] w-[210px] h-[210px] rounded-full bg-[#3949AB] opacity-50" />
+        <div class="absolute top-[-50px] right-[-50px] w-[150px] h-[150px] rounded-full bg-[#3949AB] opacity-80" />
+        <div class="p-2 rounded-lg bg-[#3949AB] w-[25px] flex items-center">
           <img src="./img.png" class="w-[25px] h-[25px]">
         </div>
         <h2 class="font-b text-3xl py-3">
@@ -92,3 +94,9 @@ const consumeRecord = computed(() => {
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.settings {
+  box-shadow: rgb(63 81 181 / 30%) 0px 12px 14px 0px;
+}
+</style>

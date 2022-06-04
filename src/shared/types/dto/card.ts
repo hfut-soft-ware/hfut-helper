@@ -1,4 +1,4 @@
 export interface FlowWaterDto {
-  startDate: Date | string
-  endDate: Date | string
+  startDate: Date
+  endDate: Date
 }
