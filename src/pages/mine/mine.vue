@@ -1,5 +1,5 @@
 <script lang='ts' setup>
-import { ref, watch, watchEffect } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { onPullDownRefresh } from '@dcloudio/uni-app'
 import { storeToRefs } from 'pinia'
 import Toast from '@vant/weapp/lib/toast/toast'
