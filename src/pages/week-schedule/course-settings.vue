@@ -60,7 +60,7 @@ function onRelieveLoverClick() {
 function handleChooseBgImg() {
   uni.chooseImage({
     count: 1,
-    sizeType: ['original', 'compressed'],
+    sizeType: ['original'],
     sourceType: ['album'],
     success(res) {
       store.setBgImg(res.tempFilePaths[0])
@@ -139,22 +139,24 @@ function onOpenImgModeSetting() {
         <div class="flex flex-col gap-5">
           <div class="flex gap-3">
             <div
-              class="flex-1 bg-blue-500/90 shadow-lg shadow-blue-500/30 btn text-sm"
+              class="flex-1 bg-[#3F51B5] shadow-lg btn text-sm"
               @click="handleChooseBgImg"
             >
               选择背景图片
             </div>
             <template v-if="bgImg.length > 0">
               <div
-                class="flex-1 bg-cyan-500/90 shadow-lg shadow-cyan-500/30 btn"
+                class="flex-1 border-[1px] border-red-400/80 btn"
                 @click="handleRemoveBgImg"
               >
-                删除背景图片
+                <p class="text-red-500">
+                  删除背景图片
+                </p>
               </div>
             </template>
           </div>
           <template v-if="bgImg.length > 0">
-            <div class="btn bg-indigo-500/90 shadow-lg shadow-indigo-500/30" @click="onOpenImgModeSetting">
+            <div class="btn bg-[#7582EB] shadow-lg" @click="onOpenImgModeSetting">
               调整背景图片
             </div>
           </template>
@@ -165,7 +167,7 @@ function onOpenImgModeSetting() {
       </van-divider>
       <div class="flex flex-col gap-3 text-sm">
         <template v-if="isLoverRelieved">
-          <div class="bg-red-500 btn shadow-red-500/50 shadow-lg text-white" @click="onBindLover">
+          <div class="bg-[#EB3D76] btn shadow-lg text-white" @click="onBindLover">
             绑定Ta
           </div>
         </template>

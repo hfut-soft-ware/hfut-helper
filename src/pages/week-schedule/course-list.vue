@@ -77,17 +77,28 @@ function onClose() {
       >
         <template v-if="course?.detail">
           <div
-            class="rounded-md px-1 text-xs flex flex-col gap-2 pt-1"
-            :class="course.detail?.color"
+            class="relative rounded-md px-1 text-xs flex flex-col gap-2 pt-1"
+            :class="`${course.detail?.color} ${course.detail?.type === 'Exam' ? 'exam-card' : ''}`"
             :style="{height: `${course.course.height}px`, opacity: settings.alpha / 100}"
             @click="handleCourseClick(course)"
           >
-            <p class="font-bold">
-              {{ formatCourseName(course.detail?.courseName) }}
-            </p>
-            <p class="text-[11px]">
-              {{ formatRoom(course.course?.room) }}
-            </p>
+            <div v-if="course.detail?.type === 'Exam'" class="animate-bounce absolute right-2 flex justify-items-end items-center">
+              <span class="animate-ping h-2 w-2 absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
+            </div>
+            <template v-if="course.detail?.type === 'Exam' && course.course.height === 60">
+              <p class="font-bold">
+                {{ formatCourseName(course.detail?.courseName) }}
+              </p>
+            </template>
+            <template v-else>
+              <p class="font-bold">
+                {{ formatCourseName(course.detail?.courseName) }}
+              </p>
+              <p class="text-[11px]">
+                {{ formatRoom(course.course?.room) }}
+              </p>
+            </template>
           </div>
         </template>
         <template v-else />

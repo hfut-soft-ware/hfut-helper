@@ -9,12 +9,22 @@ export interface ICourse {
   lessons: ILesson[]
   mooc: IMooc[]
   schedule: ISchedule[][][]
+  exams: IExam[]
 }
 
 export interface IMooc {
   id: number
   name: string
   detail: ILessonDetail
+}
+
+export interface IExam {
+  name: string
+  startTime: string
+  endTime: string
+  date: string
+  position: string
+  mark: string
 }
 
 export interface ILessonDetail {

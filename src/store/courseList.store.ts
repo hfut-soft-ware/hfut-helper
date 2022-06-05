@@ -1,5 +1,6 @@
 import { defineStore, storeToRefs } from 'pinia'
-import type { ICourse, ILesson, IMainInfo, ISchedule } from '@/shared/types/response/course'
+import { addDays, addWeeks, format, isToday } from 'date-fns'
+import type { ICourse, IExam, ILesson, IMainInfo, ISchedule } from '@/shared/types/response/course'
 import { getCourseListRequest } from '@/server/api/user'
 import { isNullOrUndefined, isObject } from '@/shared/utils/'
 import { CARD_COLORS, COURSE_KEY } from '@/shared/constant'
@@ -32,6 +33,14 @@ type State = {
   alreadyLoaded: boolean
 }
 
+export type TExam = {
+  detail: IExam
+  isExpired: boolean
+  isToday: boolean
+  startDate: Date
+  endDate: Date
+}[]
+
 type Getters = {
   course: (state: State) => ICourse
   mainInfo: (state: State) => IMainInfo
@@ -39,7 +48,8 @@ type Getters = {
   todayCourse: (state: State) => ISchedule[]
   dayScheduleVisibleWeek: (state: State) => ScheduleVisibleWeek
   weekScheduleVisibleWeek: (state: State) => ScheduleVisibleWeek
-  exam: () => ILesson[]
+  exam: () => TExam
+  recentExam: () => TExam
 }
 
 export type GetCourseByHourIndexReturn = { course?: ISchedule; detail?: ILesson }
@@ -121,6 +131,7 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
       },
       mooc: [],
       schedule: [],
+      exams: [],
     },
     currentWeekIdx: 0,
     daySchedule: {
@@ -144,7 +155,24 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
       return this.course.schedule[state.daySchedule.weekIdx!][state.daySchedule.dayIdx!]
     },
     exam() {
-      return getWeekCourse().lessons.filter(item => item.type === 'Exam')
+      return this.list.exams.map((item) => {
+        const startDate = new Date(`${item.date} ${item.startTime}`)
+        const endDate = new Date(`${item.date} ${item.endTime}`)
+        const currentDate = new Date()
+        const isExpired = currentDate > endDate
+        const isTodayExam = isToday(endDate)
+
+        return {
+          isExpired,
+          startDate,
+          isToday: isTodayExam,
+          endDate,
+          detail: item,
+        }
+      }) as TExam
+    },
+    recentExam() {
+      return this.exam.filter(item => !item.isExpired)
     },
     dayScheduleVisibleWeek: createScheduleVisibleWeek('daySchedule'),
     weekScheduleVisibleWeek: createScheduleVisibleWeek('weekSchedule'),
@@ -234,7 +262,7 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
 })
 
 export function getCourseDate(date: GetDateProp) {
-  const startTime = new Date(date.startTime)
+  const startTime = addDays(new Date(date.startTime), -1)
 
   return new Date(startTime.getTime() + date.week * 7 * 24 * 60 * 60 * 1000 + (date.day + 1) * 24 * 60 * 60 * 1000)
 }

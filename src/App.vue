@@ -28,7 +28,6 @@ if (auth.status === AuthStatus.LOGIN_IN) {
 
 </script>
 
-<template />
 <style lang="scss">
 @import "./components/wxcomponents/vant/common/index.wxss";
 </style>

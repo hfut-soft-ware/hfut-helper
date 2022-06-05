@@ -1,5 +1,8 @@
 <script lang='ts' setup>
-import { ref } from 'vue'
+import { ref, watch, watchEffect } from 'vue'
+import { onPullDownRefresh } from '@dcloudio/uni-app'
+import { storeToRefs } from 'pinia'
+import Toast from '@vant/weapp/lib/toast/toast'
 import Header from '@/pages/mine/header.vue'
 import CommonServices from '@/pages/mine/common-services.vue'
 import AccountSettings from '@/pages/mine/account-settings.vue'
@@ -13,8 +16,25 @@ const active = ref<TActive>('commonServices')
 const { state } = useGetUserInfo()
 
 const mineStore = useMineStore()
+const { cardInfo } = storeToRefs(mineStore)
 
 mineStore.getCardInfo()
+
+onPullDownRefresh(() => {
+  mineStore.getCardInfo()
+  const { state: userInfo } = useGetUserInfo()
+  watchEffect(() => {
+    state.value = userInfo.value
+    if (userInfo.value && cardInfo.value) {
+      uni.stopPullDownRefresh()
+      Toast.clear()
+      Toast.success({
+        message: '更新个人数据成功',
+        duration: 1000,
+      })
+    }
+  })
+})
 
 function onActiveChange(event: any) {
   active.value = event.target.name
@@ -24,6 +44,7 @@ getUserInfo()
 </script>
 
 <template>
+  <van-toast id="van-toast" />
   <div class="relative w-[95vw] mx-[2.5vw] pb-5">
     <van-dialog id="van-dialog" />
     <Header />

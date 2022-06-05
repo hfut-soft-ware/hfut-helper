@@ -5,8 +5,7 @@
       "style": {
         "navigationBarTitleText": "登录",
         "enablePullDownRefresh": false,
-        "navigationStyle": "custom",
-        "backgroundColorTop": "#ffffff"
+        "navigationBarTextStyle":"black"
       }
     },
     {
@@ -35,21 +34,32 @@
       "style": {
         "backgroundColorTop": "#ffffff",
         "navigationStyle": "custom",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#ffffff",
+
       }
     },
     {
       "path": "pages/mine/mooc/mooc",
       "style": {
         "enablePullDownRefresh": false,
-        "navigationBarBackgroundColor": "#3173FD"
+        "navigationBarBackgroundColor": "#3173FD",
+        "navigationBarTitleText": "慕课信息"
       }
     },
     {
       "path": "pages/mine/card/card",
       "style": {
         "navigationBarBackgroundColor": "#283593",
-        "enablePullDownRefresh": false
+        "enablePullDownRefresh": false,
+        "navigationBarTitleText": "一卡通信息"
+      }
+    },
+    {
+      "path": "pages/mine/exam/exam",
+      "style": {
+        "navigationBarBackgroundColor": "#283593",
+        "enablePullDownRefresh": false,
+        "navigationBarTitleText": "考试安排"
       }
     }
   ],

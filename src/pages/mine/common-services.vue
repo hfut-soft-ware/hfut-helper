@@ -8,13 +8,14 @@ const mineStore = useMineStore()
 const { cardInfo } = storeToRefs(mineStore)
 
 const courseStore = useCourseListStore()
-const { exam } = storeToRefs(courseStore)
+const { recentExam } = storeToRefs(courseStore)
 
 function onServiceClick(url: string) {
   uni.navigateTo({
     url: `/pages/mine/${url}`,
   })
 }
+
 </script>
 
 <template>
@@ -27,9 +28,9 @@ function onServiceClick(url: string) {
         {{ cardInfo?.content }}
       </p>
     </div>
-    <div class="base-info-card">
+    <div class="base-info-card" @click="onServiceClick('exam/exam')">
       <p class="font-semibold text-md">
-        {{ exam.length }}门
+        {{ recentExam.length }}门
       </p>
       <p class="text-sm text-[#637381]">
         最近考试安排

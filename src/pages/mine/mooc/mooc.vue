@@ -57,8 +57,8 @@ const moocDetailList = computed(() => {
 </script>
 
 <template>
-  <div class="w-[90vw] min-h-screen mx-auto mt-10">
-    <div class="flex flex-col gap-3 mt-10 bg-white">
+  <div class="w-[90vw] min-h-screen mx-auto py-10">
+    <div class="flex flex-col gap-3 bg-white">
       <div
         v-for="mooc in moocDetailList"
         :key="mooc.id"
