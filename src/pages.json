@@ -27,15 +27,29 @@
       }
     },
     {
-      "path": "pages/score/score"
+      "path": "pages/score/score",
+      "style": {
+        "navigationBarBackgroundColor": "#283593"
+      }
+    },
+    {
+      "path": "pages/score/semester/semester",
+      "style": {
+        "navigationBarBackgroundColor": "#283593"
+      }
+    },
+    {
+      "path": "pages/score/course/course",
+      "style": {
+        "navigationBarBackgroundColor": "#283593"
+      }
     },
     {
       "path": "pages/mine/mine",
       "style": {
         "backgroundColorTop": "#ffffff",
         "navigationStyle": "custom",
-        "backgroundColor": "#ffffff",
-
+        "backgroundColor": "#ffffff"
       }
     },
     {

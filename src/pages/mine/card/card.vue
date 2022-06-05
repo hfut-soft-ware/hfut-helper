@@ -28,9 +28,7 @@ const {
   </div>
   <div class="w-screen min-h-screen bg-[#F1F2F6] pb-5">
     <div class="w-[95vw] mx-auto mt-5">
-      <div class="overflow-hidden px-4 py-5 bg-[#283593] rounded-2xl flex-col text-white relative">
-        <div class="absolute top-[30px] right-[-50px] w-[210px] h-[210px] rounded-full bg-[#3949AB] opacity-50" />
-        <div class="absolute top-[-50px] right-[-50px] w-[150px] h-[150px] rounded-full bg-[#3949AB] opacity-80" />
+      <Card>
         <div class="p-2 rounded-lg bg-[#3949AB] w-[25px] flex items-center">
           <img src="./img.png" class="w-[25px] h-[25px]">
         </div>
@@ -40,7 +38,7 @@ const {
         <h4 class="text-white/50 text-sm">
           {{ cardInfo.title }}
         </h4>
-      </div>
+      </Card>
       <div class="flex flex-col gap-5">
         <div
           v-for="(list, day) in consumeRecord"
