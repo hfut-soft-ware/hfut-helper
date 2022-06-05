@@ -88,7 +88,7 @@ function handleCourseClick(item: Score) {
                 <p>{{ item.name }}</p>
                 <div class="flex text-gray-500 text-xs gap-2">
                   <p>学分: {{ item.credit }}</p>
-                  <p>学分: {{ item.gpa }}</p>
+                  <p>GPA: {{ item.gpa }}</p>
                 </div>
               </div>
             </div>
