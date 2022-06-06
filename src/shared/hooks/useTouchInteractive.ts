@@ -43,7 +43,7 @@ export function useTouchInteractive(store: TCourseListStore, type: 'day' | 'week
         const dayIdx = daySchedule.value.dayIdx! - 1
         if (dayIdx < 0) {
           onPrev()
-          store.setDaySchedule({ dayIdx: 0 })
+          store.setDaySchedule({ dayIdx: 6 })
           return
         }
         store.setDaySchedule({ dayIdx: daySchedule.value.dayIdx! - 1 })
