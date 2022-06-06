@@ -5,7 +5,7 @@ import { useCourseListStore } from '@/store/courseList.store'
 
 const store = useCourseListStore()
 
-const { weekSchedule, weekScheduleVisibleWeek } = storeToRefs(store)
+const { weekSchedule, weekScheduleVisibleWeek, currentWeekIdx } = storeToRefs(store)
 
 </script>
 
@@ -13,7 +13,7 @@ const { weekSchedule, weekScheduleVisibleWeek } = storeToRefs(store)
   <div class="h-[100px] w-screen z-[1] bg-white/30 fixed">
     <div class="absolute bottom-1 w-screen flex flex-col w-[95vw]">
       <div class="flex justify-center mx-[2.5vw]">
-        <p>当前是第{{ weekSchedule.weekIdx + 1 }}周</p>
+        <p>第{{ weekSchedule.weekIdx + 1 }}周 {{ currentWeekIdx === weekSchedule.weekIdx ? '' : `(当前是第${currentWeekIdx + 1}周)` }}</p>
       </div>
       <div class="flex w-screen mt-2">
         <template v-if="weekScheduleVisibleWeek.course">

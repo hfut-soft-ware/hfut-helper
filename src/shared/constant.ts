@@ -36,4 +36,9 @@ export const CARD_COLORS = [
   'green',
   'yellow',
   'purple',
+  'light-yellow',
+  'light-blue',
+  'pink',
+  'grown',
+  'light-green',
 ]

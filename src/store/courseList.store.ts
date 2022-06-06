@@ -247,7 +247,7 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
       // TODO 莫名其妙的bug
       idx = idx || 0
 
-      return { ...this.course.lessons[idx], color: CARD_COLORS[idx % 3] }
+      return { ...this.course.lessons[idx], color: CARD_COLORS[idx % (CARD_COLORS.length - 1)] }
     },
     getCourseByHourIndex(index: number) {
       const course = this.todayCourse.find(course => course.index === index)

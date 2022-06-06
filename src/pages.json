@@ -56,7 +56,7 @@
       "path": "pages/mine/mooc/mooc",
       "style": {
         "enablePullDownRefresh": false,
-        "navigationBarBackgroundColor": "#3173FD",
+        "navigationBarBackgroundColor": "#283593",
         "navigationBarTitleText": "慕课信息"
       }
     },

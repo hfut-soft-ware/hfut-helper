@@ -66,7 +66,7 @@ function onClose() {
               <template v-if="list.course.course">
                 <div
                   :key="list.course.course.startTime"
-                  :class="`card ${cardsColor[list.course.course.index - 1]} ${list.course.course.wholePoint ? 'mt-2': 'mt-4'}`"
+                  :class="`card ${list.course.detail.color} ${list.course.course.wholePoint ? 'mt-2': 'mt-4'}`"
                   @click="handleCourseClick(list.course)"
                 >
                   <div class="card-flex">
@@ -109,21 +109,39 @@ function onClose() {
   border: 1px solid rgba($color, 0.2);
   border-left: 2px solid $color;
 }
-.yellow {
-  @include generateCardStyle(#f8a043);
-}
-.red {
-  @include generateCardStyle(#f88c8e);
-}
 
-.green {
-  @include generateCardStyle(#3eb770);
+.yellow {
+  @include generateCardStyle(#FE9900);
+}
+.light-yellow {
+  @include generateCardStyle(#FD9800);
+}
+.light-blue {
+  @include generateCardStyle(#00A5F1);
 }
 .blue {
-  @include generateCardStyle(#63b1ef);
+  @include generateCardStyle(#00A5F1);
+}
+.pink {
+  @include generateCardStyle(#F167BA);
+}
+.red {
+  @include generateCardStyle(#EF5B75);
+}
+.grown {
+  @include generateCardStyle(#CBA713);
+}
+.light-green {
+  @include generateCardStyle(#3CB3C9);
+}
+.green {
+  @include generateCardStyle(#27BCA9);
+}
+.blue {
+  @include generateCardStyle(#00A6F2);
 }
 .purple {
-  @include generateCardStyle(#9a88c6);
+  @include generateCardStyle(#B967E3);
 }
 
 .course-list-cards {

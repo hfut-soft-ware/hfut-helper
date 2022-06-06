@@ -1,13 +1,16 @@
 <script lang='ts' setup>
 import { storeToRefs } from 'pinia'
 import { computed, ref } from 'vue'
-import { isOdd, isUndefined } from '@/shared/utils'
+import { isOdd } from '@/shared/utils'
 import type { CourseData } from '@/store/courseList.store'
 import { formatCourseName, formatRoom, useCourseListStore } from '@/store/courseList.store'
 import CoursePopup from '@/components/CoursePopup/course-popup.vue'
 import { useTouchInteractive } from '@/shared/hooks/useTouchInteractive'
 import { WEEK_SCHEDULE_CARD_HEIGHT } from '@/pages/week-schedule/constant'
 import { useWeekListSettingsStore } from '@/store/weekListSettings.store'
+import { useRef } from '@/shared/hooks/useRef'
+import type { ISchedule } from '@/shared/types/response/course'
+import BounceBall from '@/components/BounceBall/BounceBall.vue'
 
 const store = useCourseListStore()
 const { weekScheduleVisibleWeek } = storeToRefs(store)
@@ -20,16 +23,19 @@ const courseList = computed<CourseData[][]>(() => {
   return Array.from({ length: 7 }, (_, weekday) => {
     const todayCourse = weekVal.course[weekday]
     return Array.from({ length: 11 }, (_, lessonIdx) => {
-      const course = todayCourse.find(course => course.lessonStartIndex === lessonIdx + 1)
+      const courseResource = todayCourse.filter(course => course.lessonStartIndex === lessonIdx + 1)
 
-      if (isUndefined(course)) {
+      if (courseResource.length === 0) {
         return undefined
       }
+
+      const course = courseResource[0]
 
       return {
         detail: store.getCourseDetailByIdx(course.lessonIndex),
         course: {
           ...course,
+          extraCourse: [...courseResource.slice(0)],
           height: course.period * WEEK_SCHEDULE_CARD_HEIGHT,
         },
       }
@@ -44,7 +50,20 @@ const settingsStore = useWeekListSettingsStore()
 
 const { settings } = storeToRefs(settingsStore)
 
+const [conflictCourseShow, setConflictCourseShow] = useRef(false)
+const conflictCourse = ref<CourseData[]>([])
+
 function handleCourseClick(clickedCourse: CourseData) {
+  if ((clickedCourse.course as any).extraCourse && (clickedCourse.course as any).extraCourse.length > 1) {
+    setConflictCourseShow(true)
+    conflictCourse.value = (clickedCourse.course as any).extraCourse.map((course: ISchedule) => {
+      return {
+        course,
+        detail: store.getCourseDetailByIdx(course.lessonIndex),
+      }
+    })
+    return
+  }
   if (clickedCourse) {
     show.value = true
     courseData.value = clickedCourse
@@ -59,6 +78,49 @@ function onClose() {
 
 <template>
   <course-popup v-if="show" :show="show" :data="courseData" @close="onClose" />
+  <van-popup
+    :show="conflictCourseShow"
+    round
+    closeable
+    position="bottom"
+    custom-style="height: 40%"
+    @close="setConflictCourseShow(false)"
+  >
+    <div class="p-3 mt-3 flex flex-col gap-5">
+      <h2 class="font-semibold text-center">
+        课程详情
+      </h2>
+      <div class="flex flex-col gap-3">
+        <div
+          v-for="item in conflictCourse"
+          :key="item.detail.courseName"
+          class="flex justify-between items-center"
+        >
+          <div class="flex flex-col gap-1">
+            <p>{{ item.detail.courseName }}</p>
+            <div class="flex flex-col text-xs text-[#666666] gap-1">
+              <div class="flex gap-1">
+                <van-icon name="clock-o" />
+                <p>{{ item.course.startTime }}-{{ item.course.endTime }}</p>
+              </div>
+              <div class="flex gap-1">
+                <van-icon name="location-o" />
+                <p>{{ item.course.room }}</p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="px-4 py-2 bg-[#E5F1FE] rounded-full text-[#0C84FF] text-sm" @click="() => {
+              handleCourseClick(item)
+              setConflictCourseShow(false)
+            }"
+          >
+            详情
+          </div>
+        </div>
+      </div>
+    </div>
+  </van-popup>
   <div
     class="w-screen mt-[100px] overflow-hidden flex relative"
     @touchstart="onTouchStart"
@@ -82,16 +144,14 @@ function onClose() {
             :style="{height: `${course.course.height}px`, opacity: settings.alpha / 100}"
             @click="handleCourseClick(course)"
           >
-            <div v-if="course.detail?.type === 'Exam'" class="animate-bounce absolute right-2 flex justify-items-end items-center">
-              <span class="animate-ping h-2 w-2 absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
-              <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
-            </div>
+            <BounceBall v-if="course.detail?.type === 'Exam'" class="absolute right-2" color="red" />
+            <BounceBall v-if="course.course.extraCourse.length > 1" class="absolute right-2" />
             <template v-if="course.detail?.type === 'Exam' && course.course.height === 60">
               <p class="font-bold">
                 {{ formatCourseName(course.detail?.courseName) }}
               </p>
             </template>
-            <template v-else>
+            <template v-if="course.course.extraCourse.length === 1">
               <p class="font-bold">
                 {{ formatCourseName(course.detail?.courseName) }}
               </p>
@@ -99,9 +159,16 @@ function onClose() {
                 {{ formatRoom(course.course?.room) }}
               </p>
             </template>
+            <template v-else>
+              <p class="font-bold">
+                这里有{{ course.course.extraCourse.length }}门课冲突
+              </p>
+              <p class="text-[11px]">
+                点击查看详情
+              </p>
+            </template>
           </div>
         </template>
-        <template v-else />
       </div>
     </div>
     <div class="fixed bottom-3 w-screen z-[1]">
@@ -137,12 +204,29 @@ function onClose() {
 }
 
 .yellow {
-  @include generateCardStyle(#FCEBCF, #FE9900);
+  @include generateCardStyle(#FCEBCD, #FE9900);
+}
+.light-yellow {
+  @include generateCardStyle(#FCEBCF, #FD9800);
+}
+.light-blue {
+  @include generateCardStyle(#E6F4FF,#00A5F1);
+}
+.blue {
+  @include generateCardStyle(#E6F3FE, #00A5F1);
+}
+.pink {
+  @include generateCardStyle(#FFEEF8, #F167BA);
 }
 .red {
   @include generateCardStyle(#FFEFF0, #EF5B75);
 }
-
+.grown {
+  @include generateCardStyle(#FFF9C9, #CBA713);
+}
+.light-green {
+  @include generateCardStyle(#DEFBF7, #3CB3C9);
+}
 .green {
   @include generateCardStyle(#E2F9F3, #27BCA9);
 }
@@ -150,7 +234,7 @@ function onClose() {
   @include generateCardStyle(#E6F4FF, #00A6F2);
 }
 .purple {
-  @include generateCardStyle(#FAECFF, #B569DD);
+  @include generateCardStyle(#FAEDFF, #B967E3);
 }
 
 </style>

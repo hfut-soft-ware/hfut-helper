@@ -44,16 +44,7 @@ onPullDownRefresh(async() => {
         :class="item.isExpired ? 'bg-gray-200 text-gray-500' : 'bg-white'"
       >
         <template v-if="!item.isExpired">
-          <span class="absolute right-2 flex h-3 w-3 animate-bounce">
-            <span
-              class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"
-              :class="item.isToday ? 'bg-red-400' : ''"
-            />
-            <span
-              class="relative inline-flex rounded-full h-3 w-3 bg-sky-500"
-              :class="item.isToday ? 'bg-red-500' : ''"
-            />
-          </span>
+          <BounceBall class="absolute right-2" />
         </template>
         <div class="flex flex-col gap-3 text-sm">
           <div class="text-lg w-full flex justify-between">
