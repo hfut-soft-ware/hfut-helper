@@ -1,5 +1,5 @@
 <script lang='ts' setup>
-import { computed, reactive, ref } from 'vue'
+import { computed, reactive, ref, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 import type { CourseData } from '@/store/courseList.store'
 import { formatCourseName, formatRoom, getTeachers, useCourseListStore } from '@/store/courseList.store'
@@ -9,6 +9,10 @@ import CoursePopup from '@/components/CoursePopup/course-popup.vue'
 const store = useCourseListStore()
 
 const { todayCourse } = storeToRefs(store)
+
+watchEffect(() => {
+  console.log(todayCourse.value)
+})
 
 const cardsColor = reactive([
   'red',
@@ -71,7 +75,7 @@ function onClose() {
                         {{ list.course.course.startTime }} - {{ list.course.course.endTime }}
                       </div>
                       <div class="text-sm">
-                        {{ getTeachers(list.course.detail?.detailInfo.teachers) }}
+                        {{ list.course.detail?.detailInfo.teachers && getTeachers(list.course.detail.detailInfo.teachers) }}
                       </div>
                     </div>
                     <div class="font-bold text-base">

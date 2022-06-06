@@ -1,22 +1,41 @@
 <script lang='ts' setup>
 import { storeToRefs } from 'pinia'
 import { format } from 'date-fns'
-import { watchEffect } from 'vue'
+import { onPullDownRefresh } from '@dcloudio/uni-app'
+import Toast from '@vant/weapp/lib/toast/toast'
+import { getRandomQAQ } from 'qaq-font'
 import { useCourseListStore } from '@/store/courseList.store'
 
 const store = useCourseListStore()
 const { exam } = storeToRefs(store)
 
-watchEffect(() => {
-  console.log(exam.value)
+onPullDownRefresh(async() => {
+  Toast.loading({
+    message: `正在加载最新考试信息中...\n${getRandomQAQ('happy')[0]}`,
+    duration: 0,
+  })
+  store.getCourseList(true).then(() => {
+    Toast.clear()
+    Toast.success({
+      message: `加载完成\n${getRandomQAQ('happy')[0]}`,
+    })
+  }).catch(() => {
+    Toast.clear()
+    Toast.fail({
+      message: `加载失败\n${getRandomQAQ('sadness')[0]}`,
+    })
+  }).finally(() => {
+    uni.stopPullDownRefresh()
+  })
 })
 </script>
 
 <template>
+  <van-toast id="van-toast" />
   <div class="min-h-screen w-screen">
     <div class="w-[95vw] mx-auto flex flex-col gap-5 pt-10">
       <div v-if="exam.length === 0">
-        <van-empty description="暂时没有考试噢" />
+        <van-empty description="暂时没有考试噢，刷新一下看看" />
       </div>
       <div
         v-for="item in exam"

@@ -72,7 +72,6 @@
       "path": "pages/mine/exam/exam",
       "style": {
         "navigationBarBackgroundColor": "#283593",
-        "enablePullDownRefresh": false,
         "navigationBarTitleText": "考试安排"
       }
     }

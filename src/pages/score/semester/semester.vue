@@ -2,6 +2,7 @@
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 import { onPullDownRefresh } from '@dcloudio/uni-app'
+import Toast from '@vant/weapp/lib/toast/toast'
 import { useScoreStore } from '@/store/score.store'
 import type { Score } from '@/shared/types/response/score'
 
@@ -45,6 +46,10 @@ const semesterDetailInfo = computed(() => {
 const innerHeight = uni.getSystemInfoSync().windowHeight * 0.7
 
 function handleCourseClick(item: Score) {
+  if (item.gpa === null) {
+    Toast('请先去教务评教')
+    return
+  }
   scoreStore.setCurrentSelectedCourse(item)
   uni.navigateTo({
     url: '/pages/score/course/course',
@@ -92,7 +97,7 @@ function handleCourseClick(item: Score) {
                 </div>
               </div>
             </div>
-            <p>{{ item.score }}</p>
+            <p>{{ item.gpa === null ? '待评教' : item.score }}</p>
           </div>
         </div>
       </scroll-view>

@@ -1,4 +1,5 @@
 import { reactive } from 'vue'
+import { storeToRefs } from 'pinia'
 import type { TCourseListStore } from '@/store/courseList.store'
 import { useSelectCourseList } from '@/shared/hooks/use-selectCourseList'
 
@@ -9,6 +10,7 @@ export function useTouchInteractive(store: TCourseListStore, type: 'day' | 'week
   })
 
   const { onPrev, onNext } = useSelectCourseList(store, type)
+  const { daySchedule } = storeToRefs(store)
 
   function onTouchStart(e: TouchEvent) {
     pos.initialX = e.touches[0].pageX
@@ -24,9 +26,30 @@ export function useTouchInteractive(store: TCourseListStore, type: 'day' | 'week
     }
 
     if (pos.initialX - pos.endX > interactiveBoundary) {
-      onNext()
+      if (type === 'day') {
+        const dayIdx = daySchedule.value.dayIdx! + 1
+        if (dayIdx > 6) {
+          onNext()
+          store.setDaySchedule({ dayIdx: 0 })
+          return
+        }
+
+        store.setDaySchedule({ dayIdx: daySchedule.value.dayIdx! + 1 })
+      } else {
+        onNext()
+      }
     } else if (pos.endX - pos.initialX > interactiveBoundary) {
-      onPrev()
+      if (type === 'day') {
+        const dayIdx = daySchedule.value.dayIdx! - 1
+        if (dayIdx < 0) {
+          onPrev()
+          store.setDaySchedule({ dayIdx: 0 })
+          return
+        }
+        store.setDaySchedule({ dayIdx: daySchedule.value.dayIdx! - 1 })
+      } else {
+        onPrev()
+      }
     }
   }
 
