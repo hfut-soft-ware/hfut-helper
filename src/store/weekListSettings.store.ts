@@ -105,8 +105,8 @@ const [getBgImgModeStorage, setBgImgModeStorage] = useSyncStorage(BG_IMG_MODE)
 export const useWeekListSettingsStore = defineStore('weekListSettings', () => {
   const settings = reactive<TWeekSettings>(getWeekSettings())
   const [showSettings, setShowSettings] = useRef(false)
-  const [bgImg, setRefBgImg] = useRef(getBgImgStorage<string>())
-  const imgMode = ref<ImageMode>(getBgImgModeStorage<ImageMode>('aspectFit'))
+  const [bgImg, setRefBgImg] = useRef(getBgImgStorage())
+  const imgMode = ref<ImageMode>(getBgImgModeStorage('aspectFit'))
 
   const setAlpha = (value: number) => {
     settings.alpha = value

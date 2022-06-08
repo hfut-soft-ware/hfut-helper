@@ -1,6 +1,6 @@
 <script lang='ts' setup>
 import { storeToRefs } from 'pinia'
-import { format } from 'date-fns'
+import { format, formatDistanceToNow } from 'date-fns'
 import { onPullDownRefresh } from '@dcloudio/uni-app'
 import Toast from '@vant/weapp/lib/toast/toast'
 import { getRandomQAQ } from 'qaq-font'
@@ -44,9 +44,16 @@ onPullDownRefresh(async() => {
         :class="item.isExpired ? 'bg-gray-200 text-gray-500' : 'bg-white'"
       >
         <template v-if="!item.isExpired">
-          <div class="animate-bounce absolute right-2 flex justify-items-end items-center">
-            <span class="animate-ping h-2 w-2 absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
+          <div class="absolute right-2">
+            <div class="animate-bounce absolute right-2 flex justify-items-end items-center">
+              <span class="animate-ping h-2 w-2 absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
+            </div>
+            <div class="flex font-semibold">
+              <div class="text-red-500/80">
+                {{ formatDistanceToNow(item.startDate) }}
+              </div>
+            </div>
           </div>
         </template>
         <div class="flex flex-col gap-3 text-sm">

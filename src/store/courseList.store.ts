@@ -6,6 +6,7 @@ import { isNullOrUndefined, isObject } from '@/shared/utils/'
 import { CARD_COLORS, COURSE_KEY } from '@/shared/constant'
 import { ellipsisString } from '@/shared/utils/ellipsisString'
 import { getLoverCourse, setLoverCourse, uesLoverStore } from '@/store/lover.store'
+import { useSyncStorage } from '@/shared/hooks/use-syncStorage'
 
 type VisibleSchedule = Partial<{
   weekIdx: number
@@ -64,6 +65,7 @@ type Actions = {
   getCourseByHourIndex: (hourIndex: number) => CourseData
   initStore: (data: ICourse) => void
   changeStatus: (isLover: boolean) => void
+  addCourse: (payload: TCustomCourse) => void
 }
 
 function createSetSchedule(name: ScheduleName, _this: State) {
@@ -118,6 +120,12 @@ export const setWeekCourse = (data: ICourse) => uni.setStorageSync(COURSE_KEY, d
 
 export const getWeekCourse = () => uni.getStorageSync(COURSE_KEY) as ICourse
 
+const CUSTOM_COURSE_KEY = '__CUSTOM_COURSE_KEY__'
+
+export type TCustomCourse = { weekIdx: number[]; dayIdx: number; name: string; room: string; startTime: string; endTime: string; color: string }
+
+export const [getCustomCourse, setCustomCourse] = useSyncStorage<ICourse>(CUSTOM_COURSE_KEY)
+
 // TODO 用setupStore重构
 export const useCourseListStore = defineStore<'courseList', State, Getters, Actions>('courseList', {
   state: () => ({
@@ -155,7 +163,8 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
       return this.course.schedule[state.daySchedule.weekIdx!][state.daySchedule.dayIdx!]
     },
     exam() {
-      return this.list.exams.map((item) => {
+      const exams = this.list.exams || []
+      return exams.map((item) => {
         const startDate = new Date(`${item.date} ${item.startTime}`)
         const endDate = new Date(`${item.date} ${item.endTime}`)
         const currentDate = new Date()
@@ -237,6 +246,16 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
         this.initStore(getWeekCourse())
       }
     },
+    addCourse(payload: TCustomCourse) {
+      setCustomCourse(payload)
+      const { weekIdx, dayIdx } = payload
+      weekIdx.forEach((idx) => {
+        // TODO 解决类型
+        this.list.schedule[idx][dayIdx].push({
+          ...(payload as any),
+        })
+      })
+    },
     setDaySchedule(payload) {
       createSetSchedule('daySchedule', this)(payload)
     },
@@ -257,7 +276,6 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
         detail: this.getCourseDetailByIdx(course?.lessonIndex),
       }
     },
-
   },
 })
 

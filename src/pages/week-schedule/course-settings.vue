@@ -33,12 +33,13 @@ const loverStore = uesLoverStore()
 const { isLover, isLoverRelieved } = storeToRefs(loverStore)
 const { getPoemOnConfirm, getPoemOnCanceled } = useLoverPoem()
 
-const loverChecked = ref(isLover.value.value.value)
+const loverChecked = ref(isLover.value)
 function onLoverCheckedChange(evt: any) {
   const status = evt.detail
-  loverChecked.value.value = status
+  loverChecked.value = status
   loverStore.setLover(status, true)
 }
+
 function onRelieveLoverClick() {
   Dialog.confirm({
     title: '解绑情侣课表',
@@ -78,7 +79,7 @@ function onClose() {
 
 function onOpenImgModeSetting() {
   store.setShowSettings(false)
-  openImgModeSetting.value.value()
+  openImgModeSetting()
 }
 </script>
 

@@ -156,6 +156,7 @@
       "van-dropdown-menu": "./components/wxcomponents/vant/dropdown-menu/index",
       "van-empty": "./components/wxcomponents/vant/empty/index",
       "van-field": "./components/wxcomponents/vant/field/index",
+      "van-stepper": "./components/wxcomponents/vant/stepper/index",
       "van-goods-action": "./components/wxcomponents/vant/goods-action/index",
       "van-goods-action-button": "./components/wxcomponents/vant/goods-action-button/index",
       "van-goods-action-icon": "./components/wxcomponents/vant/goods-action-icon/index",

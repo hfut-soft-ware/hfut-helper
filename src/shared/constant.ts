@@ -42,3 +42,5 @@ export const CARD_COLORS = [
   'grown',
   'light-green',
 ]
+
+export type TColors = 'red' | 'blue' | 'green' | 'yellow' | 'purple'| 'light-yellow' | 'light-blue' | 'pink'| 'grown' | 'light-green'

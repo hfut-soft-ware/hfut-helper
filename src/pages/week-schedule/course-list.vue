@@ -1,7 +1,7 @@
 <script lang='ts' setup>
 import { storeToRefs } from 'pinia'
 import { computed, ref } from 'vue'
-import { isOdd } from '@/shared/utils'
+import { isOdd, isUndefined } from '@/shared/utils'
 import type { CourseData } from '@/store/courseList.store'
 import { formatCourseName, formatRoom, useCourseListStore } from '@/store/courseList.store'
 import CoursePopup from '@/components/CoursePopup/course-popup.vue'
@@ -10,9 +10,12 @@ import { WEEK_SCHEDULE_CARD_HEIGHT } from '@/pages/week-schedule/constant'
 import { useWeekListSettingsStore } from '@/store/weekListSettings.store'
 import { useRef } from '@/shared/hooks/useRef'
 import type { ISchedule } from '@/shared/types/response/course'
+import type { TEmptyCoursePos } from '@/pages/week-schedule/use-customCourse'
+import { useCustomCourse } from '@/pages/week-schedule/use-customCourse'
+import CustomCourse from '@/pages/week-schedule/custom-course.vue'
 
 const store = useCourseListStore()
-const { weekScheduleVisibleWeek } = storeToRefs(store)
+const { weekScheduleVisibleWeek, weekSchedule } = storeToRefs(store)
 
 const { onTouchStart, onTouchEnd, onPrev, onNext } = useTouchInteractive(store, 'week')
 
@@ -52,7 +55,23 @@ const { settings } = storeToRefs(settingsStore)
 const [conflictCourseShow, setConflictCourseShow] = useRef(false)
 const conflictCourse = ref<CourseData[]>([])
 
-function handleCourseClick(clickedCourse: CourseData) {
+const {
+  customCourseShow,
+  currentEmptyCourse,
+  startIndex,
+  onCustomCourseClose,
+  handleOpenCustomCourse,
+  handleCustomCourseCardClick,
+} = useCustomCourse()
+
+function handleCourseClick(clickedCourse: CourseData, pos: TEmptyCoursePos = currentEmptyCourse) {
+  // 处理自定义课程
+  if (isUndefined(clickedCourse)) {
+    handleCustomCourseCardClick(pos)
+    return
+  }
+
+  // 处理冲突课程
   if ((clickedCourse.course as any).extraCourse && (clickedCourse.course as any).extraCourse.length > 1) {
     setConflictCourseShow(true)
     conflictCourse.value = (clickedCourse.course as any).extraCourse.map((course: ISchedule) => {
@@ -76,6 +95,16 @@ function onClose() {
 </script>
 
 <template>
+  <van-popup
+    :show="customCourseShow"
+    round
+    closeable
+    position="bottom"
+    custom-style="height: 90%"
+    @close="onCustomCourseClose"
+  >
+    <CustomCourse :start-index="startIndex" :current-week="weekSchedule.weekIdx" />
+  </van-popup>
   <course-popup v-if="show" :show="show" :data="courseData" @close="onClose" />
   <van-popup
     :show="conflictCourseShow"
@@ -135,13 +164,13 @@ function onClose() {
         :key="`${course?.course?.lessonStartIndex}-${course?.detail?.id}${index}`"
         class="h-[62px] border-r-[1px] border-slate-200 px-[2px]"
         :class="isOdd(index + 1) ? 'oddBorder' : 'evenBorder'"
+        @click="handleCourseClick(course, {x: weekday, y: index})"
       >
         <template v-if="course?.detail">
           <div
             class="relative rounded-md px-1 text-xs flex flex-col gap-2 pt-1"
             :class="`${course.detail?.color} ${course.detail?.type === 'Exam' ? 'exam-card' : ''}`"
             :style="{height: `${course.course.height}px`, opacity: settings.alpha / 100}"
-            @click="handleCourseClick(course)"
           >
             <div v-if="course.detail?.type === 'Exam'" class="animate-bounce absolute right-2 flex justify-items-end items-center">
               <span class="animate-ping h-2 w-2 absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
@@ -174,6 +203,11 @@ function onClose() {
             </template>
           </div>
         </template>
+        <template v-if="currentEmptyCourse.x === weekday && currentEmptyCourse.y === index">
+          <div class="addCard" @click="handleOpenCustomCourse">
+            <van-icon name="plus" />
+          </div>
+        </template>
       </div>
     </div>
     <div class="fixed bottom-3 w-screen z-[1]">
@@ -190,6 +224,10 @@ function onClose() {
 </template>
 
 <style lang='scss' scoped>
+.addCard {
+  @apply bg-white/50 flex justify-center items-center rounded-lg h-[60px] text-black/80;
+}
+
 // 偶数行的边框，写在此处是为了解决JIT问题
 .evenBorder {
   @apply border-b-[1px] pb-[1px];
