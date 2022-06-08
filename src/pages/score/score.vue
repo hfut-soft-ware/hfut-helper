@@ -3,6 +3,7 @@ import { storeToRefs } from 'pinia'
 import { onPullDownRefresh } from '@dcloudio/uni-app'
 import { useScoreStore } from '@/store/score.store'
 import Card from '@/components/Card/Card.vue'
+import BounceBall from '@/components/BounceBall/BounceBall.vue'
 
 const scoreStore = useScoreStore()
 const {
@@ -81,7 +82,7 @@ function handleSemesterOpen(index: number) {
       <div class="mt-5">
         <div
           v-for="item in semesterScoreData"
-          :key="item"
+          :key="item.semesterInfo.semester"
           class="text-xs text-[#616161]"
           @click="handleSemesterOpen(item.index)"
         >
@@ -94,7 +95,7 @@ function handleSemesterOpen(index: number) {
       </div>
     </div>
   </div>
-  <div class="absolute bottom-3 w-full flex justify-center text-xs text-black/80">
+  <div class="mt-2 w-full flex justify-center text-xs text-black/80">
     成绩信息仅供参考，一切以教务系统为准。
   </div>
 </template>

@@ -17,6 +17,10 @@ import '@/assets/icons/explore-planet.png'
 import '@/assets/icons/galaxy.png'
 import '@/assets/icons/star-moon.png'
 import '@/assets/icons/telescope.png'
+import '@/assets/icons/astronaut.png'
+
+// imgs
+import '@/pages/mine/about/donate/donate.png'
 
 export function createApp() {
   const app = createSSRApp(App)

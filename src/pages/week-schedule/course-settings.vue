@@ -33,10 +33,10 @@ const loverStore = uesLoverStore()
 const { isLover, isLoverRelieved } = storeToRefs(loverStore)
 const { getPoemOnConfirm, getPoemOnCanceled } = useLoverPoem()
 
-const loverChecked = ref(isLover.value)
+const loverChecked = ref(isLover.value.value.value)
 function onLoverCheckedChange(evt: any) {
   const status = evt.detail
-  loverChecked.value = status
+  loverChecked.value.value = status
   loverStore.setLover(status, true)
 }
 function onRelieveLoverClick() {
@@ -78,7 +78,7 @@ function onClose() {
 
 function onOpenImgModeSetting() {
   store.setShowSettings(false)
-  openImgModeSetting()
+  openImgModeSetting.value.value()
 }
 </script>
 

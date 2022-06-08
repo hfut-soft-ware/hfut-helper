@@ -28,7 +28,7 @@ export function useFormValidate() {
 
     const validatePwd = () => {
       const pwd = form.password
-      if (pwd.length < 8) {
+      if (pwd.length < 6) {
         return
       }
       return true
@@ -44,7 +44,7 @@ export function useFormValidate() {
     }
 
     if (!isValidate.pwd) {
-      Notify({ type: 'danger', message: '密码格式错误，信息门户的密码至少是8位字符' })
+      Notify({ type: 'danger', message: '密码格式错误，信息门户的密码至少是6位字符' })
       return
     }
 

@@ -74,6 +74,27 @@
         "navigationBarBackgroundColor": "#283593",
         "navigationBarTitleText": "考试安排"
       }
+    },
+    {
+      "path": "pages/mine/about/about",
+      "style": {
+        "navigationBarBackgroundColor": "#283593",
+        "navigationBarTitleText": "关于我们"
+      }
+    },
+    {
+      "path": "pages/mine/about/disclaimers/disclaimers",
+      "style": {
+        "navigationBarBackgroundColor": "#283593",
+        "navigationBarTitleText": "用户协议"
+      }
+    },
+    {
+      "path": "pages/mine/about/donate/donate",
+      "style": {
+        "navigationBarBackgroundColor": "#283593",
+        "navigationBarTitleText": "赞助我们"
+      }
     }
   ],
   "tabBar": {

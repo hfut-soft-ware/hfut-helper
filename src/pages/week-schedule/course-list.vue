@@ -10,7 +10,6 @@ import { WEEK_SCHEDULE_CARD_HEIGHT } from '@/pages/week-schedule/constant'
 import { useWeekListSettingsStore } from '@/store/weekListSettings.store'
 import { useRef } from '@/shared/hooks/useRef'
 import type { ISchedule } from '@/shared/types/response/course'
-import BounceBall from '@/components/BounceBall/BounceBall.vue'
 
 const store = useCourseListStore()
 const { weekScheduleVisibleWeek } = storeToRefs(store)
@@ -144,8 +143,14 @@ function onClose() {
             :style="{height: `${course.course.height}px`, opacity: settings.alpha / 100}"
             @click="handleCourseClick(course)"
           >
-            <BounceBall v-if="course.detail?.type === 'Exam'" class="absolute right-2" color="red" />
-            <BounceBall v-if="course.course.extraCourse.length > 1" class="absolute right-2" />
+            <div v-if="course.detail?.type === 'Exam'" class="animate-bounce absolute right-2 flex justify-items-end items-center">
+              <span class="animate-ping h-2 w-2 absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
+            </div>
+            <div v-if="course.course.extraCourse.length > 1" class="animate-bounce absolute right-2 flex justify-items-end items-center">
+              <span class="animate-ping h-2 w-2 absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-sky-500" />
+            </div>
             <template v-if="course.detail?.type === 'Exam' && course.course.height === 60">
               <p class="font-bold">
                 {{ formatCourseName(course.detail?.courseName) }}

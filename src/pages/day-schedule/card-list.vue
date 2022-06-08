@@ -1,5 +1,5 @@
 <script lang='ts' setup>
-import { computed, reactive, ref, watchEffect } from 'vue'
+import { computed, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import type { CourseData } from '@/store/courseList.store'
 import { formatCourseName, formatRoom, getTeachers, useCourseListStore } from '@/store/courseList.store'
@@ -9,18 +9,6 @@ import CoursePopup from '@/components/CoursePopup/course-popup.vue'
 const store = useCourseListStore()
 
 const { todayCourse } = storeToRefs(store)
-
-watchEffect(() => {
-  console.log(todayCourse.value)
-})
-
-const cardsColor = reactive([
-  'red',
-  'blue',
-  'green',
-  'yellow',
-  'purple',
-])
 
 const courseList = computed(() => dayHours.map(hour => ({
   time: hour,
@@ -70,25 +58,25 @@ function onClose() {
                   @click="handleCourseClick(list.course)"
                 >
                   <div class="card-flex">
-                    <div class="flex justify-between py-2 items-center">
-                      <div class="text-xs">
+                    <div class="flex justify-between items-center text-xs">
+                      <div>
                         {{ list.course.course.startTime }} - {{ list.course.course.endTime }}
                       </div>
-                      <div class="text-sm">
+                      <div>
                         {{ list.course.detail?.detailInfo.teachers && getTeachers(list.course.detail.detailInfo.teachers) }}
                       </div>
                     </div>
-                    <div class="font-bold text-base">
+                    <div class="font-semibold text-base">
                       {{ list.course.detail?.courseName && formatCourseName(list.course.detail?.courseName) }}
                     </div>
-                    <div class="text-xs">
+                    <div>
                       {{ formatRoom(list.course.course.room) }}
                     </div>
                   </div>
                 </div>
               </template>
               <template v-else>
-                <div class="h-20" />
+                <div class="h-12" />
               </template>
             </template>
           </template>
@@ -145,7 +133,7 @@ function onClose() {
 }
 
 .course-list-cards {
-  @apply w-full h-full bg-white mt-10 rounded-t-3xl pt-5 pb-5;
+  @apply w-full h-full bg-white mt-10 rounded-t-3xl pt-1 pb-5;
   .card-list-container {
     @apply flex flex-col gap-4 mt-5 w-[90%] m-auto;
     .card-container {
@@ -158,13 +146,13 @@ function onClose() {
         }
       }
       .lunch-card {
-        @apply rounded-lg mt-2 h-16 bg-slate-200/50 text-lg flex justify-center items-center text-slate-400;
+        @apply rounded-lg mt-2 h-12 bg-slate-200/50 text-lg flex justify-center items-center text-slate-400;
       }
       .card {
         transition: all .2s;
-        @apply flex-[6] flex gap-3 p-2 rounded-lg h-24;
+        @apply flex-[5] flex gap-1 p-2 rounded-lg h-20;
         &-flex {
-          @apply flex flex-col gap-2 w-full;
+          @apply flex flex-col gap-2 w-full justify-center;
         }
 
       }

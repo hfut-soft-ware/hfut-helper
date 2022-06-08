@@ -2,9 +2,10 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import Toast from '@vant/weapp/lib/toast/toast'
 import { getRandomQAQ } from 'qaq-font'
-import { getScoreRequest } from '@/server/api/score'
+import { getScoreRequest, getSingleScoreRequest } from '@/server/api/score'
 import type { IScore, MajorRankVo, Score, Semester } from '@/shared/types/response/score'
 import { useRef } from '@/shared/hooks/useRef'
+import type { ISingleScoreData, SingleScoreDto } from '@/shared/types/response/sing-score'
 
 type TScore = {
   total: number
@@ -28,7 +29,7 @@ type SemesterScore = {
   index: number
 }
 
-type ActiveType = 'average' | 'gpa'
+type ActiveType = 'average' | 'gpa' | 'max'
 
 function createScoreDetail(data: MajorRankVo, type: ActiveType) {
   if (type === 'average') {
@@ -57,6 +58,7 @@ export const useScoreStore = defineStore('scoreStore', () => {
   const [homeActive, setHomeActive] = useRef<ActiveType>('average')
   const [selectedSemester, setSelectedSemester] = useRef<number>(0)
   const [currentSelectedCourse, setCurrentSelectedCourse] = useRef<Score>({} as Score)
+  const [currentScoreData, setCurrentScoreData] = useRef<ISingleScoreData>({} as ISingleScoreData)
 
   const homeDetailInfo = computed(() => {
     const data = homeScoreData.value
@@ -131,6 +133,32 @@ export const useScoreStore = defineStore('scoreStore', () => {
     })
   }
 
+  const getSingleScoreData = async() => {
+    const singleScoreDto: SingleScoreDto = {
+      lessonId: currentSelectedCourse.value.lessonId,
+      semesterId: selectedSemesterData.value.semesterInfo.semesterId,
+    }
+
+    Toast.loading({
+      duration: 0,
+      message: `正在获取成绩信息...\n${getRandomQAQ('happy')[0]}`,
+    })
+    await getSingleScoreRequest(singleScoreDto).then((res) => {
+      Toast.clear()
+      Toast.success({
+        message: `获取成绩信息成功！\n${getRandomQAQ('happy')[0]}`,
+      })
+      uni.stopPullDownRefresh()
+      setCurrentScoreData(res.data.data)
+    }).catch(() => {
+      Toast.clear()
+      uni.stopPullDownRefresh()
+      Toast.fail({
+        message: `获取成绩信息失败，去交流群问问吧~\n${getRandomQAQ('sadness')[0]}`,
+      })
+    })
+  }
+
   return {
     scoreData,
     homeDetailInfo,
@@ -144,5 +172,7 @@ export const useScoreStore = defineStore('scoreStore', () => {
     selectedSemesterData,
     currentSelectedCourse,
     setCurrentSelectedCourse,
+    currentScoreData,
+    getSingleScoreData,
   }
 })

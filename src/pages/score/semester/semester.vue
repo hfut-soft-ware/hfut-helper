@@ -9,6 +9,7 @@ import type { Score } from '@/shared/types/response/score'
 const scoreStore = useScoreStore()
 const {
   selectedSemesterData,
+  currentScoreData,
 } = storeToRefs(scoreStore)
 
 onPullDownRefresh(() => {
@@ -43,7 +44,7 @@ const semesterDetailInfo = computed(() => {
     },
   ]
 })
-const innerHeight = uni.getSystemInfoSync().windowHeight * 0.7
+const innerHeight = uni.getSystemInfoSync().windowHeight * 0.68
 
 function handleCourseClick(item: Score) {
   if (item.gpa === null) {

@@ -14,6 +14,11 @@ export const servicesList: { icon: string; title: string; url: string }[] = [
     title: '我的慕课',
     url: 'mooc/mooc',
   },
+  {
+    icon: 'astronaut',
+    title: '关于我们',
+    url: 'about/about',
+  },
   // {
   //   icon: 'star-moon',
   //   title: '空教室查询',
