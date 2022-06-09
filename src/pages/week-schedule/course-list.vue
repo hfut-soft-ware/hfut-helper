@@ -150,7 +150,7 @@ function onClose() {
     </div>
   </van-popup>
   <div
-    class="w-screen mt-[100px] overflow-hidden flex relative"
+    class="w-screen mt-[125px] overflow-hidden flex relative"
     @touchstart="onTouchStart"
     @touchend="onTouchEnd"
   >

@@ -9,7 +9,6 @@ import type { Score } from '@/shared/types/response/score'
 const scoreStore = useScoreStore()
 const {
   selectedSemesterData,
-  currentScoreData,
 } = storeToRefs(scoreStore)
 
 onPullDownRefresh(() => {

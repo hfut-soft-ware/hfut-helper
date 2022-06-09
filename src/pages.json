@@ -14,7 +14,8 @@
         "backgroundColorTop": "#F6F8FA",
         "navigationStyle": "custom",
         "backgroundColor": "#F6F8FA",
-        "navigationBarBackgroundColor": "#F6F8FA"
+        "navigationBarBackgroundColor": "#F6F8FA",
+        "navigationBarTextStyle":"black"
       }
     },
     {
@@ -27,9 +28,17 @@
       }
     },
     {
+      "path": "pages/score/custom/custom",
+      "style": {
+        "navigationBarBackgroundColor": "#283593",
+        "navigationBarTitleText": "自定义成绩"
+      }
+    },
+    {
       "path": "pages/score/score",
       "style": {
-        "navigationBarBackgroundColor": "#283593"
+        "navigationBarBackgroundColor": "#283593",
+        "navigationBarTitleText": "成绩"
       }
     },
     {
@@ -49,7 +58,8 @@
       "style": {
         "backgroundColorTop": "#ffffff",
         "navigationStyle": "custom",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#ffffff",
+        "navigationBarTextStyle":"black"
       }
     },
     {

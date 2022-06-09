@@ -159,6 +159,8 @@ export const useScoreStore = defineStore('scoreStore', () => {
     })
   }
 
+  const getCustomScoreData = async() => {}
+
   return {
     scoreData,
     homeDetailInfo,

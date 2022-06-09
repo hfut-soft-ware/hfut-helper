@@ -33,7 +33,7 @@ function handleLoverClick() {
 
 <template>
   <van-dialog id="van-dialog" />
-  <div class="h-[100px] w-screen z-[1] bg-white/30 fixed">
+  <div class="h-[125px] w-screen z-[1] bg-white/30 fixed">
     <template v-if="weekSchedule">
       <div class="absolute bottom-1 w-screen flex flex-col w-[95vw] mx-auto">
         <div class="flex w-[95vw] ml-[2.5vw]">

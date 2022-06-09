@@ -1,41 +1,33 @@
 <script lang='ts' setup>
 import { storeToRefs } from 'pinia'
-import { onPullDownRefresh } from '@dcloudio/uni-app'
-import { useScoreStore } from '@/store/score.store'
+import { computed, ref, watchEffect } from 'vue'
 import Card from '@/components/Card/Card.vue'
-import Settings from '@/pages/score/settings.vue'
+import { useScoreStore } from '@/store/score.store'
 
-const scoreStore = useScoreStore()
-const {
-  homeDetailInfo,
-  homeActive,
-  homeScoreData,
-  semesterScoreData,
-} = storeToRefs(scoreStore)
+const store = useScoreStore()
+const { scoreData } = storeToRefs(store)
 
-scoreStore.getScoreStore()
+const semesters = computed(() => scoreData.value?.semesters)
 
-onPullDownRefresh(() => {
-  scoreStore.getScoreStore()
-})
+const selectedScore = ref([])
 
-function handleSemesterOpen(index: number) {
-  scoreStore.setSelectedSemester(index)
-  uni.navigateTo({
-    url: '/pages/score/semester/semester',
-  })
+function onScoreSelectedChange(evt: any) {
+  selectedScore.value = evt.detail
 }
+
+watchEffect(() => {
+  console.log(semesters.value)
+  console.log(selectedScore.value.value2)
+})
 </script>
 
 <template>
-  <van-toast id="van-toast" />
-  <Settings />
   <div class="w-[95vw] min-h-screen mx-auto py-5 relative flex flex-col gap-5 bg-[#E8EAF6] mt-5 rounded-lg box-border px-3">
     <Card>
       <div class="flex flex-col gap-3 py-1">
         <div class="w-full flex justify-between">
           <div class="text-[#9FA8DA] text-sm">
-            专业排名(所有学期的总成绩)
+            自定义排名
           </div>
           <div class="flex">
             <div
@@ -56,7 +48,7 @@ function handleSemesterOpen(index: number) {
         </div>
         <div>
           <h3 class="font-semibold text-2xl text-white">
-            {{ homeScoreData.rank }} / {{ homeScoreData.total }}
+            0 / 0
           </h3>
         </div>
         <div class="bg-[#3F51B5] p-2 rounded-md flex">
@@ -76,31 +68,30 @@ function handleSemesterOpen(index: number) {
         </div>
       </div>
     </Card>
-    <div class="mt-5 flex border-[1px] border-[#D3D7EE] rounded-md px-5 py-3 flex-col bg-white">
-      <h3 class="font-semibold">
-        成绩列表
-      </h3>
-      <div class="mt-5">
-        <div
-          v-for="item in semesterScoreData"
-          :key="item.semesterInfo.semester"
-          class="text-xs text-[#616161]"
-          @click="handleSemesterOpen(item.index)"
-        >
-          <div class="w-full flex justify-between">
-            <p>{{ item.semesterInfo.semester }}</p>
-            <p>{{ item.data.rank }}/{{ item.data.total }}</p>
+    <div class="flex flex-col gap-5 mt-5">
+      <div
+        v-for="item in semesters"
+        :key="item.semester"
+        class="flex border-[1px] border-[#D3D7EE] rounded-md px-5 py-3 flex-col bg-white"
+      >
+        <h3 class="font-semibold">
+          {{ item.semester }}
+        </h3>
+        <div class="mt-5 flex flex-col">
+          <div v-for="score in item.scores" :key="score.name">
+            <van-checkbox-group :value="selectedScore" @change="onScoreSelectedChange">
+              <div class="flex justify-between">
+                <p>{{ score.name }}</p>
+                <van-checkbox :name="score.name" />
+              </div>
+            </van-checkbox-group>
           </div>
-          <van-divider />
         </div>
       </div>
     </div>
   </div>
-  <div class="mt-2 w-full flex justify-center text-xs text-black/80">
-    成绩信息仅供参考，一切以教务系统为准。
-  </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 
 </style>
