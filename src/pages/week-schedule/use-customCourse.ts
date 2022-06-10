@@ -81,7 +81,7 @@ export function useCustomCourse(
       })
       store.getCourseList(true).then((res) => {
         Toast.success({
-          message: '删除成功',
+          message: '添加成功',
         })
       }).catch(() => {
         Toast.fail({

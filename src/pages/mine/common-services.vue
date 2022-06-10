@@ -30,7 +30,7 @@ function onServiceClick(url: string) {
     </div>
     <div class="base-info-card" @click="onServiceClick('exam/exam')">
       <p class="font-semibold text-md">
-        {{ recentExam.length }}门
+        {{ recentExam?.length || 0 }}门
       </p>
       <p class="text-sm text-[#637381]">
         最近考试安排

@@ -59,10 +59,10 @@ getUserInfo()
             </div>
             <template v-if="state">
               <p class="text-white text-md font-bold">
-                {{ state.department }}
+                {{ state?.department }}
               </p>
               <p class="text-gray-400 text-xs">
-                {{ state.adminClass }}
+                {{ state?.adminClass }}
               </p>
             </template>
           </div>
