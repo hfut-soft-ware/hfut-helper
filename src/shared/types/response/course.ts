@@ -49,7 +49,8 @@ export interface ILesson {
   id: number
   courseName: string
   detailInfo: DetailInfo
-  type: 'Lesson' | 'Exam'
+  type: 'Lesson' | 'Exam' | 'Diy'
+  diyId: string
 }
 
 export interface DetailInfo {
@@ -58,6 +59,8 @@ export interface DetailInfo {
   credits: string
   courseTypeName: string
   code: string
+  color: string
+  mark: string
   weeks: string
   examMode: string
   teachers: string[]

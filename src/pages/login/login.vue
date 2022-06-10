@@ -50,6 +50,11 @@ async function onLogin() {
   }
 }
 
+function toDisclaimers() {
+  uni.navigateTo({
+    url: '/pages/mine/about/disclaimers/disclaimers',
+  })
+}
 </script>
 
 <template>
@@ -99,6 +104,9 @@ async function onLogin() {
         登录
       </div>
     </div>
+    <p class="text-center text-blue-500 underline text-sm mt-10" @click="toDisclaimers">
+      用户协议
+    </p>
   </div>
 </template>
 

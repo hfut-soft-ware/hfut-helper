@@ -100,7 +100,7 @@ export const ImageModes: { title: string;mode: ImageMode }[] = [
 
 const BG_IMG_MODE = '__BG_IMG_MODE__'
 
-const [getBgImgModeStorage, setBgImgModeStorage] = useSyncStorage(BG_IMG_MODE)
+const [getBgImgModeStorage, setBgImgModeStorage] = useSyncStorage<ImageMode>(BG_IMG_MODE)
 
 export const useWeekListSettingsStore = defineStore('weekListSettings', () => {
   const settings = reactive<TWeekSettings>(getWeekSettings())

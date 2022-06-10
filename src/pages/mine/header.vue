@@ -23,7 +23,7 @@ const greetingWords = computed(() => {
 
 <template>
   <StatusBar />
-  <div class="flex flex-col gap-2">
+  <div class="flex flex-col gap-2 mt-5">
     <p class="text-xs text-2xl">
       {{ greetingWords[0] }},
     </p>

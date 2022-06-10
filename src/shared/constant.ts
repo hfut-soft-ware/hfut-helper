@@ -44,3 +44,5 @@ export const CARD_COLORS = [
 ]
 
 export type TColors = 'red' | 'blue' | 'green' | 'yellow' | 'purple'| 'light-yellow' | 'light-blue' | 'pink'| 'grown' | 'light-green'
+
+export const scrollHeight = uni.getSystemInfoSync().windowHeight * 0.68

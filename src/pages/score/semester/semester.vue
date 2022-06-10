@@ -5,6 +5,7 @@ import { onPullDownRefresh } from '@dcloudio/uni-app'
 import Toast from '@vant/weapp/lib/toast/toast'
 import { useScoreStore } from '@/store/score.store'
 import type { Score } from '@/shared/types/response/score'
+import { scrollHeight } from '@/shared/constant'
 
 const scoreStore = useScoreStore()
 const {
@@ -43,7 +44,6 @@ const semesterDetailInfo = computed(() => {
     },
   ]
 })
-const innerHeight = uni.getSystemInfoSync().windowHeight * 0.68
 
 function handleCourseClick(item: Score) {
   if (item.gpa === null) {
@@ -79,7 +79,7 @@ function handleCourseClick(item: Score) {
       <scroll-view
         id="scroller"
         scroll-y
-        :style="`height: ${innerHeight}px;`"
+        :style="`height: ${scrollHeight}px;`"
       >
         <div class="flex flex-col gap-5">
           <div v-for="item in semesterScore" :key="item.name" class="flex justify-between" @click="handleCourseClick(item)">

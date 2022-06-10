@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 import { computed, ref } from 'vue'
 import { isNumber } from 'lodash'
 import { onPullDownRefresh } from '@dcloudio/uni-app'
-import { useScoreStore } from '@/store/score.store'
+import { formatScore, useScoreStore } from '@/store/score.store'
 import BounceBall from '@/components/BounceBall/BounceBall.vue'
 
 const scoreStore = useScoreStore()
@@ -49,7 +49,7 @@ const currentCourseDetail = computed(() => {
     detailInfo: [
       {
         title: '我的成绩',
-        value: isNumber(score.myScore) ? (score.myScore.toString()).toFixed(2) : score.myScore,
+        value: formatScore(score.myScore),
         icon: 'user-circle-o',
       },
       {

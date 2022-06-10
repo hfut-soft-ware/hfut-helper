@@ -19,7 +19,8 @@
       "@typescript-eslint/ban-ts-comment": "off",
       "@typescript-eslint/consistent-indexed-object-style": "off",
       "n/handle-callback-err": "off",
-      "no-extra-boolean-cast": "off"
+      "no-extra-boolean-cast": "off",
+      "vue/attribute-hyphenation": "off"
     }
   }]
 }

@@ -163,7 +163,7 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
       return this.course.schedule[state.daySchedule.weekIdx!][state.daySchedule.dayIdx!]
     },
     exam() {
-      const exams = this.list.exams || []
+      const exams = this.list.exams
       return exams.map((item) => {
         const startDate = new Date(`${item.date} ${item.startTime}`)
         const endDate = new Date(`${item.date} ${item.endTime}`)
@@ -266,7 +266,11 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
       // TODO 莫名其妙的bug
       idx = idx || 0
 
-      return { ...this.course.lessons[idx], color: CARD_COLORS[idx % (CARD_COLORS.length - 1)] }
+      const detail = this.course.lessons[idx]
+      const detailColor = detail.detailInfo.color || ''
+      const color = detailColor.length > 0 ? detailColor : CARD_COLORS[idx % (CARD_COLORS.length - 1)]
+
+      return { ...detail, color }
     },
     getCourseByHourIndex(index: number) {
       const course = this.todayCourse.find(course => course.index === index)

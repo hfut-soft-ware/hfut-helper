@@ -1,23 +1,41 @@
 <script lang='ts' setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+import { storeToRefs } from 'pinia'
 import type { CourseData } from '@/store/courseList.store'
-import { getTeachers } from '@/store/courseList.store'
+import { getTeachers, useCourseListStore } from '@/store/courseList.store'
 import type { TCourseDetail } from '@/components/CourseDetail/course-detail.vue'
 import CourseDetail from '@/components/CourseDetail/course-detail.vue'
+import { useEditSchedule } from '@/components/CoursePopup/use-editSchedule'
+import CreateCustomPage from '@/components/CreateCustomPage/CreateCustomPage.vue'
 
 interface Props {
   show: boolean
   data: CourseData
+  isCustom: boolean
+  weekday: number
 }
 
 interface Emits {
   (e: 'close'): void
 }
 
-const { data, show } = defineProps<Props>()
+const courseStore = useCourseListStore()
+const { weekSchedule } = storeToRefs(courseStore)
+
+const { data, show, isCustom, weekday } = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
+const popupShow = ref(show)
+
 const isExam = computed(() => data.detail?.type === 'Exam')
+
+const popupHeight = computed(() => {
+  return (isExam.value || isCustom) ? 50 : 85
+})
+
+// 判断是不是考试或者自定义，来让高度减小
+const isShortCourse = computed(() => isExam.value || isCustom)
+const scrollStyle = computed(() => `height: ${400 * (popupHeight.value / (isShortCourse.value ? 200 : 100))}px;`)
 
 const headerInfo = computed(() => {
   const res = [
@@ -38,6 +56,12 @@ const headerInfo = computed(() => {
     res[1].title = '上课时间'
   }
 
+  if (isCustom) {
+    res[0].title = '地点'
+    res[0].value = data.course!.room
+    res[1].title = '时间'
+  }
+
   return res
 })
 
@@ -50,6 +74,14 @@ const lessonDetailList = computed<TCourseDetail[]>(() => {
         icon: 'location-o',
         title: '考试地点',
         value: data.course?.room,
+      },
+    ]
+  } else if (isCustom) {
+    return [
+      {
+        icon: 'comment-o',
+        title: '备注',
+        value: data.detail!.detailInfo.mark,
       },
     ]
   }
@@ -98,22 +130,58 @@ function onClose() {
   emit('close')
 }
 
+const {
+  editShow,
+  onScheduleClose,
+  onEditUpdated,
+  onEditScheduleClick,
+} = useEditSchedule(data)
+
 </script>
 
 <template>
   <van-popup
-    :show="show"
+    :show="editShow"
+    closeable
+    round
+    position="bottom"
+    custom-style="height: 80%"
+    @close="() => {
+      onScheduleClose()
+      onClose()
+    }"
+  >
+    <CreateCustomPage
+      :detail="data.detail"
+      :is-custom="isCustom"
+      :course-data="data"
+      :type="'update'"
+      :current-week="weekSchedule.weekIdx + 1"
+      :current-day="weekday"
+      :title="'编辑日程'"
+      :start-index="data.course?.lessonStartIndex"
+      :name="data.detail?.courseName"
+      :location="data.course?.room"
+      :desc="data.detail?.detailInfo?.mark"
+      @updated="() => {
+        onClose()
+        onEditUpdated()
+      }"
+    />
+  </van-popup>
+  <van-popup
+    :show="popupShow"
     round
     closeable
     position="bottom"
-    :custom-style="isExam ? 'height: 50%' : 'height: 85%'"
-    :overlay-style="isExam ? '' : 'background-color: #4981F9'"
+    :custom-style="`height: ${popupHeight}%`"
+    :overlay-style="(isExam || isCustom) ? '' : 'background-color: #4981F9'"
     @close="onClose"
   >
     <div class="container">
       <div class="header">
         <div class="courseName">
-          <div :class="`line ${isExam ? 'line-exam' : ''}`" />
+          <div :class="`line ${isExam ? 'line-exam' : isCustom ? 'line-custom' : ''}`" />
           <p class="text-lg font-medium">
             {{ data.detail?.courseName }}
           </p>
@@ -131,13 +199,75 @@ function onClose() {
         <div class="mt-5">
           <van-divider />
         </div>
-        <CourseDetail :detail="lessonDetailList" />
+        <scroll-view
+          id="scroller"
+          scroll-y
+          :style="scrollStyle"
+        >
+          <CourseDetail :detail="lessonDetailList" />
+        </scroll-view>
+      </div>
+      <div
+        v-if="!isExam && isCustom"
+        class="border-[1px] mt-10 border-[#5079D0] font-semibold text-center py-3 px-5 rounded-full text-[#4C81F8]"
+        @click="() => {
+          popupShow = false
+          onEditScheduleClick()
+        }"
+      >
+        修改日程
       </div>
     </div>
   </van-popup>
 </template>
 
 <style lang='scss' scoped>
+@mixin generateCardStyle($bgColor) {
+  background: $bgColor;
+}
+
+.week-active {
+  @apply bg-blue-500 text-white;
+}
+
+.color-active {
+  @apply  border-2 border-blue-500;
+}
+
+.yellow {
+  @include generateCardStyle(#FCEBCD);
+}
+.light-yellow {
+  @include generateCardStyle(#FCEBCF);
+}
+.light-blue {
+  @include generateCardStyle(#E6F4FF);
+}
+.blue {
+  @include generateCardStyle(#E6F3FE);
+}
+.pink {
+  @include generateCardStyle(#FFEEF8);
+}
+.red {
+  @include generateCardStyle(#FFEFF0);
+}
+.grown {
+  @include generateCardStyle(#FFF9C9);
+}
+.light-green {
+  @include generateCardStyle(#DEFBF7);
+}
+.green {
+  @include generateCardStyle(#E2F9F3);
+}
+.blue {
+  @include generateCardStyle(#E6F4FF);
+}
+.purple {
+  @include generateCardStyle(#FAEDFF);
+}
+
 .container {
   @apply w-[85%] mx-auto mt-5 relative;
   .header {
@@ -149,6 +279,9 @@ function onClose() {
       }
       .line-exam {
         background-color: $red !important;
+      }
+      .line-custom {
+        background-color: $blue !important;
       }
     }
     .info {

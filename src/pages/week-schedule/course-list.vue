@@ -1,7 +1,8 @@
 <script lang='ts' setup>
 import { storeToRefs } from 'pinia'
 import { computed, ref } from 'vue'
-import { isOdd, isUndefined } from '@/shared/utils'
+import { isUndefined } from 'lodash'
+import { isOdd } from '@/shared/utils'
 import type { CourseData } from '@/store/courseList.store'
 import { formatCourseName, formatRoom, useCourseListStore } from '@/store/courseList.store'
 import CoursePopup from '@/components/CoursePopup/course-popup.vue'
@@ -10,8 +11,8 @@ import { WEEK_SCHEDULE_CARD_HEIGHT } from '@/pages/week-schedule/constant'
 import { useWeekListSettingsStore } from '@/store/weekListSettings.store'
 import { useRef } from '@/shared/hooks/useRef'
 import type { ISchedule } from '@/shared/types/response/course'
-import type { TEmptyCoursePos } from '@/pages/week-schedule/use-customCourse'
-import { useCustomCourse } from '@/pages/week-schedule/use-customCourse'
+import type { TEmptyCoursePos } from '@/pages/week-schedule/use-customCourseShow'
+import { useCustomCourseShow } from '@/pages/week-schedule/use-customCourseShow'
 import CustomCourse from '@/pages/week-schedule/custom-course.vue'
 
 const store = useCourseListStore()
@@ -59,16 +60,27 @@ const {
   customCourseShow,
   currentEmptyCourse,
   startIndex,
+  currentDay,
+  isCustom,
+  weekday,
   onCustomCourseClose,
   handleOpenCustomCourse,
   handleCustomCourseCardClick,
-} = useCustomCourse()
+} = useCustomCourseShow()
 
 function handleCourseClick(clickedCourse: CourseData, pos: TEmptyCoursePos = currentEmptyCourse) {
-  // 处理自定义课程
+  weekday.value = pos.x + 1
+
   if (isUndefined(clickedCourse)) {
     handleCustomCourseCardClick(pos)
     return
+  }
+
+  // 处理自定义课程
+  if (clickedCourse?.detail?.type === 'Diy') {
+    isCustom.value = true
+  } else {
+    isCustom.value = false
   }
 
   // 处理冲突课程
@@ -96,6 +108,7 @@ function onClose() {
 
 <template>
   <van-popup
+    v-if="customCourseShow"
     :show="customCourseShow"
     round
     closeable
@@ -103,9 +116,21 @@ function onClose() {
     custom-style="height: 90%"
     @close="onCustomCourseClose"
   >
-    <CustomCourse :start-index="startIndex" :current-week="weekSchedule.weekIdx" />
+    <CustomCourse
+      :current-day="currentDay"
+      :start-index="startIndex"
+      :current-week="weekSchedule.weekIdx + 1"
+      :close-popup="() => customCourseShow = false"
+    />
   </van-popup>
-  <course-popup v-if="show" :show="show" :data="courseData" @close="onClose" />
+  <course-popup
+    v-if="show"
+    :is-custom="isCustom"
+    :show="show"
+    :data="courseData"
+    :weekday="weekday"
+    @close="onClose"
+  />
   <van-popup
     :show="conflictCourseShow"
     round

@@ -20,8 +20,11 @@ export const getLoverCourse = () => uni.getStorageSync(LOVER_COURSE) as ICourse
 export const setLoverStatus = (isLover: boolean) => uni.setStorageSync(LOVER_STATUS, isLover)
 export const getLoverStatus = () => !!uni.getStorageSync(LOVER_STATUS)
 
+let isInit = false
+
 export const uesLoverStore = defineStore('loverStore', () => {
-  const isLover = ref(getLoverStatus())
+  const isLover = ref(isInit ? getLoverStatus() : false)
+  isInit = true
 
   const isLoverRelieved = ref(!isObject(getLoverCourse()))
 

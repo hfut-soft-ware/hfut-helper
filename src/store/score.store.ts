@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import Toast from '@vant/weapp/lib/toast/toast'
 import { getRandomQAQ } from 'qaq-font'
+import { isNumber } from 'lodash'
 import { getScoreRequest, getSingleScoreRequest } from '@/server/api/score'
 import type { IScore, MajorRankVo, Score, Semester } from '@/shared/types/response/score'
 import { useRef } from '@/shared/hooks/useRef'
@@ -29,9 +30,9 @@ type SemesterScore = {
   index: number
 }
 
-type ActiveType = 'average' | 'gpa' | 'max'
+export type ScoreCardActiveType = 'average' | 'gpa' | 'max'
 
-function createScoreDetail(data: MajorRankVo, type: ActiveType) {
+function createScoreDetail(data: MajorRankVo, type: ScoreCardActiveType) {
   if (type === 'average') {
     return {
       total: data.total,
@@ -53,9 +54,17 @@ function createScoreDetail(data: MajorRankVo, type: ActiveType) {
   }
 }
 
+export function formatScore(score: any) {
+  if (isNumber(score)) {
+    return score.toFixed(2)
+  } else {
+    return parseFloat(`${score}`).toFixed(2)
+  }
+}
+
 export const useScoreStore = defineStore('scoreStore', () => {
   const scoreData = ref<IScore>()
-  const [homeActive, setHomeActive] = useRef<ActiveType>('average')
+  const [homeActive, setHomeActive] = useRef<ScoreCardActiveType>('average')
   const [selectedSemester, setSelectedSemester] = useRef<number>(0)
   const [currentSelectedCourse, setCurrentSelectedCourse] = useRef<Score>({} as Score)
   const [currentScoreData, setCurrentScoreData] = useRef<ISingleScoreData>({} as ISingleScoreData)
@@ -115,6 +124,7 @@ export const useScoreStore = defineStore('scoreStore', () => {
   const getScoreStore = async() => {
     Toast.loading({
       duration: 0,
+      forbidClick: true,
       message: `正在获取成绩信息...\n${getRandomQAQ('happy')[0]}`,
     })
     await getScoreRequest().then((res) => {

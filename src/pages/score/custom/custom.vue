@@ -1,27 +1,47 @@
 <script lang='ts' setup>
-import { storeToRefs } from 'pinia'
-import { computed, ref, watchEffect } from 'vue'
+import { watchEffect } from 'vue'
 import Card from '@/components/Card/Card.vue'
 import { useScoreStore } from '@/store/score.store'
+import { useCustom } from '@/pages/score/custom/use-custom'
+import BounceBall from '@/components/BounceBall/BounceBall.vue'
 
 const store = useScoreStore()
-const { scoreData } = storeToRefs(store)
-
-const semesters = computed(() => scoreData.value?.semesters)
-
-const selectedScore = ref([])
-
-function onScoreSelectedChange(evt: any) {
-  selectedScore.value = evt.detail
-}
+const {
+  selectedScore,
+  customData,
+  homeActive,
+  detailInfo,
+  semesters,
+  changeHeadAndMax,
+  handleQueryClick,
+} = useCustom(store)
 
 watchEffect(() => {
   console.log(semesters.value)
-  console.log(selectedScore.value.value2)
 })
+
+function toggle(courseName: string) {
+  const selectedScoreVal = Array.from(selectedScore.value)
+  if (selectedScoreVal.includes(courseName)) {
+    const idx = selectedScoreVal.findIndex(item => item === courseName)
+    selectedScoreVal.splice(idx, 1)
+  } else {
+    selectedScoreVal.push(courseName)
+  }
+  selectedScore.value = selectedScoreVal
+}
 </script>
 
 <template>
+  <van-toast id="van-toast" />
+  <div class="fixed top-64 right-0 z-[1]">
+    <div
+      class="settings bg-[#3F51B5] text-lg w-[50px] h-[50px] flex justify-center items-center text-white rounded-l-full rounded-tr-full"
+      @click="handleQueryClick"
+    >
+      <van-icon name="search" />
+    </div>
+  </div>
   <div class="w-[95vw] min-h-screen mx-auto py-5 relative flex flex-col gap-5 bg-[#E8EAF6] mt-5 rounded-lg box-border px-3">
     <Card>
       <div class="flex flex-col gap-3 py-1">
@@ -33,14 +53,14 @@ watchEffect(() => {
             <div
               class="score-type"
               :class="homeActive === 'average' ? 'score-type-active' : ''"
-              @click="scoreStore.setHomeActive('average')"
+              @click="store.setHomeActive('average')"
             >
               均分
             </div>
             <div
               class="score-type"
               :class="homeActive === 'gpa' ? 'score-type-active' : ''"
-              @click="scoreStore.setHomeActive('gpa')"
+              @click="store.setHomeActive('gpa')"
             >
               GPA
             </div>
@@ -48,14 +68,15 @@ watchEffect(() => {
         </div>
         <div>
           <h3 class="font-semibold text-2xl text-white">
-            0 / 0
+            {{ customData.score.rank }} / {{ customData.total }}
           </h3>
         </div>
         <div class="bg-[#3F51B5] p-2 rounded-md flex">
           <div
-            v-for="item in homeDetailInfo"
+            v-for="(item, index) in detailInfo"
             :key="item.icon"
-            class="flex flex-1 gap-2"
+            class="flex flex-1 gap-2 relative"
+            @click="changeHeadAndMax(index)"
           >
             <van-icon :name="item.icon" />
             <div class="flex-col gap-3 text-sm">
@@ -63,35 +84,47 @@ watchEffect(() => {
                 {{ item.title }}
               </p>
               <p>{{ item.value }}</p>
+
+              <BounceBall v-if="index === 2" class="absolute top-0 right-2" />
             </div>
           </div>
         </div>
       </div>
     </Card>
-    <div class="flex flex-col gap-5 mt-5">
-      <div
-        v-for="item in semesters"
-        :key="item.semester"
-        class="flex border-[1px] border-[#D3D7EE] rounded-md px-5 py-3 flex-col bg-white"
-      >
-        <h3 class="font-semibold">
-          {{ item.semester }}
-        </h3>
-        <div class="mt-5 flex flex-col">
-          <div v-for="score in item.scores" :key="score.name">
-            <van-checkbox-group :value="selectedScore" @change="onScoreSelectedChange">
-              <div class="flex justify-between">
-                <p>{{ score.name }}</p>
-                <van-checkbox :name="score.name" />
+
+    <van-checkbox-group :value="selectedScore">
+      <div class="flex flex-col gap-5 mt-5">
+        <div
+          v-for="item in semesters"
+          :key="item.semester"
+          class="flex border-[1px] border-[#D3D7EE] rounded-md px-5 py-3 flex-col bg-white"
+        >
+          <h2 class="font-semibold">
+            {{ item.semester }}
+          </h2>
+          <van-cell-group>
+            <div class="mt-5 flex flex-col gap-2">
+              <div
+                v-for="score in item.scores"
+                :key="score.name"
+                @click="toggle(score.name)"
+              >
+                <van-cell
+                  clickable
+                  :title="score.name"
+                  class="flex justify-between"
+                >
+                  <div class="flex justify-end">
+                    <van-checkbox
+                      :name="score.name"
+                    />
+                  </div>
+                </van-cell>
               </div>
-            </van-checkbox-group>
-          </div>
+            </div>
+          </van-cell-group>
         </div>
       </div>
-    </div>
+    </van-checkbox-group>
   </div>
 </template>
-
-<style lang='scss' scoped>
-
-</style>
