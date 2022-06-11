@@ -14,6 +14,7 @@ const {
   handleNextPageClick,
 } = useRecordedList(waterFlowStore)
 
+console.log(cardInfo.value)
 </script>
 
 <template>

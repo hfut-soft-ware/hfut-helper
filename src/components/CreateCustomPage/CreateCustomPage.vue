@@ -1,10 +1,12 @@
 <script lang='ts' setup>
 import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
 import type { CustomType } from '@/pages/week-schedule/use-customCourse'
 import { useCustomCourse } from '@/pages/week-schedule/use-customCourse'
 import type { CourseData } from '@/store/courseList.store'
 import { useCourseListStore } from '@/store/courseList.store'
 import { CARD_COLORS } from '@/shared/constant'
+import { uesLoverStore } from '@/store/lover.store'
 
 interface Props {
   name: string
@@ -44,6 +46,9 @@ const diyId = ref(props.courseData?.detail?.diyId)
 
 const store = useCourseListStore()
 
+const loverStore = uesLoverStore()
+const { isLover } = storeToRefs(loverStore)
+
 const {
   courseDesc,
   courseActive,
@@ -77,28 +82,28 @@ const handleButtonClick = () => {
 
 <template>
   <vant-toast id="van-toast" />
-  <div class="flex flex-col gap-2 p-5">
+  <div class="flex flex-col gap-3 p-5">
     <div class="text-center font-semibold">
       {{ props.title }}
     </div>
     <div class="flex flex-col gap-3">
       <div v-if="isCustom" class="w-full bg p-4 bg-gray-500/20 rounded-lg box-border flex justify-between">
-        <p class="flex-[4] font-semibold">
+        <p class="flex-[5] font-semibold">
           日程名
         </p>
-        <input v-model="courseName" placeholder="必填" class="flex-[2]">
+        <input v-model="courseName" placeholder="必填" class="flex-1">
       </div>
       <div v-if="isCustom" class="w-full bg p-4 bg-gray-500/20 rounded-lg box-border flex justify-between">
-        <p class="flex-[4] font-semibold">
+        <p class="flex-[5] font-semibold">
           地点
         </p>
-        <input v-model="courseLocation" placeholder="选填" class="flex-[2]">
+        <input v-model="courseLocation" placeholder="选填" class="flex-1">
       </div>
       <div class="w-full bg p-4 bg-gray-500/20 rounded-lg box-border flex justify-between">
-        <p class="flex-[4] font-semibold">
+        <p class="flex-[5] font-semibold">
           备注
         </p>
-        <input v-model="courseDesc" placeholder="选填" class="flex-[2]">
+        <input v-model="courseDesc" placeholder="选填" class="flex-1">
       </div>
     </div>
     <div class="flex justify-between">
@@ -115,7 +120,7 @@ const handleButtonClick = () => {
     <div class="flex gap-2 flex-wrap">
       <template v-for="item in 20" :key="item">
         <div
-          class="flex-1 text-center bg-gray-500/20 px-5 py-2 text-xs rounded-lg text-gray-500/60"
+          class="flex-[15%] text-center bg-gray-500/20 py-2 text-xs rounded-lg text-gray-500/60"
           :class="courseActive.includes(item) ? 'week-active' : ''"
           @click="handleWeekActiveClick(item)"
         >
@@ -127,16 +132,21 @@ const handleButtonClick = () => {
       <p class="font-semibold">
         颜色
       </p>
-      <div class="flex flex-wrap gap-2">
+      <div class="flex flex-wrap">
         <div
-          v-for="color in CARD_COLORS" :key="color"
-          class="flex-1 h-[50px] rounded-full"
-          :class="`${color} ${color === colorActive ? 'color-active' : ''}`"
-          @click="colorActive = color"
-        />
+          v-for="color in CARD_COLORS"
+          :key="color"
+          class="flex-[20%] mt-2"
+        >
+          <div
+            class="w-[50px] h-[50px] rounded-full"
+            :class="`${color} ${color === colorActive ? 'color-active' : ''}`"
+            @click="colorActive = color"
+          />
+        </div>
       </div>
     </div>
-    <div class="flex gap-2 w-[90vw] mx-auto">
+    <div v-if="!isLover" class="flex gap-2 w-[90vw] mx-auto">
       <div
         class="flex-1 box-border border-[1px] mt-5 border-[#5079D0] font-semibold text-center py-3 px-5 rounded-full text-[#4C81F8]"
         @click="() => handleButtonClick()"

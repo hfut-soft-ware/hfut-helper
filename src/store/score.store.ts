@@ -58,7 +58,8 @@ export function formatScore(score: any) {
   if (isNumber(score)) {
     return score.toFixed(2)
   } else {
-    return parseFloat(`${score}`).toFixed(2)
+    const res = parseFloat(`${score}`).toFixed(2)
+    return isNaN(res as any) ? score : res
   }
 }
 

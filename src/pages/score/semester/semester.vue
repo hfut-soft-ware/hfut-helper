@@ -79,7 +79,7 @@ function handleCourseClick(item: Score) {
       <scroll-view
         id="scroller"
         scroll-y
-        :style="`height: ${scrollHeight}px;`"
+        :style="`height: ${scrollHeight * 0.95}px;`"
       >
         <div class="flex flex-col gap-5">
           <div v-for="item in semesterScore" :key="item.name" class="flex justify-between" @click="handleCourseClick(item)">

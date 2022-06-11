@@ -1,9 +1,9 @@
 <script lang='ts' setup>
 import { storeToRefs } from 'pinia'
 import { onPullDownRefresh } from '@dcloudio/uni-app'
+import Settings from './settings.vue'
 import { useScoreStore } from '@/store/score.store'
 import Card from '@/components/Card/Card.vue'
-import Settings from '@/pages/score/settings.vue'
 
 const scoreStore = useScoreStore()
 const {

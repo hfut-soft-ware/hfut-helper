@@ -1,8 +1,8 @@
 <script lang='ts' setup>
 import { watchEffect } from 'vue'
+import { useCustom } from './use-custom'
 import Card from '@/components/Card/Card.vue'
 import { useScoreStore } from '@/store/score.store'
-import { useCustom } from '@/pages/score/custom/use-custom'
 import BounceBall from '@/components/BounceBall/BounceBall.vue'
 
 const store = useScoreStore()

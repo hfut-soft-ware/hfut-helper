@@ -25,25 +25,6 @@ onLoad((query) => {
 })
 
 usePullDownUpdateCourse()
-
-const updateManager = uni.getUpdateManager()
-
-updateManager.onUpdateReady(() => {
-  Dialog.confirm({
-    title: `HfutSpace更新啦~${getRandomQAQ('happy')[0]}`,
-    message: '是否重启加载最新版本的HfutSpace?',
-
-  }).then(() => {
-    // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
-    updateManager.applyUpdate()
-  })
-})
-
-updateManager.onUpdateFailed((res) => {
-  Toast.fail({
-    message: `HfutSpace新版本更新失败\n${getRandomQAQ('sadness')[0]}`,
-  })
-})
 </script>
 
 <template>

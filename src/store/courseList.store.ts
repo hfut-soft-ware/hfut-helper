@@ -1,5 +1,5 @@
 import { defineStore, storeToRefs } from 'pinia'
-import { addDays, addWeeks, format, isToday } from 'date-fns'
+import { addDays, isToday } from 'date-fns'
 import type { ICourse, IExam, ILesson, IMainInfo, ISchedule } from '@/shared/types/response/course'
 import { getCourseListRequest } from '@/server/api/user'
 import { isNullOrUndefined, isObject } from '@/shared/utils/'
@@ -58,12 +58,12 @@ export type GetCourseByHourIndexReturn = { course?: ISchedule; detail?: ILesson 
 export type CourseData = GetCourseByHourIndexReturn
 
 type Actions = {
-  getCourseList: (forceRefresh?: boolean) => Promise<ICourse>
+  getCourseList: (forceRefresh?: boolean, isAvoidRefreshingSchedule?: boolean) => Promise<ICourse>
   setDaySchedule: (daySchedule: VisibleSchedule) => void
   setWeekSchedule: (weekSchedule: VisibleSchedule) => void
   getCourseDetailByIdx: (idx?: number) => ILesson | undefined
   getCourseByHourIndex: (hourIndex: number) => CourseData
-  initStore: (data: ICourse) => void
+  initStore: (data: ICourse, payload?: { week: number; day: number }) => void
   changeStatus: (isLover: boolean) => void
   addCourse: (payload: TCustomCourse) => void
 }
@@ -188,14 +188,23 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
   },
 
   actions: {
-    // TODO 解决token未能及时刷新问题
-    async getCourseList(forceRefresh = false) {
+    async getCourseList(forceRefresh = false, isAvoidRefreshingScheduleDate = false) {
+      const { weekIdx: currentWeek, dayIdx: currentDay } = this.weekSchedule
       const { isLover: lover } = storeToRefs(uesLoverStore())
       const isLover = lover.value
 
       const cachedCourseList = getWeekCourse()
       if (isObject(cachedCourseList)) {
         this.initStore(cachedCourseList)
+      }
+
+      const initStore = (data: ICourse) => {
+        // 判断是否刷新后要回到本周来
+        if (isAvoidRefreshingScheduleDate) {
+          this.initStore(data, { week: currentWeek || 0, day: currentDay || 0 })
+        } else {
+          this.initStore(data)
+        }
       }
 
       const fetchData = async() => {
@@ -208,10 +217,10 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
             setWeekCourse(data)
           }
 
-          this.initStore(data)
+          initStore(data)
         }).catch((err) => {
           const data = uni.getStorageSync(COURSE_KEY) as ICourse
-          this.initStore(data)
+          initStore(data)
 
           throw new Error(err)
         })
@@ -226,13 +235,13 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
       return this.list
     },
 
-    initStore(data: ICourse) {
+    initStore(data: ICourse, payload?: { week: number; day: number }) {
       this.list = data
 
       this.currentWeekIdx = data.mainInfo.curWeek - 1
       const scheduleIdx = {
-        weekIdx: this.currentWeekIdx,
-        dayIdx: data.mainInfo.curDayIndex - 1,
+        weekIdx: payload?.week || this.currentWeekIdx,
+        dayIdx: payload?.day || data.mainInfo.curDayIndex - 1,
       }
       this.daySchedule = scheduleIdx
       this.weekSchedule = scheduleIdx

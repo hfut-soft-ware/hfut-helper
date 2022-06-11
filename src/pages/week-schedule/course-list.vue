@@ -14,11 +14,15 @@ import type { ISchedule } from '@/shared/types/response/course'
 import type { TEmptyCoursePos } from '@/pages/week-schedule/use-customCourseShow'
 import { useCustomCourseShow } from '@/pages/week-schedule/use-customCourseShow'
 import CustomCourse from '@/pages/week-schedule/custom-course.vue'
+import { uesLoverStore } from '@/store/lover.store'
 
 const store = useCourseListStore()
 const { weekScheduleVisibleWeek, weekSchedule } = storeToRefs(store)
 
 const { onTouchStart, onTouchEnd, onPrev, onNext } = useTouchInteractive(store, 'week')
+
+const loverStore = uesLoverStore()
+const { isLover } = storeToRefs(loverStore)
 
 const courseList = computed<CourseData[][]>(() => {
   const weekVal = weekScheduleVisibleWeek.value
@@ -113,7 +117,7 @@ function onClose() {
     round
     closeable
     position="bottom"
-    custom-style="height: 90%"
+    custom-style="height: 90vh"
     @close="onCustomCourseClose"
   >
     <CustomCourse
@@ -228,7 +232,7 @@ function onClose() {
             </template>
           </div>
         </template>
-        <template v-if="currentEmptyCourse.x === weekday && currentEmptyCourse.y === index">
+        <template v-if="currentEmptyCourse.x === weekday && currentEmptyCourse.y === index && !isLover">
           <div class="addCard" @click="handleOpenCustomCourse">
             <van-icon name="plus" />
           </div>

@@ -35,7 +35,7 @@ const popupHeight = computed(() => {
 
 // 判断是不是考试或者自定义，来让高度减小
 const isShortCourse = computed(() => isExam.value || isCustom)
-const scrollStyle = computed(() => `height: ${400 * (popupHeight.value / (isShortCourse.value ? 200 : 100))}px;`)
+const scrollStyle = computed(() => `height: ${450 * (popupHeight.value / (isShortCourse.value ? 200 : 100))}px;`)
 
 const headerInfo = computed(() => {
   const res = [
@@ -145,7 +145,7 @@ const {
     closeable
     round
     position="bottom"
-    custom-style="height: 80%"
+    custom-style="height: 85vh"
     @close="() => {
       onScheduleClose()
       onClose()

@@ -6,8 +6,9 @@ import type { IAddCourseDto } from '@/shared/types/dto/course'
 import { addCourseRequest, deleteCourseRequest, updateCourseRequest } from '@/server/api/user'
 import type { TColors } from '@/shared/constant'
 import { CARD_COLORS } from '@/shared/constant'
-import { LESSON_INDEX_TO_TIME } from '@/pages/week-schedule/constant'
 import type { CreateCustomPageEmits } from '@/components/CreateCustomPage/CreateCustomPage.vue'
+import { CourseLayout } from '@/_mock_/layout'
+import { LESSON_INDEX_TO_TIME } from '@/pages/week-schedule/constant'
 
 export type CustomType = 'add' | 'update'
 
@@ -45,8 +46,8 @@ export function useCustomCourse(
     mark: courseDesc.value,
     color: colorActive.value,
     schedule: {
-      startTime: (LESSON_INDEX_TO_TIME as any)[startIdx.value + 1].startTime,
-      endTime: (LESSON_INDEX_TO_TIME as any)[endIdx.value].endTime,
+      startTime: (LESSON_INDEX_TO_TIME as any)[startIdx.value + 1].startTime, // CourseLayout.result.courseUnitList.find(item => item.indexNo === startIdx.value + 1)!.startTimeText,
+      endTime: (LESSON_INDEX_TO_TIME as any)[endIdx.value].endTime, // CourseLayout.result.courseUnitList.find(item => item.indexNo === endIdx.value + 1)!.endTimeText,
       room: courseLocation.value,
       weekDay: options?.currentDay,
       weeks: courseActive,
@@ -79,7 +80,7 @@ export function useCustomCourse(
         duration: 0,
         message: '添加成功，重新刷新课表中...',
       })
-      store.getCourseList(true).then((res) => {
+      store.getCourseList(true, true).then((res) => {
         Toast.success({
           message: '添加成功',
         })
@@ -101,7 +102,7 @@ export function useCustomCourse(
         duration: 0,
         message: '更新成功，重新刷新课表中...',
       })
-      store.getCourseList(true).then((res) => {
+      store.getCourseList(true, true).then((res) => {
         Toast.success({
           message: '课表加载成功',
         })
@@ -139,7 +140,7 @@ export function useCustomCourse(
 
   const deleteCourse = async(diyId: string) => {
     await deleteCourseRequest(diyId).then((res) => {
-      store.getCourseList(true).then((res) => {
+      store.getCourseList(true, true).then((res) => {
         Toast.success({
           message: '课表加载成功',
         })
@@ -173,19 +174,8 @@ export function useCustomCourse(
   }
 
   const handleAddCourseClick = (data: IAddCourseDto) => {
-    Dialog.confirm({
-      title: '确定要新增日程吗？',
-      zIndex: 99999999,
-      beforeClose: action => new Promise((resolve) => {
-        if (action === 'confirm') {
-          addCourse(data).then(() => {
-            emit('updated')
-            resolve(true)
-          })
-        } else {
-          resolve(true)
-        }
-      }),
+    addCourse(data).then(() => {
+      emit('updated')
     })
   }
 

@@ -21,7 +21,7 @@ function onLogout() {
 <template>
   <div>
     <div class="logout" @click="onLogout">
-      注销
+      退出登录
     </div>
   </div>
 </template>

@@ -2,6 +2,7 @@
 import Toast from '@vant/weapp/dist/toast/toast'
 import { onLoad } from '@dcloudio/uni-app'
 import { computed, ref } from 'vue'
+import { getRandomQAQ } from 'qaq-font'
 import loverImg from './lover.png'
 import normalImg from '@/pages/login/img.png'
 import { useFormValidate } from '@/pages/login/use-formValidate'
@@ -70,13 +71,20 @@ function toDisclaimers() {
       >
     </div>
 
-    <div class="mr-[15vw] mt-10">
+    <div class="mr-[15vw] mt-10 flex flex-col gap-2">
       <van-notice-bar
         wrapable
         color="#1989fa"
         background="#ecf9ff"
         left-icon="info-o"
         text="忘记密码的话可以去信息门户重置一下噢"
+      />
+      <van-notice-bar
+        wrapable
+        color="#1989fa"
+        background="#ecf9ff"
+        left-icon="info-o"
+        text="密码输错太多次是会被冻结五分钟的噢"
       />
     </div>
     <div class="form">
@@ -104,9 +112,15 @@ function toDisclaimers() {
         登录
       </div>
     </div>
-    <p class="text-center text-blue-500 underline text-sm mt-10" @click="toDisclaimers">
-      用户协议
-    </p>
+    <div class="flex flex-col gap-5">
+      <p class="text-center text-blue-500 underline text-sm mt-10" @click="toDisclaimers">
+        用户协议
+      </p>
+
+      <p class="text-xs text-gray-500">
+        登录遇到了问题？可以加入交流群656140321问问 {{ getRandomQAQ('happy')[0] }}
+      </p>
+    </div>
   </div>
 </template>
 

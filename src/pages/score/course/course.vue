@@ -1,8 +1,8 @@
 <script lang='ts' setup>
 import { storeToRefs } from 'pinia'
-import { computed, ref } from 'vue'
-import { isNumber } from 'lodash'
+import { computed, onMounted, ref } from 'vue'
 import { onPullDownRefresh } from '@dcloudio/uni-app'
+import * as echarts from 'echarts'
 import { formatScore, useScoreStore } from '@/store/score.store'
 import BounceBall from '@/components/BounceBall/BounceBall.vue'
 
@@ -75,11 +75,15 @@ function changeHeadAndMax(index: number) {
     }
   }
 }
+
 </script>
 
 <template>
   <van-toast id="van-toast" />
   <div class="w-[95vw] min-h-screen mx-auto py-5 relative flex flex-col gap-5 bg-[#E8EAF6] mt-5 rounded-lg box-border px-3">
+    <view style="height: 750rpx">
+      <LimeEchart ref="chartRef" />
+    </view>
     <Card>
       <div class="flex flex-col gap-3 py-1">
         <div class="w-full flex justify-between">
