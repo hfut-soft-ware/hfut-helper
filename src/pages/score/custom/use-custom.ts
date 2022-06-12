@@ -104,7 +104,9 @@ export function useCustom(store: ReturnType<typeof useScoreStore>) {
 
     res!.forEach((item) => {
       item.scores.forEach((score) => {
-        payload.push(score.name)
+        if (score.lessonId.endsWith('B') || score.lessonId.endsWith('0X')) {
+          payload.push(score.name)
+        }
       })
     })
 

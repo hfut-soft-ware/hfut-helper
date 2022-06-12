@@ -84,7 +84,7 @@ function toDisclaimers() {
         color="#1989fa"
         background="#ecf9ff"
         left-icon="info-o"
-        text="密码输错太多次是会被冻结五分钟的噢"
+        text="密码输错太多次是会被教务那边冻结五分钟的噢"
       />
     </div>
     <div class="form">

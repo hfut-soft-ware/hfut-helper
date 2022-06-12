@@ -9,6 +9,7 @@ export const useFlowWaterStore = defineStore('flowWaterStore', () => {
   const totalPageNum = ref(1)
   const currentPage = ref(1)
   const recordList = reactive<IFlowWaterData[]>([])
+  const alreadyLoad = ref(false)
 
   const getUserFlowWater = async(pageNum: number, isLoadNextPage = false) => {
     if (pageNum > totalPageNum.value) {
@@ -38,6 +39,7 @@ export const useFlowWaterStore = defineStore('flowWaterStore', () => {
       Toast.success({
         message: `流水数据加载成功\n${getRandomQAQ('happy')[0]}`,
       })
+      alreadyLoad.value = true
       uni.stopPullDownRefresh()
     }).catch(() => {
       Toast.fail({
@@ -51,6 +53,7 @@ export const useFlowWaterStore = defineStore('flowWaterStore', () => {
     totalPageNum,
     recordList,
     currentPage,
+    alreadyLoad,
     getUserFlowWater,
   }
 })

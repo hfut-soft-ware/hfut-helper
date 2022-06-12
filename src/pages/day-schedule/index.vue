@@ -1,8 +1,5 @@
 <script lang='ts' setup>
-import { onLaunch, onLoad } from '@dcloudio/uni-app'
-import Dialog from '@vant/weapp/lib/dialog/dialog'
-import { getRandomQAQ } from 'qaq-font'
-import Toast from '@vant/weapp/lib/toast/toast'
+import { onLoad } from '@dcloudio/uni-app'
 import Header from './Header.vue'
 import CardList from './card-list.vue'
 import { useCourseRequest } from './use-courseRequest'
@@ -23,6 +20,7 @@ onLoad((query) => {
     usePullDownUpdateCourse()
   }
 })
+uni.startPullDownRefresh({})
 
 usePullDownUpdateCourse()
 </script>

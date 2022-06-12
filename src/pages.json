@@ -100,13 +100,6 @@
         "navigationBarTitleText": "用户协议"
       }
     },
-    {
-      "path": "pages/mine/about/donate/donate",
-      "style": {
-        "navigationBarBackgroundColor": "#283593",
-        "navigationBarTitleText": "赞助我们"
-      }
-    }
   ],
   "tabBar": {
     "height": "20px",

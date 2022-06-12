@@ -7,14 +7,16 @@ import type { useFlowWaterStore } from '@/store/flowWater.store'
 import { set } from '@/shared/utils/object'
 
 export function useRecordedList(store: ReturnType<typeof useFlowWaterStore>) {
-  const { recordList, currentPage } = storeToRefs(store)
+  const { recordList, currentPage, alreadyLoad } = storeToRefs(store)
 
-  store.getUserFlowWater(1)
+  if (!alreadyLoad.value) {
+    store.getUserFlowWater(1)
+  }
 
   const consumeRecord = computed(() => {
     const data = recordList.value
 
-    const list: Record<string, IFlowWaterData['list'] & { total: number }> = {}
+    const list: Record<string, IFlowWaterData['list']> = {}
 
     data.forEach((cardItem) => {
       cardItem.list.forEach((item) => {

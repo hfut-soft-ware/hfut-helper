@@ -13,8 +13,6 @@ const {
   consumeRecord,
   handleNextPageClick,
 } = useRecordedList(waterFlowStore)
-
-console.log(cardInfo.value)
 </script>
 
 <template>
@@ -33,7 +31,7 @@ console.log(cardInfo.value)
         <div class="p-2 rounded-lg bg-[#3949AB] w-[25px] flex items-center">
           <img src="./img.png" class="w-[25px] h-[25px]">
         </div>
-        <h2 class="font-b text-3xl py-3">
+        <h2 class="text-3xl py-3">
           {{ cardInfo.content }}
         </h2>
         <h4 class="text-white/50 text-sm">
@@ -59,7 +57,9 @@ console.log(cardInfo.value)
               class="flex bg-white text-sm justify-between p-5 card-shadow w-full rounded-lg box-border"
             >
               <p>{{ item.merchantName.length > 0 ? item.merchantName : item.consumerType }}</p>
-              <p>{{ item.amount }}</p>
+              <p :class="item.amount.includes('-') ? 'cost' : 'recharge'">
+                {{ item.amount }}
+              </p>
             </div>
           </div>
         </div>
@@ -71,5 +71,11 @@ console.log(cardInfo.value)
 <style lang="scss" scoped>
 .settings {
   box-shadow: rgb(63 81 181 / 30%) 0px 12px 14px 0px;
+}
+.recharge {
+  @apply text-green-500/80;
+}
+.cost {
+  @apply text-red-500/80;
 }
 </style>

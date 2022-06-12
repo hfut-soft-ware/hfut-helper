@@ -25,6 +25,12 @@ function handleSemesterOpen(index: number) {
     url: '/pages/score/semester/semester',
   })
 }
+
+function handleOpenCustomClick() {
+  uni.navigateTo({
+    url: '/pages/score/custom/custom',
+  })
+}
 </script>
 
 <template>
@@ -76,7 +82,7 @@ function handleSemesterOpen(index: number) {
         </div>
       </div>
     </Card>
-    <div class="mt-5 flex border-[1px] border-[#D3D7EE] rounded-md px-5 py-3 flex-col bg-white">
+    <div class="relative mt-5 flex border-[1px] border-[#D3D7EE] rounded-md px-5 py-3 flex-col bg-white">
       <h3 class="font-semibold">
         成绩列表
       </h3>
@@ -94,6 +100,12 @@ function handleSemesterOpen(index: number) {
           <van-divider />
         </div>
       </div>
+      <p
+        class="text-center text-sm text-[#3F51B5] font-semibold"
+        @click="handleOpenCustomClick"
+      >
+        自定义排名<van-icon name="arrow" />
+      </p>
     </div>
   </div>
   <div class="mt-2 w-full flex justify-center text-xs text-black/80">

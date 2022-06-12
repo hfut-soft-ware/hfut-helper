@@ -20,8 +20,10 @@ watchEffect(() => {
   console.log(semesters.value)
 })
 
-function toggle(courseName: string) {
+function toggle(course: any) {
+  const courseName = course.name as string
   const selectedScoreVal = Array.from(selectedScore.value)
+  console.log(course)
   if (selectedScoreVal.includes(courseName)) {
     const idx = selectedScoreVal.findIndex(item => item === courseName)
     selectedScoreVal.splice(idx, 1)
@@ -107,7 +109,7 @@ function toggle(courseName: string) {
               <div
                 v-for="score in item.scores"
                 :key="score.name"
-                @click="toggle(score.name)"
+                @click="toggle(score)"
               >
                 <van-cell
                   clickable
