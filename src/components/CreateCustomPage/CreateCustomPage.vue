@@ -155,7 +155,7 @@ const handleButtonClick = () => {
       </div>
       <div
         v-if="type === 'update'"
-        class="flex-1 border-[1px] mt-5 border-red-500 font-semibold text-center py-3 px-5 rounded-full text-red-500"
+        class="flex-1 flex justify-center border-2 mt-5 border-red-500 font-semibold text-center py-3 px-5 rounded-full text-red-500"
         @click="handleDeleteCourse"
       >
         删除

@@ -4,17 +4,21 @@ import { format, formatDistanceToNow } from 'date-fns'
 import { onPullDownRefresh } from '@dcloudio/uni-app'
 import Toast from '@vant/weapp/lib/toast/toast'
 import { getRandomQAQ } from 'qaq-font'
+import { ref } from 'vue'
 import { useCourseListStore } from '@/store/courseList.store'
 
 const store = useCourseListStore()
 const { exam } = storeToRefs(store)
+
+const test = ref()
 
 onPullDownRefresh(async() => {
   Toast.loading({
     message: `正在加载最新考试信息中...\n${getRandomQAQ('happy')[0]}`,
     duration: 0,
   })
-  store.getCourseList(true).then(() => {
+  store.getCourseList(true).then((res) => {
+    test.value = res
     Toast.clear()
     Toast.success({
       message: `加载完成\n${getRandomQAQ('happy')[0]}`,
@@ -32,7 +36,7 @@ onPullDownRefresh(async() => {
 
 <template>
   <van-toast id="van-toast" />
-  <div class="min-h-screen w-screen">
+  <div class="min-h-screen w-screen bg-gray-300/10">
     <div class="w-[95vw] mx-auto flex flex-col gap-5 pt-10">
       <template v-if="!exam?.length">
         <van-empty description="暂时没有考试噢，刷新一下看看" />

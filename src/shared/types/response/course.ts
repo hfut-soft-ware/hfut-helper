@@ -16,6 +16,7 @@ export interface IMooc {
   id: number
   name: string
   detail: ILessonDetail
+  mock: boolean
 }
 
 export interface IExam {

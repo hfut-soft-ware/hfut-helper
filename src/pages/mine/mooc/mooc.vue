@@ -13,6 +13,7 @@ const moocDetailList = computed(() => {
     const detail = item.detail
     return {
       name: item.name,
+      isMooc: item.mock,
       detail: [
         {
           icon: 'bookmark-o',
@@ -32,7 +33,7 @@ const moocDetailList = computed(() => {
         {
           icon: 'notes-o',
           title: '上课周数',
-          value: detail.weeks.length > 0 ? detail.weeks : '建议前往学习通查看',
+          value: detail.weeks.length > 0 ? detail.weeks : '暂无',
         },
 
         {
@@ -57,17 +58,23 @@ const moocDetailList = computed(() => {
 </script>
 
 <template>
-  <div class="w-[90vw] min-h-screen mx-auto py-10">
-    <div class="flex flex-col gap-3 bg-white">
-      <div
-        v-for="mooc in moocDetailList"
-        :key="mooc.id"
-        class="card-shadow flex flex-col gap-2 p-5 rounded-lg"
-      >
-        <p class="font-bold">
-          {{ mooc.name }}
-        </p>
-        <CourseDetail :detail="mooc.detail" />
+  <div class="w-screen min-h-screen bg-gray-300/25">
+    <div class="w-[90vw] min-h-screen mx-auto py-10">
+      <div class="flex flex-col gap-3 bg-white rounded-lg">
+        <template
+          v-for="mooc in moocDetailList"
+          :key="mooc.id"
+        >
+          <div
+            v-if="mooc.isMooc"
+            class="card-shadow flex flex-col gap-2 p-5"
+          >
+            <p class="font-bold">
+              {{ mooc.name }}
+            </p>
+            <CourseDetail :detail="mooc.detail" />
+          </div>
+        </template>
       </div>
     </div>
   </div>

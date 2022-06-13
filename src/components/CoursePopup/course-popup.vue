@@ -7,6 +7,9 @@ import type { TCourseDetail } from '@/components/CourseDetail/course-detail.vue'
 import CourseDetail from '@/components/CourseDetail/course-detail.vue'
 import { useEditSchedule } from '@/components/CoursePopup/use-editSchedule'
 import CreateCustomPage from '@/components/CreateCustomPage/CreateCustomPage.vue'
+import { useFailureRateQuery } from '@/components/CoursePopup/use-failureRateQuery'
+import { useFailureRateStore } from '@/store/failureRate.store'
+import { useCourseSearchStore } from '@/store/courseSearch.store'
 
 interface Props {
   show: boolean
@@ -29,13 +32,18 @@ const popupShow = ref(show)
 
 const isExam = computed(() => data.detail?.type === 'Exam')
 
+const { mode: courseListMode } = storeToRefs(useCourseSearchStore())
+
 const popupHeight = computed(() => {
+  if (courseListMode.value === 'search') {
+    return 100
+  }
   return (isExam.value || isCustom) ? 50 : 85
 })
 
 // 判断是不是考试或者自定义，来让高度减小
 const isShortCourse = computed(() => isExam.value || isCustom)
-const scrollStyle = computed(() => `height: ${450 * (popupHeight.value / (isShortCourse.value ? 200 : 100))}px;`)
+const scrollStyle = computed(() => `height: ${450 * (popupHeight.value / (isShortCourse.value ? 200 : 90))}px;`)
 
 const headerInfo = computed(() => {
   const res = [
@@ -137,6 +145,9 @@ const {
   onEditScheduleClick,
 } = useEditSchedule(data)
 
+const failureRateStore = useFailureRateStore()
+const { handleFailureRateQueryClick } = useFailureRateQuery(failureRateStore, data.detail!.courseName)
+
 </script>
 
 <template>
@@ -209,13 +220,21 @@ const {
       </div>
       <div
         v-if="!isExam && isCustom"
-        class="border-[1px] mt-10 border-[#5079D0] font-semibold text-center py-3 px-5 rounded-full text-[#4C81F8]"
+        class="border-2 mt-5 border-[#5079D0] font-semibold text-center py-3 px-5 rounded-full text-[#4C81F8]"
         @click="() => {
           popupShow = false
           onEditScheduleClick()
         }"
       >
         修改日程
+      </div>
+      <div
+        v-if="!isCustom"
+        class="border-2 mt-3 border-[#5079D0] font-bold text-center py-3 px-5 rounded-full text-[#4C81F8]"
+        :class="isExam ? 'failure-rate-query-exam' : ''"
+        @click="handleFailureRateQueryClick"
+      >
+        挂科率查询
       </div>
     </div>
   </van-popup>
@@ -232,6 +251,10 @@ const {
 
 .color-active {
   @apply  border-2 border-blue-500;
+}
+
+.failure-rate-query-exam {
+  @apply border-red-500/80 text-red-500/75;
 }
 
 .yellow {

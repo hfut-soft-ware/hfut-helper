@@ -5,6 +5,8 @@ import type { IUserInfo } from '@/shared/types/response/userInfo'
 import { getLoverToken } from '@/store/lover.store'
 import type { ICardBaseInfoResponse } from '@/shared/types/response/card'
 import type { IAddCourseDto } from '@/shared/types/dto/course'
+import type { IAllCourseOptionsResponse } from '@/shared/types/response/all-course-options'
+import type { IGetAllCourseDto } from '@/shared/types/dto/getAllCourse'
 
 export function getCourseListRequest(isLover = false) {
   const header = isLover ? { authorization: `Bearer ${getLoverToken()}` } : {}
@@ -56,5 +58,19 @@ export function deleteCourseRequest(diyId: string) {
     params: {
       diyId,
     },
+  })
+}
+
+export function getAllCourseOptionsRequest() {
+  return request<IAllCourseOptionsResponse>({
+    url: '/course/school/option',
+  })
+}
+
+export function getAllCourseQueryRequest(data: IGetAllCourseDto) {
+  return request<ICourseResponse>({
+    url: '/course/school/query',
+    method: 'POST',
+    data,
   })
 }

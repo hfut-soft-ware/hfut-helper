@@ -30,7 +30,7 @@
     {
       "path": "pages/score/custom/custom",
       "style": {
-        "navigationBarBackgroundColor": "#283593",
+        "navigationBarBackgroundColor": "#4981F9",
         "navigationBarTitleText": "自定义成绩",
         "enablePullDownRefresh": false
       }
@@ -45,13 +45,13 @@
     {
       "path": "pages/score/semester/semester",
       "style": {
-        "navigationBarBackgroundColor": "#283593"
+        "navigationBarBackgroundColor": "#4981F9"
       }
     },
     {
       "path": "pages/score/course/course",
       "style": {
-        "navigationBarBackgroundColor": "#283593"
+        "navigationBarBackgroundColor": "#4981F9"
       }
     },
     {
@@ -67,8 +67,16 @@
       "path": "pages/mine/mooc/mooc",
       "style": {
         "enablePullDownRefresh": false,
-        "navigationBarBackgroundColor": "#283593",
+        "navigationBarBackgroundColor": "#4981F9",
         "navigationBarTitleText": "慕课信息"
+      }
+    },
+    {
+      "path": "pages/failure-rate/failure-rate",
+      "style": {
+        "enablePullDownRefresh": false,
+        "navigationBarBackgroundColor": "#4981F9",
+        "navigationBarTitleText": "挂科率"
       }
     },
     {
@@ -82,24 +90,31 @@
     {
       "path": "pages/mine/exam/exam",
       "style": {
-        "navigationBarBackgroundColor": "#283593",
+        "navigationBarBackgroundColor": "#4981F9",
         "navigationBarTitleText": "考试安排"
       }
     },
     {
       "path": "pages/mine/about/about",
       "style": {
-        "navigationBarBackgroundColor": "#283593",
+        "navigationBarBackgroundColor": "#4981F9",
         "navigationBarTitleText": "关于我们"
       }
     },
     {
       "path": "pages/mine/about/disclaimers/disclaimers",
       "style": {
-        "navigationBarBackgroundColor": "#283593",
+        "navigationBarBackgroundColor": "#4981F9",
         "navigationBarTitleText": "用户协议"
       }
     },
+    {
+      "path": "pages/mine/course-search/course-search",
+      "style": {
+        "navigationBarBackgroundColor": "#4981F9",
+        "navigationBarTitleText": "全校课表"
+      }
+    }
   ],
   "tabBar": {
     "height": "20px",

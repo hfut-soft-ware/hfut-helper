@@ -7,6 +7,7 @@ import { CARD_COLORS, COURSE_KEY } from '@/shared/constant'
 import { ellipsisString } from '@/shared/utils/ellipsisString'
 import { getLoverCourse, setLoverCourse, uesLoverStore } from '@/store/lover.store'
 import { useSyncStorage } from '@/shared/hooks/use-syncStorage'
+import { useCourseSearchStore } from '@/store/courseSearch.store'
 
 type VisibleSchedule = Partial<{
   weekIdx: number
@@ -64,8 +65,10 @@ type Actions = {
   getCourseDetailByIdx: (idx?: number) => ILesson | undefined
   getCourseByHourIndex: (hourIndex: number) => CourseData
   initStore: (data: ICourse, payload?: { week: number; day: number }) => void
+  initCachedStore: () => void
   changeStatus: (isLover: boolean) => void
   addCourse: (payload: TCustomCourse) => void
+  initSearchStore: (data: ICourse) => void
 }
 
 function createSetSchedule(name: ScheduleName, _this: State) {
@@ -84,7 +87,7 @@ function createSetSchedule(name: ScheduleName, _this: State) {
 function createScheduleVisibleWeek(name: ScheduleName) {
   return function(state: State) {
     const weekIdx = state[name].weekIdx!
-    const startTime = state.list.mainInfo.semesterStartDate
+    const startTime = state.list?.mainInfo?.semesterStartDate || getWeekCourse().mainInfo.semesterStartDate
 
     return {
       week: Array.from(
@@ -193,6 +196,8 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
       const { isLover: lover } = storeToRefs(uesLoverStore())
       const isLover = lover.value
 
+      const { mode } = storeToRefs(useCourseSearchStore())
+
       const cachedCourseList = getWeekCourse()
       if (isObject(cachedCourseList)) {
         this.initStore(cachedCourseList)
@@ -234,7 +239,6 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
 
       return this.list
     },
-
     initStore(data: ICourse, payload?: { week: number; day: number }) {
       this.list = data
 
@@ -247,6 +251,16 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
       this.weekSchedule = scheduleIdx
 
       this.alreadyLoaded = true
+    },
+    initCachedStore() {
+      this.initStore(getWeekCourse())
+    },
+    initSearchStore(data: ICourse) {
+      this.list = data
+      this.weekSchedule = {
+        weekIdx: 0,
+        dayIdx: 0,
+      }
     },
     changeStatus(isLover: boolean) {
       if (isLover) {

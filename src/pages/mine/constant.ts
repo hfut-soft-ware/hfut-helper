@@ -5,14 +5,19 @@ export const servicesList: { icon: string; title: string; url: string }[] = [
   //   url: 'allCoursesSearch',
   // },
   {
-    icon: 'explore-planet',
-    title: '一卡通',
-    url: 'card/card',
+    icon: 'flyship',
+    title: '全校课表查询',
+    url: 'course-search/course-search',
   },
   {
     icon: 'galaxy',
     title: '我的慕课',
     url: 'mooc/mooc',
+  },
+  {
+    icon: 'explore-planet',
+    title: '一卡通',
+    url: 'card/card',
   },
   {
     icon: 'astronaut',

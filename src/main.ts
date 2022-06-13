@@ -18,6 +18,7 @@ import '@/assets/icons/galaxy.png'
 import '@/assets/icons/star-moon.png'
 import '@/assets/icons/telescope.png'
 import '@/assets/icons/astronaut.png'
+import '@/assets/icons/flyship.png'
 
 // imgs
 import '@/pages/mine/about/donate/donate.png'

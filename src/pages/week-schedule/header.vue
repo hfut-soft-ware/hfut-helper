@@ -4,14 +4,16 @@ import { format } from 'date-fns'
 import Dialog from '@vant/weapp/lib/dialog/dialog'
 import { useCourseListStore } from '@/store/courseList.store'
 import { uesLoverStore } from '@/store/lover.store'
+import { useCourseSearchStore } from '@/store/courseSearch.store'
 
 const store = useCourseListStore()
-
-const loverStore = uesLoverStore()
-
 const { weekSchedule, weekScheduleVisibleWeek, currentWeekIdx } = storeToRefs(store)
 
+const loverStore = uesLoverStore()
 const { isLoverRelieved, isLover } = storeToRefs(loverStore)
+
+const courseSearchStore = useCourseSearchStore()
+const { mode } = storeToRefs(courseSearchStore)
 
 function handleLoverClick() {
   if (isLoverRelieved.value) {
@@ -33,11 +35,14 @@ function handleLoverClick() {
 
 <template>
   <van-dialog id="van-dialog" />
-  <div class="h-[125px] w-screen z-[1] bg-white/30 fixed">
+  <div
+    class=" w-screen z-[1] bg-white/30 fixed"
+    :class="mode === 'normal' ? 'normal-height' : 'search-height'"
+  >
     <template v-if="weekSchedule">
       <div class="absolute bottom-1 w-screen flex flex-col w-[95vw] mx-auto">
         <div class="flex w-[95vw] ml-[2.5vw]">
-          <van-icon name="like-o" :class="isLover ? 'text-red-500' : ''" class="text-lg" @click="handleLoverClick" />
+          <van-icon v-if="mode === 'normal'" name="like-o" :class="isLover ? 'text-red-500' : ''" class="text-lg" @click="handleLoverClick" />
           <div class="flex justify-center w-full">
             <div class="flex justify-center mx-[2.5vw]">
               <p>第{{ weekSchedule.weekIdx + 1 }}周 {{ currentWeekIdx === weekSchedule.weekIdx ? '' : `(当前是第${currentWeekIdx + 1}周)` }}</p>
@@ -67,5 +72,13 @@ function handleLoverClick() {
 <style lang='scss' scoped>
 .active-day {
   @apply text-[#217DD2] font-bold;
+}
+
+.normal-height {
+  @apply h-[125px];
+}
+
+.search-height {
+  @apply h-[75px];
 }
 </style>

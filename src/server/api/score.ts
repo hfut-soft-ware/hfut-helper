@@ -2,10 +2,11 @@ import { request } from '@/server/base'
 import type { IScoreResponse } from '@/shared/types/response/score'
 import type { ISingleScoreResponse, SingleScoreDto } from '@/shared/types/response/sing-score'
 import type { ICustomScoreResponse } from '@/shared/types/response/score-custom'
+import type { IFailureRateResponse } from '@/shared/types/response/failure-rate'
 
 export function getScoreRequest() {
   return request<IScoreResponse>({
-    url: '/score/all',
+    url: '/score/v2/all',
     params: {
       refresh: true,
     },
@@ -27,6 +28,15 @@ export function getCustomScoreRequest(courseNames: string[]) {
     method: 'POST',
     data: {
       courseNames,
+    },
+  })
+}
+
+export function getFailureRateRequest(courseName: string) {
+  return request<IFailureRateResponse>({
+    url: '/score/failRate',
+    params: {
+      courseName,
     },
   })
 }

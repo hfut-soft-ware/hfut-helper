@@ -62,7 +62,7 @@ function toDisclaimers() {
   <StatusBar />
   <van-toast id="van-toast" />
   <van-notify id="van-notify" />
-  <div class="login-page">
+  <div class="login-page relative min-h-screen">
     <div class="login-page-header">
       <img
         class="logo object-cover"
@@ -71,7 +71,7 @@ function toDisclaimers() {
       >
     </div>
 
-    <div class="mr-[15vw] mt-10 flex flex-col gap-2">
+    <div class="mt-10 flex flex-col gap-2">
       <van-notice-bar
         wrapable
         color="#1989fa"
@@ -112,15 +112,12 @@ function toDisclaimers() {
         登录
       </div>
     </div>
-    <div class="flex flex-col gap-5">
-      <p class="text-center text-blue-500 underline text-sm mt-10" @click="toDisclaimers">
-        用户协议
-      </p>
-
-      <p class="text-xs text-gray-500">
-        登录遇到了问题？可以加入交流群656140321问问 {{ getRandomQAQ('happy')[0] }}
-      </p>
-    </div>
+    <p class="text-center text-blue-500 underline text-sm mt-10" @click="toDisclaimers">
+      用户协议
+    </p>
+    <p class="absolute bottom-16 text-xs text-gray-500 mt-20">
+      登录遇到了问题？可以加入交流群656140321问问 {{ getRandomQAQ('happy')[0] }}
+    </p>
   </div>
 </template>
 

@@ -2,6 +2,8 @@
 import { storeToRefs } from 'pinia'
 import { computed, ref } from 'vue'
 import { isUndefined } from 'lodash'
+import Header from './header.vue'
+import Settings from './settings.vue'
 import { isOdd } from '@/shared/utils'
 import type { CourseData } from '@/store/courseList.store'
 import { formatCourseName, formatRoom, useCourseListStore } from '@/store/courseList.store'
@@ -15,6 +17,7 @@ import type { TEmptyCoursePos } from '@/pages/week-schedule/use-customCourseShow
 import { useCustomCourseShow } from '@/pages/week-schedule/use-customCourseShow'
 import CustomCourse from '@/pages/week-schedule/custom-course.vue'
 import { uesLoverStore } from '@/store/lover.store'
+import { useCourseSearchStore } from '@/store/courseSearch.store'
 
 const store = useCourseListStore()
 const { weekScheduleVisibleWeek, weekSchedule } = storeToRefs(store)
@@ -23,6 +26,9 @@ const { onTouchStart, onTouchEnd, onPrev, onNext } = useTouchInteractive(store, 
 
 const loverStore = uesLoverStore()
 const { isLover } = storeToRefs(loverStore)
+
+const courseSearchStore = useCourseSearchStore()
+const { mode } = storeToRefs(courseSearchStore)
 
 const courseList = computed<CourseData[][]>(() => {
   const weekVal = weekScheduleVisibleWeek.value
@@ -111,6 +117,7 @@ function onClose() {
 </script>
 
 <template>
+  <Settings class="z-[999]" />
   <van-popup
     v-if="customCourseShow"
     :show="customCourseShow"
@@ -178,8 +185,10 @@ function onClose() {
       </div>
     </div>
   </van-popup>
+  <Header />
   <div
-    class="w-screen mt-[125px] overflow-hidden flex relative"
+    class="w-screen overflow-hidden flex relative"
+    :class="mode === 'normal' ? 'normal-mt' : 'search-mt'"
     @touchstart="onTouchStart"
     @touchend="onTouchEnd"
   >
@@ -232,7 +241,7 @@ function onClose() {
             </template>
           </div>
         </template>
-        <template v-if="currentEmptyCourse.x === weekday && currentEmptyCourse.y === index && !isLover">
+        <template v-if="currentEmptyCourse.x === weekday && currentEmptyCourse.y === index && !isLover && mode === 'normal'">
           <div class="addCard" @click="handleOpenCustomCourse">
             <van-icon name="plus" />
           </div>
@@ -268,6 +277,14 @@ function onClose() {
 
 .arrow {
   @apply w-[75px] h-[75px] rounded-full bg-gray-300/70 text-black/60 flex justify-center items-center;
+}
+
+.normal-mt {
+  @apply mt-[125px];
+}
+
+.search-mt {
+  @apply relative top-[75px];
 }
 
 @mixin generateCardStyle($bgColor, $textColor) {

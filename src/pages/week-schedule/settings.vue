@@ -1,21 +1,31 @@
 <script lang='ts' setup>
+import { storeToRefs } from 'pinia'
 import { useWeekListSettingsStore } from '@/store/weekListSettings.store'
+import { useCourseSearchStore } from '@/store/courseSearch.store'
 
 const settingsStore = useWeekListSettingsStore()
 
+const searchCourseStore = useCourseSearchStore()
+const { mode } = storeToRefs(searchCourseStore)
+
 function handleOpenClick() {
-  settingsStore.setShowSettings(true)
+  if (mode.value === 'normal') {
+    settingsStore.setShowSettings(true)
+  } else {
+    searchCourseStore.openSetting()
+  }
 }
 </script>
 
 <template>
-  <div class="fixed right-0 top-64 flex items-center">
+  <div class="fixed right-0 top-64 flex items-center z-[99]">
     <div
       class="flex bg-white/80 justify-center items-center text-lg w-[50px] h-[50px] settings rounded-l-full rounded-tr-full"
       @click="handleOpenClick"
     >
-      <div class="spin">
-        <van-icon name="setting-o" />
+      <div :class="mode === 'normal'? 'spin' : ''">
+        <van-icon v-if="mode === 'normal'" name="setting-o" />
+        <van-icon v-if="mode === 'search'" name="search" />
       </div>
     </div>
   </div>
