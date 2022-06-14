@@ -66,7 +66,6 @@ const moocDetailList = computed(() => {
           :key="mooc.id"
         >
           <div
-            v-if="mooc.isMooc"
             class="card-shadow flex flex-col gap-2 p-5"
           >
             <p class="font-bold">

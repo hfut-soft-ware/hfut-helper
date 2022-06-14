@@ -1,5 +1,6 @@
 <script lang='ts' setup>
-import { onLoad } from '@dcloudio/uni-app'
+import { onLoad, onShow } from '@dcloudio/uni-app'
+import { storeToRefs } from 'pinia'
 import Header from './Header.vue'
 import CardList from './card-list.vue'
 import { useCourseRequest } from './use-courseRequest'
@@ -8,6 +9,7 @@ import { useTouchInteractive } from '@/shared/hooks/useTouchInteractive'
 import { useCourseListStore } from '@/store/courseList.store'
 import { usePullDownUpdateCourse } from '@/shared/hooks/use-PullDownUpdateCourse'
 import { isEmptyObject } from '@/shared/utils'
+import { useCourseSearchStore } from '@/store/courseSearch.store'
 
 const { isLoading, state } = useCourseRequest()
 
@@ -21,6 +23,14 @@ onLoad((query) => {
   }
 })
 uni.startPullDownRefresh({})
+
+const { mode } = storeToRefs(useCourseSearchStore())
+onShow(() => {
+  if (mode.value !== 'normal') {
+    mode.value = 'normal'
+    store.initCachedStore()
+  }
+})
 
 usePullDownUpdateCourse()
 </script>
