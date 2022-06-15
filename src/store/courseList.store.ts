@@ -168,8 +168,9 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
     exam() {
       const exams = this.list.exams
       return exams.map((item) => {
-        const startDate = new Date(`${item.date} ${item.startTime}`)
-        const endDate = new Date(`${item.date} ${item.endTime}`)
+        const date = item.date.replace(/-/g, '/')
+        const startDate = new Date(`${date} ${item.startTime}`)
+        const endDate = new Date(`${date} ${item.endTime}`)
         const currentDate = new Date()
         const isExpired = currentDate > endDate
         const isTodayExam = isToday(endDate)

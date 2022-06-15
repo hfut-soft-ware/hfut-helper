@@ -1,24 +1,20 @@
 <script lang='ts' setup>
 import { storeToRefs } from 'pinia'
-import { format, formatDistanceToNow } from 'date-fns'
 import { onPullDownRefresh } from '@dcloudio/uni-app'
 import Toast from '@vant/weapp/lib/toast/toast'
 import { getRandomQAQ } from 'qaq-font'
-import { ref } from 'vue'
+import { format, formatDistanceToNow } from 'date-fns'
 import { useCourseListStore } from '@/store/courseList.store'
 
 const store = useCourseListStore()
 const { exam } = storeToRefs(store)
-
-const test = ref()
 
 onPullDownRefresh(async() => {
   Toast.loading({
     message: `正在加载最新考试信息中...\n${getRandomQAQ('happy')[0]}`,
     duration: 0,
   })
-  store.getCourseList(true).then((res) => {
-    test.value = res
+  store.getCourseList(true).then(() => {
     Toast.clear()
     Toast.success({
       message: `加载完成\n${getRandomQAQ('happy')[0]}`,
@@ -32,6 +28,7 @@ onPullDownRefresh(async() => {
     uni.stopPullDownRefresh()
   })
 })
+
 </script>
 
 <template>
@@ -70,7 +67,7 @@ onPullDownRefresh(async() => {
             </div>
             <div class="flex gap-1">
               <van-icon name="underway-o" />
-              <p>{{ format(item.startDate, 'MM-dd HH:mm') }} - {{ format(item.endDate, 'HH:mm') }}</p>
+              <p>{{ format(item?.startDate, 'MM-dd HH:mm') }} - {{ format(item?.endDate, 'HH:mm') }}</p>
             </div>
             <div class="flex gap-1">
               <van-icon name="location-o" />

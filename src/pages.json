@@ -30,7 +30,7 @@
     {
       "path": "pages/score/custom/custom",
       "style": {
-        "navigationBarBackgroundColor": "#4981F9",
+        "navigationBarBackgroundColor": "#283593",
         "navigationBarTitleText": "自定义成绩",
         "enablePullDownRefresh": false
       }
@@ -45,13 +45,13 @@
     {
       "path": "pages/score/semester/semester",
       "style": {
-        "navigationBarBackgroundColor": "#4981F9"
+        "navigationBarBackgroundColor": "#283593"
       }
     },
     {
       "path": "pages/score/course/course",
       "style": {
-        "navigationBarBackgroundColor": "#4981F9"
+        "navigationBarBackgroundColor": "#283593"
       }
     },
     {

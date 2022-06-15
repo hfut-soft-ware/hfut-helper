@@ -60,19 +60,24 @@ const moocDetailList = computed(() => {
 <template>
   <div class="w-screen min-h-screen bg-gray-300/25">
     <div class="w-[90vw] min-h-screen mx-auto py-10">
-      <div class="flex flex-col gap-3 bg-white rounded-lg">
-        <template
-          v-for="mooc in moocDetailList"
-          :key="mooc.id"
-        >
-          <div
-            class="card-shadow flex flex-col gap-2 p-5"
+      <div class="flex flex-col gap-3">
+        <template v-if="moocDetailList.length">
+          <template
+            v-for="mooc in moocDetailList"
+            :key="mooc.id"
           >
-            <p class="font-bold">
-              {{ mooc.name }}
-            </p>
-            <CourseDetail :detail="mooc.detail" />
-          </div>
+            <div
+              class="card-shadow bg-white flex flex-col gap-2 p-5 rounded-lg"
+            >
+              <p class="font-bold">
+                {{ mooc.name }}
+              </p>
+              <CourseDetail :detail="mooc.detail" />
+            </div>
+          </template>
+        </template>
+        <template v-else>
+          <van-empty description="同学你这学期没有选慕课哦~" />
         </template>
       </div>
     </div>

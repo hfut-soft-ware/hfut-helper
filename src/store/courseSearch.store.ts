@@ -47,6 +47,9 @@ export const useCourseSearchStore = defineStore('courseSearch', () => {
     },
     set(val: string) {
       collegesRef.value = val
+      majorRef.value = null
+      gradsRef.value = null
+      classesRef.value = null
     },
   })
   const currentCollege = computed(() => currentCampus.value?.colleges.find(item => item.college === colleges.value))
@@ -59,18 +62,21 @@ export const useCourseSearchStore = defineStore('courseSearch', () => {
     },
     set(val: string) {
       majorRef.value = val
+      gradsRef.value = null
+      classesRef.value = null
     },
   })
   const currentMajor = computed(() => currentCollege.value?.majors.find(item => item.major === major.value))
 
   const gradsOptions = computed(() => currentMajor.value?.grades.map(item => item.grade) || [])
-  const gradsRef = ref<number | string>()
+  const gradsRef = ref<number | string | null>()
   const grads = computed({
     get() {
       return gradsRef.value || gradsOptions.value[0] || '请选择年级'
     },
     set(val: number | string) {
       gradsRef.value = val
+      classesRef.value = null
     },
   })
   const currentGrad = computed(() => currentMajor.value?.grades.find(item => item.grade === grads.value))
