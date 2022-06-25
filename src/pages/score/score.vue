@@ -18,6 +18,8 @@ const {
 onMounted(() => {
   if (isStorageEmpty(scoreKey)) {
     scoreStore.getScoreStore(true)
+  } else {
+    scoreStore.getScoreStore(false)
   }
 })
 
