@@ -7,6 +7,7 @@ import { getScoreRequest, getSingleScoreRequest } from '@/server/api/score'
 import type { IScore, MajorRankVo, Score, Semester } from '@/shared/types/response/score'
 import { useRef } from '@/shared/hooks/useRef'
 import type { ISingleScoreData, SingleScoreDto } from '@/shared/types/response/sing-score'
+import { isStorageEmpty, useSyncStorage } from '@/shared/hooks/use-syncStorage'
 
 type TScore = {
   total: number
@@ -19,14 +20,7 @@ type TScore = {
 
 type SemesterScore = {
   semesterInfo: Semester
-  data: {
-    total: number
-    rank: number
-    averageScore: number
-    score: number
-    max: number
-    top: number
-  }
+  data: TScore
   index: number
 }
 
@@ -63,8 +57,12 @@ export function formatScore(score: any) {
   }
 }
 
+export const scoreKey = '__SCORE__'
+
+export const [getScoreStorage, setScoreStorage, removeScoreStorage] = useSyncStorage<IScore>(scoreKey)
+
 export const useScoreStore = defineStore('scoreStore', () => {
-  const scoreData = ref<IScore>()
+  const scoreData = ref<IScore>(getScoreStorage())
   const [homeActive, setHomeActive] = useRef<ScoreCardActiveType>('average')
   const [selectedSemester, setSelectedSemester] = useRef<number>(0)
   const [currentSelectedCourse, setCurrentSelectedCourse] = useRef<Score>({} as Score)
@@ -122,19 +120,23 @@ export const useScoreStore = defineStore('scoreStore', () => {
     return semesterScoreData.value[selectedSemester.value]
   })
 
-  const getScoreStore = async() => {
+  const getScoreStore = async(refresh = false) => {
     Toast.loading({
       duration: 0,
       forbidClick: true,
       message: `正在获取成绩信息...\n${getRandomQAQ('happy')[0]}`,
     })
-    await getScoreRequest().then((res) => {
+    await getScoreRequest(refresh).then((res) => {
       Toast.clear()
       Toast.success({
         message: `获取成绩信息成功！\n${getRandomQAQ('happy')[0]}`,
       })
       uni.stopPullDownRefresh()
-      scoreData.value = res.data.data
+      const data = res.data.data
+      scoreData.value = data
+      if (refresh || !isStorageEmpty(scoreKey)) {
+        setScoreStorage(data)
+      }
     }).catch(() => {
       Toast.clear()
       uni.stopPullDownRefresh()

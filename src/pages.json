@@ -72,6 +72,14 @@
       }
     },
     {
+      "path": "pages/mine/semester-course/semester-course",
+      "style": {
+        "enablePullDownRefresh": false,
+        "navigationBarBackgroundColor": "#4981F9",
+        "navigationBarTitleText": "本学期课表"
+      }
+    },
+    {
       "path": "pages/failure-rate/failure-rate",
       "style": {
         "enablePullDownRefresh": false,

@@ -16,3 +16,8 @@ export function useSyncStorage<T = any>(key: string) {
 
   return [getStorage, setStorage, removeStorage] as const
 }
+
+export function isStorageEmpty(key: string) {
+  const data = uni.getStorageSync(key)
+  return data === ''
+}

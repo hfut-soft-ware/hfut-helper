@@ -13,12 +13,12 @@ import '@/assets/icons/score.png'
 import '@/assets/icons/score-active.png'
 import '@/assets/icons/mine.png'
 import '@/assets/icons/mine-active.png'
-import '@/assets/icons/explore-planet.png'
 import '@/assets/icons/galaxy.png'
 import '@/assets/icons/star-moon.png'
 import '@/assets/icons/telescope.png'
 import '@/assets/icons/astronaut.png'
 import '@/assets/icons/flyship.png'
+import '@/assets/icons/satellite-orbit.png'
 
 // imgs
 import '@/pages/mine/about/donate/donate.png'

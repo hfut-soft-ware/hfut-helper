@@ -11,13 +11,13 @@ export const servicesList: { icon: string; title: string; url: string }[] = [
   },
   {
     icon: 'galaxy',
-    title: '我的慕课',
+    title: '我的慕课(包含部分选修课)',
     url: 'mooc/mooc',
   },
   {
-    icon: 'explore-planet',
-    title: '一卡通',
-    url: 'card/card',
+    icon: 'satellite-orbit',
+    title: '本学期课表',
+    url: 'semester-course/semester-course',
   },
   {
     icon: 'astronaut',

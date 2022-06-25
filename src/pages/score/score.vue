@@ -1,9 +1,11 @@
 <script lang='ts' setup>
 import { storeToRefs } from 'pinia'
 import { onPullDownRefresh } from '@dcloudio/uni-app'
+import { onMounted } from 'vue'
 import Settings from './settings.vue'
-import { useScoreStore } from '@/store/score.store'
+import { scoreKey, useScoreStore } from '@/store/score.store'
 import Card from '@/components/Card/Card.vue'
+import { isStorageEmpty } from '@/shared/hooks/use-syncStorage'
 
 const scoreStore = useScoreStore()
 const {
@@ -13,10 +15,14 @@ const {
   semesterScoreData,
 } = storeToRefs(scoreStore)
 
-scoreStore.getScoreStore()
+onMounted(() => {
+  if (isStorageEmpty(scoreKey)) {
+    scoreStore.getScoreStore(true)
+  }
+})
 
 onPullDownRefresh(() => {
-  scoreStore.getScoreStore()
+  scoreStore.getScoreStore(true)
 })
 
 function handleSemesterOpen(index: number) {

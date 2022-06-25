@@ -4,11 +4,11 @@ import type { ISingleScoreResponse, SingleScoreDto } from '@/shared/types/respon
 import type { ICustomScoreResponse } from '@/shared/types/response/score-custom'
 import type { IFailureRateResponse } from '@/shared/types/response/failure-rate'
 
-export function getScoreRequest() {
+export function getScoreRequest(refresh = true) {
   return request<IScoreResponse>({
     url: '/score/v2/all',
     params: {
-      refresh: true,
+      refresh,
     },
   })
 }

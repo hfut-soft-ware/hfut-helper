@@ -7,7 +7,6 @@ import { CARD_COLORS, COURSE_KEY } from '@/shared/constant'
 import { ellipsisString } from '@/shared/utils/ellipsisString'
 import { getLoverCourse, setLoverCourse, uesLoverStore } from '@/store/lover.store'
 import { useSyncStorage } from '@/shared/hooks/use-syncStorage'
-import { useCourseSearchStore } from '@/store/courseSearch.store'
 
 type VisibleSchedule = Partial<{
   weekIdx: number
@@ -52,6 +51,7 @@ type Getters = {
   weekScheduleVisibleWeek: (state: State) => ScheduleVisibleWeek
   exam: () => TExam
   recentExam: () => TExam
+  courseList: (state: State) => (ILesson & { isFinished: boolean })[]
 }
 
 export type GetCourseByHourIndexReturn = { course?: ISchedule; detail?: ILesson }
@@ -165,6 +165,10 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
     todayCourse(state: State) {
       return this.course.schedule[state.daySchedule.weekIdx!][state.daySchedule.dayIdx!]
     },
+    courseList: (state: State) => state.list.lessons.filter(item => item.id !== null).map(item => ({
+      ...item,
+      isFinished: parseInt((/^[0-9][0-9]?~([0-9][0-9]?)周$/.exec(item.detailInfo.weeks) || [])[1] || '0') < state.currentWeekIdx + 1,
+    })),
     exam() {
       const exams = this.list.exams
       return exams.map((item) => {
@@ -196,8 +200,6 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
       const { weekIdx: currentWeek, dayIdx: currentDay } = this.weekSchedule
       const { isLover: lover } = storeToRefs(uesLoverStore())
       const isLover = lover.value
-
-      const { mode } = storeToRefs(useCourseSearchStore())
 
       const cachedCourseList = getWeekCourse()
       if (isObject(cachedCourseList)) {

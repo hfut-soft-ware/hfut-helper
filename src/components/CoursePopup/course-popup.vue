@@ -38,7 +38,7 @@ const popupHeight = computed(() => {
   if (courseListMode.value === 'search') {
     return 100
   }
-  return (isExam.value || isCustom) ? 50 : 85
+  return (isExam.value || isCustom) ? 55 : 85
 })
 
 // 判断是不是考试或者自定义，来让高度减小

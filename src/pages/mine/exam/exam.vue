@@ -33,7 +33,7 @@ onPullDownRefresh(async() => {
 
 <template>
   <van-toast id="van-toast" />
-  <div class="min-h-screen w-screen bg-gray-300/10">
+  <div class="min-h-screen w-screen bg-gray-300/10 pb-5">
     <div class="w-[95vw] mx-auto flex flex-col gap-5 pt-10">
       <template v-if="!exam?.length">
         <van-empty description="暂时没有考试噢，刷新一下看看" />
@@ -59,7 +59,7 @@ onPullDownRefresh(async() => {
             </div>
           </template>
           <div class="flex flex-col gap-3 text-sm text-black/85">
-            <div class="w-full flex justify-between">
+            <div class="w-9/12 flex justify-between">
               <p>{{ item?.detail?.name }}</p>
               <p v-if="item?.isExpired">
                 已考完
