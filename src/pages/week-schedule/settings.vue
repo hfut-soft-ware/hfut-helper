@@ -18,7 +18,7 @@ function handleOpenClick() {
 </script>
 
 <template>
-  <div class="fixed right-0 top-64 flex items-center z-[99]">
+  <div class="fixed right-0 top-64 flex items-center z-[99] opacity-60">
     <div
       class="flex bg-white/80 justify-center items-center text-lg w-[50px] h-[50px] settings rounded-l-full rounded-tr-full"
       @click="handleOpenClick"

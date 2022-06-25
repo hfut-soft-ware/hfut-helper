@@ -59,8 +59,10 @@ onPullDownRefresh(async() => {
             </div>
           </template>
           <div class="flex flex-col gap-3 text-sm text-black/85">
-            <div class="w-9/12 flex justify-between">
-              <p>{{ item?.detail?.name }}</p>
+            <div class="w-full flex justify-between">
+              <p class="w-8/12">
+                {{ item?.detail?.name }}
+              </p>
               <p v-if="item?.isExpired">
                 已考完
               </p>

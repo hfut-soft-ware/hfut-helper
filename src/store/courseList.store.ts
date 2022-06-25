@@ -186,7 +186,7 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
           endDate,
           detail: item,
         }
-      }) as TExam
+      }).sort((prev, cur) => (prev.startDate as any) - (cur.startDate as any)) as TExam
     },
     recentExam() {
       return this.exam.filter(item => !item.isExpired)

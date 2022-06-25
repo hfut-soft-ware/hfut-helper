@@ -15,7 +15,7 @@ const { courseList } = storeToRefs(courseStore)
       <div
         v-for="item in courseList"
         :key="item.courseName"
-        class="opacity-90 bg-white rounded-md card-shadow py-3 px-5 flex justify-between"
+        class="bg-white rounded-md card-shadow py-3 px-5 flex justify-between"
       >
         <div>
           <p>
