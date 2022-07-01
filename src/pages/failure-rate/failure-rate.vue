@@ -58,7 +58,8 @@ const computedFailureRateData = computed(() => failureRateData.value.map((item) 
                 </div>
               </div>
             </div>
-          </div><div class="absolute inset-0 pointer-events-none border border-black/5 rounded-xl dark:border-white/5" />
+          </div>
+          <div class="absolute inset-0 pointer-events-none border border-black/5 rounded-xl dark:border-white/5" />
         </div>
       </div>
     </div>
