@@ -77,7 +77,7 @@ const onSearchClick = useDebounceFn(() => {
     </div>
   </van-popup>
   <div class="w-screen min-h-screen bg-gray-100">
-    <div class="w-[95vw] mx-auto pt-2">
+    <div class="w-[95vw] mx-auto py-5">
       <div class="flex gap-3 items-center box-border px-[2.5vw]">
         <div class="flex inset-y-0 left-0 items-center">
           <van-icon name="search" />

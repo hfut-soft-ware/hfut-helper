@@ -1,6 +1,7 @@
 <script lang='ts' setup>
 import Toast from '@vant/weapp/lib/toast/toast'
 import { getRandomQAQ } from 'qaq-font'
+import SettingList from '@/pages/mine/about/SettingList.vue'
 
 const list = [
   {
@@ -66,22 +67,7 @@ const list = [
         </div>
       </div>
 
-      <div class="list-card card-shadow text-lg flex-col gap-3">
-        <div
-          v-for="item in list"
-          :key="item.title"
-          class="flex justify-between"
-          @click="item.cb"
-        >
-          <div class="flex gap-2">
-            <van-icon :name="item.leftIcon" />
-            <div>{{ item.title }}</div>
-          </div>
-          <div>
-            <van-icon name="arrow" />
-          </div>
-        </div>
-      </div>
+      <SettingList :list="list" />
     </div>
   </div>
 </template>

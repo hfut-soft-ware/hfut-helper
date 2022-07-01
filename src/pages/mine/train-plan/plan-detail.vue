@@ -1,6 +1,5 @@
 <script lang='ts' setup>
 import { storeToRefs } from 'pinia'
-import { watchEffect } from 'vue'
 import { useTrainPlanStore } from '@/pages/mine/train-plan/trainPlan.store'
 import PlanProgress from '@/pages/mine/train-plan/plan-progress.vue'
 
@@ -8,9 +7,6 @@ const store = useTrainPlanStore()
 
 const { selectedPlan } = storeToRefs(store)
 
-watchEffect(() => {
-  console.log(selectedPlan.value)
-})
 </script>
 
 <template>

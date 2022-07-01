@@ -9,6 +9,8 @@ import AccountSettings from '@/pages/mine/account-settings.vue'
 import { getUserInfo } from '@/server/api/user'
 import { useGetUserInfo } from '@/pages/mine/use-getUserInfo'
 import { useMineStore } from '@/store/mine.store'
+import BounceBall from '@/components/BounceBall/BounceBall.vue'
+import { useAvatar } from '@/pages/mine/use-avatar'
 type TActive = 'commonServices' | 'settings'
 const active = ref<TActive>('commonServices')
 
@@ -18,6 +20,8 @@ const mineStore = useMineStore()
 const { cardInfo } = storeToRefs(mineStore)
 
 mineStore.getCardInfo()
+
+const { hasAvatar, onAvatarClick, avatarUrl } = useAvatar()
 
 onPullDownRefresh(() => {
   mineStore.getCardInfo()
@@ -53,8 +57,11 @@ getUserInfo()
         <div class="relative flex justify-center items-center h-[200px] overflow-hidden">
           <img mode="aspectFill" class="w-full bg" src="../../assets/imgs/mine-bg.png">
           <div class="flex absolute flex-col items-center gap-2">
-            <div class="w-[75px] h-[75px] border-2 border-white/50 rounded-full overflow-hidden">
-              <img mode="aspectFill" class="w-[75px] h-[75px]" src="../../assets/imgs/avatar.png">
+            <div class="w-[75px] h-[75px] border-2 border-white/50 rounded-full">
+              <div class="relative" @click="onAvatarClick">
+                <BounceBall v-if="!hasAvatar" class="right-3" />
+                <img mode="aspectFill" class="w-[75px] rounded-full h-[75px]" :src="avatarUrl">
+              </div>
             </div>
             <template v-if="state">
               <p class="text-white text-md font-bold">

@@ -1,13 +1,13 @@
 export const servicesList: { icon: string; title: string; url: string }[] = [
-  // {
-  //   icon: 'telescope',
-  //   title: '全校课表查询',
-  //   url: 'allCoursesSearch',
-  // },
   {
     icon: 'flyship',
     title: '全校课表查询',
     url: 'course-search/course-search',
+  },
+  {
+    icon: 'telescope',
+    title: '挂科率查询',
+    url: 'failureRate/failureRate',
   },
   {
     icon: 'galaxy',
@@ -23,11 +23,6 @@ export const servicesList: { icon: string; title: string; url: string }[] = [
     icon: 'rocket-2',
     title: '图书馆馆藏查询',
     url: 'library/library',
-  },
-  {
-    icon: 'flyBall',
-    title: '挂科率查询',
-    url: 'failureRate/failureRate',
   },
   {
     icon: 'satellite-orbit',

@@ -16,10 +16,11 @@ function onLogout() {
       })
     })
 }
+
 </script>
 
 <template>
-  <div>
+  <div class="grid gap-2">
     <div class="logout" @click="onLogout">
       退出登录
     </div>

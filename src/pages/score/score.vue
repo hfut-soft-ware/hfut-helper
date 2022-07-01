@@ -39,6 +39,12 @@ function handleOpenCustomClick() {
     url: '/pages/score/custom/custom',
   })
 }
+
+const onFailureRateSearchClick = () => {
+  uni.navigateTo({
+    url: '/pages/mine/failureRate/failureRate',
+  })
+}
 </script>
 
 <template>
@@ -113,6 +119,15 @@ function handleOpenCustomClick() {
         @click="handleOpenCustomClick"
       >
         自定义排名<van-icon name="arrow" />
+      </p>
+    </div>
+    <div
+      class="card-shadow bg-white rounded-full py-2 px-5 flex items-center"
+      @click="onFailureRateSearchClick"
+    >
+      <img class="w-[30px] h-[30px]" src="../../assets/icons/telescope.png">
+      <p class="ml-2 text-sm">
+        挂科率查询
       </p>
     </div>
   </div>

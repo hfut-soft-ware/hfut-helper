@@ -56,7 +56,7 @@ function onPlanClick(payload: ITrainPlanData) {
                   <p class="mt-2">
                     已修学分: {{ item?.requiredCredit }}/{{ item?.credit }} 学分
                   </p>
-                  <p>要求学分: {{ item?.requiredCredit }}</p>
+                  <p>要求学分: {{ item?.credit }}</p>
                 </div>
               </div>
               <van-icon name="arrow" />
