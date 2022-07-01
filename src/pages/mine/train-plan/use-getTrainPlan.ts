@@ -20,6 +20,7 @@ export function useGetTrainPlan() {
   const getTrainPlan = async() => {
     Toast.loading({
       message: '加载培养方案中...',
+      duration: 0,
     })
     getTrainPlanRequest().then((res) => {
       data.value = res.data.data

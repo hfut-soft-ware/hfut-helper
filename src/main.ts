@@ -25,6 +25,7 @@ import '@/assets/icons/flyBall.png'
 
 // imgs
 import '@/pages/mine/about/donate/donate.png'
+import '@/assets/imgs/avatar.png'
 
 export function createApp() {
   const app = createSSRApp(App)
