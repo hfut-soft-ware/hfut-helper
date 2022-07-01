@@ -9,7 +9,6 @@ import AccountSettings from '@/pages/mine/account-settings.vue'
 import { getUserInfo } from '@/server/api/user'
 import { useGetUserInfo } from '@/pages/mine/use-getUserInfo'
 import { useMineStore } from '@/store/mine.store'
-
 type TActive = 'commonServices' | 'settings'
 const active = ref<TActive>('commonServices')
 

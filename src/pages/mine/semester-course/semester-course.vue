@@ -23,7 +23,7 @@ const totalCredits = computed(() => {
     <p class="text-2xl text-white px-[2.5vw]">
       总学分: {{ totalCredits }}
     </p>
-    <div class="flex flex-col gap-2 text-sm">
+    <div class="flex flex-col gap-2">
       <div class="w-[95vw] mx-auto flex flex-col gap-1 mt-5">
         <div
           v-for="item in list"
@@ -42,7 +42,7 @@ const totalCredits = computed(() => {
               </div>
             </div>
           </div>
-          <div class="rounded-full w-[25px] h-[25px] border-2 border-[#6E6E6E] text-[#6E6E6E] flex items-center justify-center">
+          <div class="rounded-full w-[20px] h-[20px] border-2 border-[#6E6E6E] text-[#6E6E6E] flex items-center justify-center">
             <van-icon v-if="item.isFinished" name="success" />
           </div>
         </div>

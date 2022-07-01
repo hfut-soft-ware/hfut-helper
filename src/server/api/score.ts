@@ -3,6 +3,7 @@ import type { IScoreResponse } from '@/shared/types/response/score'
 import type { ISingleScoreResponse, SingleScoreDto } from '@/shared/types/response/sing-score'
 import type { ICustomScoreResponse } from '@/shared/types/response/score-custom'
 import type { IFailureRateResponse } from '@/shared/types/response/failure-rate'
+import type { IFailureRateSearchResponse } from '@/shared/types/response/failure-rate-search'
 
 export function getScoreRequest(refresh = true) {
   return request<IScoreResponse>({
@@ -35,6 +36,15 @@ export function getCustomScoreRequest(courseNames: string[]) {
 export function getFailureRateRequest(courseName: string) {
   return request<IFailureRateResponse>({
     url: '/score/failRate',
+    params: {
+      courseName,
+    },
+  })
+}
+
+export function getFailureRateSearchRequest(courseName: string) {
+  return request<IFailureRateSearchResponse>({
+    url: '/score/v2/failRate',
     params: {
       courseName,
     },

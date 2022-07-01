@@ -117,6 +117,34 @@
       }
     },
     {
+      "path": "pages/mine/train-plan/train-plan",
+      "style": {
+        "navigationBarBackgroundColor": "#4981F9",
+        "navigationBarTitleText": "培养方案"
+      }
+    },
+    {
+      "path": "pages/mine/train-plan/plan-detail",
+      "style": {
+        "navigationBarBackgroundColor": "#4981F9",
+        "navigationBarTitleText": "方案详情"
+      }
+    },
+    {
+      "path": "pages/mine/library/library",
+      "style": {
+        "navigationBarBackgroundColor": "#4981F9",
+        "navigationBarTitleText": "图书馆查询"
+      }
+    },
+    {
+      "path": "pages/mine/failureRate/failureRate",
+      "style": {
+        "navigationBarBackgroundColor": "#4981F9",
+        "navigationBarTitleText": "挂科率查询"
+      }
+    },
+    {
       "path": "pages/mine/course-search/course-search",
       "style": {
         "navigationBarBackgroundColor": "#4981F9",

@@ -5,6 +5,7 @@ export interface IFailureRateResponse {
 }
 
 export interface IFailureRateData {
+  avgScore: number
   semesterName: string
   failCount: number
   totalCount: number

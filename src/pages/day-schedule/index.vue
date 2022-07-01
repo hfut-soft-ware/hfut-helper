@@ -1,6 +1,7 @@
 <script lang='ts' setup>
 import { onLoad, onShow } from '@dcloudio/uni-app'
 import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue'
 import Header from './Header.vue'
 import CardList from './card-list.vue'
 import { useCourseRequest } from './use-courseRequest'
@@ -19,10 +20,13 @@ const { onTouchStart, onTouchEnd } = useTouchInteractive(store)
 
 onLoad((query) => {
   if (query.refresh) {
-    usePullDownUpdateCourse()
+    useCourseRequest(true)
   }
 })
-uni.startPullDownRefresh({})
+
+onMounted(() => {
+  useCourseRequest(false)
+})
 
 const { mode } = storeToRefs(useCourseSearchStore())
 onShow(() => {

@@ -19,6 +19,9 @@ import '@/assets/icons/telescope.png'
 import '@/assets/icons/astronaut.png'
 import '@/assets/icons/flyship.png'
 import '@/assets/icons/satellite-orbit.png'
+import '@/assets/icons/detour.png'
+import '@/assets/icons/rocket-2.png'
+import '@/assets/icons/flyBall.png'
 
 // imgs
 import '@/pages/mine/about/donate/donate.png'

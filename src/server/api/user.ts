@@ -7,14 +7,17 @@ import type { ICardBaseInfoResponse } from '@/shared/types/response/card'
 import type { IAddCourseDto } from '@/shared/types/dto/course'
 import type { IAllCourseOptionsResponse } from '@/shared/types/response/all-course-options'
 import type { IGetAllCourseDto } from '@/shared/types/dto/getAllCourse'
+import type { ITrainPlanResponse } from '@/shared/types/response/train-plan'
 
-export function getCourseListRequest(isLover = false) {
+export function getCourseListRequest(isLover = false, refresh = false) {
   const header = isLover ? { authorization: `Bearer ${getLoverToken()}` } : {}
 
   return request<ICourseResponse>({
     url: 'course/all',
     header,
-
+    params: {
+      refresh,
+    },
   })
 }
 
@@ -72,5 +75,11 @@ export function getAllCourseQueryRequest(data: IGetAllCourseDto) {
     url: '/course/school/query',
     method: 'POST',
     data,
+  })
+}
+
+export function getTrainPlanRequest() {
+  return request<ITrainPlanResponse>({
+    url: '/user/trainPlan',
   })
 }

@@ -16,14 +16,14 @@ onLoad(() => {
 const computedFailureRateData = computed(() => failureRateData.value.map((item) => {
   return {
     semester: item.semesterName,
-    data: [item.semesterName, item.totalCount, item.failCount, `${(item.failRate * 100).toFixed(2)}%`],
+    data: [item.semesterName, item.totalCount, item.avgScore.toFixed(2), item.failCount, `${(item.failRate * 100).toFixed(2)}%`],
   }
 }))
 </script>
 
 <template>
   <van-toast id="van-toast" />
-  <div v-if="failureRateData.length" class="mt-3 w-[95vw] mx-auto">
+  <div v-if="failureRateData.length" class="mt-3 w-[100vw]">
     <h2 class="font-bold">
       {{ courseName }}
     </h2>
@@ -51,7 +51,7 @@ const computedFailureRateData = computed(() => failureRateData.value.map((item) 
                 >
                   <div
                     v-for="item in rateData.data"
-                    :key="item" class="table-cell border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400"
+                    :key="item" class="table-cell border-b border-slate-100 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400"
                   >
                     {{ item }}
                   </div>

@@ -15,6 +15,21 @@ export const servicesList: { icon: string; title: string; url: string }[] = [
     url: 'mooc/mooc',
   },
   {
+    icon: 'detour',
+    title: '培养方案',
+    url: 'train-plan/train-plan',
+  },
+  {
+    icon: 'rocket-2',
+    title: '图书馆馆藏查询',
+    url: 'library/library',
+  },
+  {
+    icon: 'flyBall',
+    title: '挂科率查询',
+    url: 'failureRate/failureRate',
+  },
+  {
     icon: 'satellite-orbit',
     title: '本学期课表',
     url: 'semester-course/semester-course',

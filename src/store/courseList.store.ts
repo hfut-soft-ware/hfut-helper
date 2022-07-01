@@ -1,6 +1,6 @@
 import { defineStore, storeToRefs } from 'pinia'
 import { addDays, isToday } from 'date-fns'
-import type { ICourse, IExam, ILesson, IMainInfo, ISchedule } from '@/shared/types/response/course'
+import type { ICourse, IExam, ILesson, IMainInfo, IMooc, ISchedule } from '@/shared/types/response/course'
 import { getCourseListRequest } from '@/server/api/user'
 import { isNullOrUndefined, isObject } from '@/shared/utils/'
 import { CARD_COLORS, COURSE_KEY } from '@/shared/constant'
@@ -165,10 +165,18 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
     todayCourse(state: State) {
       return this.course.schedule[state.daySchedule.weekIdx!][state.daySchedule.dayIdx!]
     },
-    courseList: (state: State) => state.list.lessons.filter(item => item.id !== null).map(item => ({
-      ...item,
-      isFinished: parseInt((/^[0-9][0-9]?~([0-9][0-9]?)周$/.exec(item.detailInfo.weeks) || [])[1] || '0') < state.currentWeekIdx + 1,
-    })),
+    courseList: (state: State) => [...state.list.lessons, ...state.list.mooc].filter(item => item.id !== null).map((item) => {
+      if ((item as IMooc)?.detail) {
+        (item as any).detailInfo = {
+          ...(item as IMooc).detail,
+        }
+        ;(item as any).courseName = (item as IMooc).name
+      }
+      return {
+        ...item,
+        isFinished: parseInt((/^[0-9][0-9]?~([0-9][0-9]?)周$/.exec(((item as any).detailInfo || (item as any).detail).weeks) || [])[1] || '20') < state.currentWeekIdx + 1,
+      } as ILesson & { isFinished: boolean }
+    }),
     exam() {
       const exams = this.list.exams
       return exams.map((item) => {
@@ -216,7 +224,7 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
       }
 
       const fetchData = async() => {
-        await getCourseListRequest(isLover).then((res) => {
+        await getCourseListRequest(isLover, forceRefresh).then((res) => {
           const data = res.data.data
           // 缓存课程信息
           if (isLover) {
@@ -235,9 +243,16 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
       }
 
       if (!this.alreadyLoaded) {
+        forceRefresh = true
         await fetchData()
       } else if (forceRefresh) {
         await fetchData()
+      } else if (!forceRefresh && this.alreadyLoaded) {
+        // 如果本地有缓存，则第一时间重置本地课表（保证时间正确性）
+        this.initCachedStore()
+        forceRefresh = true
+        // 后台静默请求
+        fetchData()
       }
 
       return this.list
@@ -248,7 +263,7 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
       this.currentWeekIdx = data.mainInfo.curWeek - 1
       const scheduleIdx = {
         weekIdx: payload?.week || this.currentWeekIdx,
-        dayIdx: payload?.day || data.mainInfo.curDayIndex - 1,
+        dayIdx: payload?.day || new Date().getDay() - 1,
       }
       this.daySchedule = scheduleIdx
       this.weekSchedule = scheduleIdx
