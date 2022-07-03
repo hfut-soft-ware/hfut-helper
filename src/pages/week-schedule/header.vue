@@ -7,7 +7,12 @@ import { uesLoverStore } from '@/store/lover.store'
 import { useCourseSearchStore } from '@/store/courseSearch.store'
 
 const store = useCourseListStore()
-const { weekSchedule, weekScheduleVisibleWeek, currentWeekIdx } = storeToRefs(store)
+const {
+  weekSchedule,
+  weekScheduleVisibleWeek,
+  currentWeekIdx,
+  mainInfo,
+} = storeToRefs(store)
 
 const loverStore = uesLoverStore()
 const { isLoverRelieved, isLover } = storeToRefs(loverStore)
@@ -31,6 +36,7 @@ function handleLoverClick() {
   isLover.value = !isLover.value
   loverStore.setLover(isLover.value, true)
 }
+
 </script>
 
 <template>
@@ -45,7 +51,7 @@ function handleLoverClick() {
           <van-icon v-if="mode === 'normal'" name="like-o" :class="isLover ? 'text-red-500' : ''" class="text-lg" @click="handleLoverClick" />
           <div class="flex justify-center w-full">
             <div class="flex justify-center mx-[2.5vw]">
-              <p>第{{ weekSchedule.weekIdx + 1 }}周 {{ currentWeekIdx === weekSchedule.weekIdx ? '' : `(当前是第${currentWeekIdx + 1}周)` }}</p>
+              <p>第{{ weekSchedule.weekIdx + 1 }}周 {{ currentWeekIdx === weekSchedule.weekIdx ? '' : `(当前是第${mainInfo.curWeek}周)` }}</p>
             </div>
           </div>
         </div>

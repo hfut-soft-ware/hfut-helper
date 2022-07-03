@@ -29,7 +29,7 @@ function handleActiveChange(idx: number) {
 </script>
 
 <template>
-  <div class="header">
+  <div v-if="todayCourse" class="header">
     <div class="flex flex-col">
       <div class="font-medium text-xl leading-8">
         <div class="font-bold text-ls">
@@ -38,7 +38,7 @@ function handleActiveChange(idx: number) {
         <div class="flex todo-list text-xs font-normal text-[#9499AA]">
           你今天有
           <div class="text-[#4981F9] font-medium">
-            {{ todayCourse.length }}
+            {{ todayCourse?.length }}
           </div>
           节课
         </div>

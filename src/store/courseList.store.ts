@@ -92,11 +92,14 @@ function createScheduleVisibleWeek(name: ScheduleName) {
     return {
       week: Array.from(
         { length: 7 },
-        (_, i) => ({
-          date: getCourseDate(
-            { week: weekIdx, day: i, startTime }),
-          active: state[name].dayIdx === i,
-        }),
+        (_, i) => {
+          console.log(state[name])
+          return {
+            date: getCourseDate(
+              { week: weekIdx, day: i, startTime }),
+            active: state[name].dayIdx === i,
+          }
+        },
       ),
       course: state.list.schedule[weekIdx],
     } as unknown as ScheduleVisibleWeek
@@ -260,10 +263,9 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
     initStore(data: ICourse, payload?: { week: number; day: number }) {
       this.list = data
 
-      this.currentWeekIdx = data.mainInfo.curWeek - 1
       const scheduleIdx = {
-        weekIdx: payload?.week || this.currentWeekIdx,
-        dayIdx: payload?.day || new Date().getDay() - 1,
+        weekIdx: payload?.week || data.mainInfo.curWeek - 1,
+        dayIdx: payload?.day || data.mainInfo.curDayIndex - 1,
       }
       this.daySchedule = scheduleIdx
       this.weekSchedule = scheduleIdx

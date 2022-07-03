@@ -17,7 +17,7 @@ export const [
 const calculateProgress = (credit: string, totalCredit: string) => {
   const creditNum = Number(credit)
   const totalCreditNum = Number(totalCredit)
-  return (creditNum / totalCreditNum) * 100
+  return Math.max((creditNum / totalCreditNum) * 100, 100)
 }
 
 export const useTrainPlanStore = defineStore('useTrainPlanStore', () => {
@@ -43,6 +43,7 @@ export const useTrainPlanStore = defineStore('useTrainPlanStore', () => {
   const getTrainPlan = async() => {
     Toast.loading({
       message: '加载培养方案中...',
+      duration: 0,
     })
     getTrainPlanRequest().then((res) => {
       data.value = res.data.data
