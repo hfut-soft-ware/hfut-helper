@@ -93,7 +93,6 @@ function createScheduleVisibleWeek(name: ScheduleName) {
       week: Array.from(
         { length: 7 },
         (_, i) => {
-          console.log(state[name])
           return {
             date: getCourseDate(
               { week: weekIdx, day: i, startTime }),
@@ -273,7 +272,10 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
       this.alreadyLoaded = true
     },
     initCachedStore() {
-      this.initStore(getWeekCourse())
+      const data = getWeekCourse()
+      const date = new Date().getDay()
+      data.mainInfo.curDayIndex = date === 0 ? 6 : date
+      this.initStore(data)
     },
     initSearchStore(data: ICourse) {
       this.list = data
