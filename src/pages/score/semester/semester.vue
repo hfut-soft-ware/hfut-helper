@@ -13,7 +13,7 @@ const {
 } = storeToRefs(scoreStore)
 
 onPullDownRefresh(() => {
-  scoreStore.getScoreStore()
+  scoreStore.getScoreStore(true)
 })
 
 const semesterInfo = computed(() => selectedSemesterData.value.semesterInfo)

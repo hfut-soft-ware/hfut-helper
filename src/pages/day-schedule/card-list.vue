@@ -84,7 +84,9 @@ function onClose() {
       </div>
     </template>
     <template v-else>
-      <van-empty description="今天没课噢，放松一下吧♪（＾∀＾●）ﾉｼ" />
+      <div class="h-[450px]">
+        <van-empty description="今天没课噢，放松一下吧♪（＾∀＾●）ﾉｼ" />
+      </div>
     </template>
   </div>
 </template>
