@@ -6,6 +6,7 @@ import Settings from './settings.vue'
 import { scoreKey, useScoreStore } from '@/store/score.store'
 import Card from '@/components/Card/Card.vue'
 import { isStorageEmpty } from '@/shared/hooks/use-syncStorage'
+import { getScoreRequest } from '@/server/api/score'
 
 const scoreStore = useScoreStore()
 const {
@@ -15,11 +16,12 @@ const {
   semesterScoreData,
 } = storeToRefs(scoreStore)
 
-onMounted(() => {
+onMounted(async() => {
   if (isStorageEmpty(scoreKey)) {
     scoreStore.getScoreStore(true)
   } else {
-    scoreStore.getScoreStore(false)
+    // 后台静默刷新，免得用户觉得我们卡
+    await getScoreRequest(true)
   }
 })
 
