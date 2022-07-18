@@ -4,10 +4,10 @@ import Toast from '@vant/weapp/lib/toast/toast'
 import { getRandomQAQ } from 'qaq-font'
 import { isNumber } from 'lodash'
 import { getScoreRequest, getSingleScoreRequest } from '@/server/api/score'
-import type { IScore, MajorRankVo, Score, Semester } from '@/shared/types/response/score'
+import type { ICompulsoryRank, IScoreData, Score, Score5, Semester } from '@/shared/types/response/score'
 import { useRef } from '@/shared/hooks/useRef'
 import type { ISingleScoreData, SingleScoreDto } from '@/shared/types/response/sing-score'
-import { isStorageEmpty, useSyncStorage } from '@/shared/hooks/use-syncStorage'
+import { useSyncStorage } from '@/shared/hooks/use-syncStorage'
 
 type TScore = {
   total: number
@@ -26,25 +26,16 @@ type SemesterScore = {
 
 export type ScoreCardActiveType = 'average' | 'gpa' | 'max'
 
-function createScoreDetail(data: MajorRankVo, type: ScoreCardActiveType) {
-  if (type === 'average') {
-    return {
-      total: data.total,
-      rank: data.scoreRank,
-      averageScore: data.majorAvgScore,
-      score: data.myAvgScore,
-      max: data.majorMaxScore,
-      top: data.majorHeadScore,
-    }
-  } else {
-    return {
-      total: data.total,
-      rank: data.gpaRank,
-      averageScore: data.majorAvgGpa,
-      score: data.myAvgGpa,
-      max: data.majorMaxGpa,
-      top: data.majorHeadGpa,
-    }
+function createScoreDetail(rankData: ICompulsoryRank, type: ScoreCardActiveType) {
+  const total = rankData.total
+  const data = type === 'average' ? rankData.score : rankData.gpa
+  return {
+    total,
+    rank: data.rank,
+    averageScore: data.avg,
+    score: data.mine,
+    max: data.max,
+    top: data.head,
   }
 }
 
@@ -59,13 +50,13 @@ export function formatScore(score: any) {
 
 export const scoreKey = '__SCORE__'
 
-export const [getScoreStorage, setScoreStorage, removeScoreStorage] = useSyncStorage<IScore>(scoreKey)
+export const [getScoreStorage, setScoreStorage, removeScoreStorage] = useSyncStorage<IScoreData>(scoreKey)
 
 export const useScoreStore = defineStore('scoreStore', () => {
-  const scoreData = ref<IScore>(getScoreStorage())
+  const scoreData = ref<IScoreData>(getScoreStorage())
   const [homeActive, setHomeActive] = useRef<ScoreCardActiveType>('average')
   const [selectedSemester, setSelectedSemester] = useRef<number>(0)
-  const [currentSelectedCourse, setCurrentSelectedCourse] = useRef<Score>({} as Score)
+  const [currentSelectedCourse, setCurrentSelectedCourse] = useRef<Score5>({} as Score5)
   const [currentScoreData, setCurrentScoreData] = useRef<ISingleScoreData>({} as ISingleScoreData)
 
   const homeDetailInfo = computed(() => {
@@ -98,11 +89,15 @@ export const useScoreStore = defineStore('scoreStore', () => {
     averageScore: 0,
   }
 
+  const homeScoreRankDataType = ref<'all' | 'compulsory'>('compulsory')
+  const homeScoreRankData = computed(() => homeScoreRankDataType.value === 'all' ? scoreData.value!.totalRank : scoreData.value!.compulsoryRank)
   const homeScoreData = computed<TScore>(() => {
     if (!scoreData.value) {
       return defaultData
     }
-    return createScoreDetail(scoreData.value!.majorRankVO, homeActive.value)
+
+    console.log(homeScoreRankData.value)
+    return createScoreDetail(homeScoreRankData.value, homeActive.value)
   })
 
   const semesterScoreData = computed<SemesterScore[]>(() => {
@@ -111,7 +106,7 @@ export const useScoreStore = defineStore('scoreStore', () => {
     }
     return scoreData.value.semesters.map((item, index) => ({
       semesterInfo: item,
-      data: createScoreDetail(item.semesterRankVO, homeActive.value),
+      data: createScoreDetail(item.compulsoryRank, homeActive.value),
       index,
     }))
   })
@@ -120,29 +115,34 @@ export const useScoreStore = defineStore('scoreStore', () => {
     return semesterScoreData.value[selectedSemester.value]
   })
 
-  const getScoreStore = async(refresh = false) => {
-    Toast.loading({
-      duration: 0,
-      forbidClick: true,
-      message: `正在获取成绩信息...\n${getRandomQAQ('happy')[0]}`,
-    })
-    await getScoreRequest(refresh).then((res) => {
-      Toast.clear()
-      Toast.success({
-        message: `获取成绩信息成功！\n${getRandomQAQ('happy')[0]}`,
+  const getScoreStore = async(refresh = false, withTip = true) => {
+    if (withTip) {
+      Toast.loading({
+        duration: 0,
+        forbidClick: true,
+        message: `正在获取成绩信息...\n${getRandomQAQ('happy')[0]}`,
       })
+    }
+    await getScoreRequest(refresh).then((res) => {
+      if (withTip) {
+        Toast.clear()
+        Toast.success({
+          message: `获取成绩信息成功！\n${getRandomQAQ('happy')[0]}`,
+        })
+      }
       uni.stopPullDownRefresh()
       const data = res.data.data
       scoreData.value = data
-      if (refresh || !isStorageEmpty(scoreKey)) {
-        setScoreStorage(data)
-      }
+      setScoreStorage(data)
     }).catch(() => {
       Toast.clear()
       uni.stopPullDownRefresh()
-      Toast.fail({
-        message: `获取成绩信息失败，去交流群问问吧~\n${getRandomQAQ('sadness')[0]}`,
-      })
+      if (withTip) {
+        Toast.fail({
+          message: `获取成绩信息失败，去交流群问问吧~\n${getRandomQAQ('sadness')[0]}`,
+        })
+      }
+      throw new Error('cannot get data')
     })
   }
 
@@ -178,6 +178,7 @@ export const useScoreStore = defineStore('scoreStore', () => {
     scoreData,
     homeDetailInfo,
     homeActive,
+    homeScoreRankDataType,
     homeScoreData,
     setHomeActive,
     getScoreStore,

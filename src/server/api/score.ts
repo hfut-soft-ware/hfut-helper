@@ -1,13 +1,13 @@
 import { request } from '@/server/base'
-import type { IScoreResponse } from '@/shared/types/response/score'
 import type { ISingleScoreResponse, SingleScoreDto } from '@/shared/types/response/sing-score'
 import type { ICustomScoreResponse } from '@/shared/types/response/score-custom'
 import type { IFailureRateResponse } from '@/shared/types/response/failure-rate'
 import type { IFailureRateSearchResponse } from '@/shared/types/response/failure-rate-search'
+import type { IScoreResponseData } from '@/shared/types/response/score'
 
 export function getScoreRequest(refresh = true) {
-  return request<IScoreResponse>({
-    url: '/score/v2/all',
+  return request<IScoreResponseData>({
+    url: '/score/v3/all',
     params: {
       refresh,
     },

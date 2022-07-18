@@ -6,7 +6,6 @@ import Settings from './settings.vue'
 import { scoreKey, useScoreStore } from '@/store/score.store'
 import Card from '@/components/Card/Card.vue'
 import { isStorageEmpty } from '@/shared/hooks/use-syncStorage'
-import { getScoreRequest } from '@/server/api/score'
 
 const scoreStore = useScoreStore()
 const {
@@ -21,12 +20,16 @@ onMounted(async() => {
     scoreStore.getScoreStore(true)
   } else {
     // 后台静默刷新，免得用户觉得我们卡
-    await getScoreRequest(true)
+    await scoreStore.getScoreStore(true, false).catch(() => {
+      scoreStore.getScoreStore(false, false)
+    })
   }
 })
 
 onPullDownRefresh(() => {
-  scoreStore.getScoreStore(true)
+  scoreStore.getScoreStore(true).catch(() => {
+    scoreStore.getScoreStore(false)
+  })
 })
 
 function handleSemesterOpen(index: number) {

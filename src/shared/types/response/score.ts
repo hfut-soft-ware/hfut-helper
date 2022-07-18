@@ -1,76 +1,112 @@
-export interface IScoreResponse {
+export interface IScoreResponseData {
   code: number
   msg: string
-  data: IScore
+  data: IScoreData
 }
 
-export interface IScore {
-  majorRankVO: MajorRankVo
-  majorStatisticVO: MajorStatisticVo
+export interface IScoreData {
+  compulsoryRank: ICompulsoryRank
+  totalRank: TotalRank
   semesters: Semester[]
 }
 
-export interface MajorRankVo {
-  scoreRank: number
-  gpaRank: number
+export interface ICompulsoryRank {
+  score: Score
+  gpa: Gpa
   total: number
-  myAvgScore: number
-  myAvgGpa: number
-  majorAvgScore: number
-  majorAvgGpa: number
-  majorMaxScore: number
-  majorMaxGpa: number
-  majorHeadScore: number
-  majorHeadGpa: number
 }
 
-export interface MajorStatisticVo {
-  majorCompulsoryCredit: number
-  majorElectiveCredit: number
-  electiveCredit: number
-  range95_100: number
-  range90_95: number
-  range80_90: number
-  range70_80: number
-  range60_70: number
-  range0_60: number
+export interface Score {
+  rank: number
+  mine: number
+  max: number
+  avg: number
+  head: number
+}
+
+export interface Gpa {
+  rank: number
+  mine: number
+  max: number
+  avg: number
+  head: number
+}
+
+export interface TotalRank {
+  score: Score2
+  gpa: Gpa2
+  total: number
+}
+
+export interface Score2 {
+  rank: number
+  mine: number
+  max: number
+  avg: number
+  head: number
+}
+
+export interface Gpa2 {
+  rank: number
+  mine: number
+  max: number
+  avg: number
+  head: number
 }
 
 export interface Semester {
   semester: string
   semesterId: number
-  semesterStatisticVO: SemesterStatisticVo
-  semesterRankVO: SemesterRankVo
-  scores: Score[]
+  compulsoryRank: CompulsoryRank2
+  totalRank: TotalRank2
+  scores: Score5[]
 }
 
-export interface SemesterStatisticVo {
-  majorCompulsoryCredit: number
-  majorElectiveCredit: number
-  electiveCredit: number
-  range95_100: number
-  range90_95: number
-  range80_90: number
-  range70_80: number
-  range60_70: number
-  range0_60: number
-}
-
-export interface SemesterRankVo {
-  scoreRank: number
-  gpaRank: number
+export interface CompulsoryRank2 {
+  score: Score3
+  gpa: Gpa3
   total: number
-  myAvgScore: number
-  myAvgGpa: number
-  majorAvgScore: number
-  majorAvgGpa: number
-  majorMaxScore: number
-  majorMaxGpa: number
-  majorHeadScore: number
-  majorHeadGpa: number
 }
 
-export interface Score {
+export interface Score3 {
+  rank: number
+  mine: number
+  max: number
+  avg: number
+  head: number
+}
+
+export interface Gpa3 {
+  rank: number
+  mine: number
+  max: number
+  avg: number
+  head: number
+}
+
+export interface TotalRank2 {
+  score: Score4
+  gpa: Gpa4
+  total: number
+}
+
+export interface Score4 {
+  rank: number
+  mine: number
+  max: number
+  avg: number
+  head: number
+}
+
+export interface Gpa4 {
+  rank: number
+  mine: number
+  max: number
+  avg: number
+  head: number
+}
+
+export interface Score5 {
   name: string
   lessonId: string
   teachingClassId: string

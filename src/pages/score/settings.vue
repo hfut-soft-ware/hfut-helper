@@ -1,5 +1,7 @@
 <script lang='ts' setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useScoreStore } from '@/store/score.store'
 
 const show = ref(false)
 
@@ -15,6 +17,18 @@ function handleOpenCustomClick() {
 
 function onClose() {
   show.value = false
+}
+
+const scoreStore = useScoreStore()
+const { homeScoreRankDataType } = storeToRefs(scoreStore)
+
+const checked = computed(() => homeScoreRankDataType.value === 'all')
+function onChange() {
+  if (homeScoreRankDataType.value === 'compulsory') {
+    homeScoreRankDataType.value = 'all'
+  } else {
+    homeScoreRankDataType.value = 'compulsory'
+  }
 }
 </script>
 
@@ -36,6 +50,12 @@ function onClose() {
           <div class="flex justify-between" @click="handleOpenCustomClick">
             <p>自定义排名</p>
             <van-icon name="arrow" />
+          </div>
+        </div>
+        <div>
+          <div class="flex justify-between">
+            <p>全科排名</p>
+            <van-switch :checked="checked" @change="onChange" />
           </div>
         </div>
       </div>
