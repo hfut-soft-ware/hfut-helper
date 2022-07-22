@@ -1,3 +1,3 @@
 export const requestConfig = {
-  baseURL: 'https://hfutspace.infinitysvs.tech:443/',
+  baseURL: 'https://www.hfut-space.top:1145/',
 }

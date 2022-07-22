@@ -39,6 +39,10 @@ const list = [
     },
   },
 ]
+
+function handleContact(e: any) {
+  console.log(e)
+}
 </script>
 
 <template>
@@ -68,6 +72,9 @@ const list = [
       </div>
 
       <SettingList :list="list" />
+      <button class="btn bg-[#4981F9] mt-2 w-full" open-type="contact" @contact="handleContact">
+        意见反馈
+      </button>
     </div>
   </div>
 </template>
