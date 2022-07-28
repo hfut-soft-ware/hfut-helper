@@ -6,9 +6,11 @@ import Settings from './settings.vue'
 import { scoreKey, useScoreStore } from '@/store/score.store'
 import Card from '@/components/Card/Card.vue'
 import { isStorageEmpty } from '@/shared/hooks/use-syncStorage'
+import BounceBall from '@/components/BounceBall/BounceBall.vue'
 
 const scoreStore = useScoreStore()
 const {
+  homeDetailMode,
   homeDetailInfo,
   homeActive,
   homeScoreData,
@@ -50,6 +52,14 @@ const onFailureRateSearchClick = () => {
     url: '/pages/mine/failureRate/failureRate',
   })
 }
+
+function changeMaxOrTop() {
+  if (homeDetailMode.value === 'top') {
+    homeDetailMode.value = 'max'
+  } else {
+    homeDetailMode.value = 'top'
+  }
+}
 </script>
 
 <template>
@@ -84,7 +94,10 @@ const onFailureRateSearchClick = () => {
             {{ homeScoreData.rank }} / {{ homeScoreData.total }}
           </h3>
         </div>
-        <div class="bg-[#3F51B5] p-2 rounded-md flex">
+        <div
+          class="bg-[#3F51B5] p-2 rounded-md flex"
+          @click="changeMaxOrTop"
+        >
           <div
             v-for="item in homeDetailInfo"
             :key="item.icon"
@@ -98,6 +111,7 @@ const onFailureRateSearchClick = () => {
               <p>{{ item.value }}</p>
             </div>
           </div>
+          <BounceBall class="absolute right-4" />
         </div>
       </div>
     </Card>

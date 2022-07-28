@@ -59,6 +59,7 @@ export const useScoreStore = defineStore('scoreStore', () => {
   const [currentSelectedCourse, setCurrentSelectedCourse] = useRef<Score5>({} as Score5)
   const [currentScoreData, setCurrentScoreData] = useRef<ISingleScoreData>({} as ISingleScoreData)
 
+  const homeDetailMode = ref<'max' | 'top'>('top')
   const homeDetailInfo = computed(() => {
     const data = homeScoreData.value
     return [
@@ -73,8 +74,8 @@ export const useScoreStore = defineStore('scoreStore', () => {
         icon: 'friends-o',
       },
       {
-        title: '专业前10%',
-        value: parseFloat(data.top.toString()).toFixed(2),
+        title: homeDetailMode.value === 'top' ? '专业前10%' : '专业最高',
+        value: parseFloat(((homeDetailMode.value === 'top' ? data.top : data.max).toString())).toFixed(2),
         icon: 'fire-o',
       },
     ]
@@ -172,10 +173,9 @@ export const useScoreStore = defineStore('scoreStore', () => {
     })
   }
 
-  const getCustomScoreData = async() => {}
-
   return {
     scoreData,
+    homeDetailMode,
     homeDetailInfo,
     homeActive,
     homeScoreRankDataType,
