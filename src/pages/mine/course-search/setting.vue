@@ -5,9 +5,7 @@ import { useCourseSearchStore } from '@/store/courseSearch.store'
 
 const store = useCourseSearchStore()
 const {
-  mode,
   settingShow,
-  options,
   semesters,
   semesterOptions,
   campuses,

@@ -7,9 +7,9 @@ const getToken = () => {
   return uni.getStorageSync(TOKEN_KEY)
 }
 
-const headers = {
-  authorization: `Bearer ${getToken()}`,
-}
+// const headers = {
+//   authorization: `Bearer ${getToken()}`,
+// }
 
 export function createInstance(config: AjaxRequestConfig) {
   return ajax.create(config)
@@ -32,7 +32,7 @@ export function createRequest<T>() {
     if (!config.method) {
       config.method = 'GET'
     }
-    return instance(config)
+    return instance<T>(config)
   }
 }
 
