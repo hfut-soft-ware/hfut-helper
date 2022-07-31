@@ -32,7 +32,7 @@ const onSearchClick = useDebounceFn(() => {
 const selectedCourse = (name: string) => {
   courseName.value = name
   uni.navigateTo({
-    url: '/pages/failure-rate/failure-rate',
+    url: '/sub1/pages/failure-rate/failure-rate',
   })
 }
 </script>

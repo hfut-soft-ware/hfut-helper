@@ -2,8 +2,8 @@
 import { ref } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 import Toast from '@vant/weapp/lib/toast/toast'
+import { useShowDetail } from './use-showDetail'
 import { getLibrarySearchRequest } from '@/server/api/library'
-import { useShowDetail } from '@/pages/mine/library/use-showDetail'
 import type { ILibraryDetailData } from '@/shared/types/response/library-detail'
 
 const {

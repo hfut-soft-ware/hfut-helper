@@ -1,10 +1,10 @@
 <script lang='ts' setup>
 import { onPullDownRefresh } from '@dcloudio/uni-app'
 import { storeToRefs } from 'pinia'
-import { TrainPlanKey, useTrainPlanStore } from '@/pages/mine/train-plan/trainPlan.store'
+import { TrainPlanKey, useTrainPlanStore } from './trainPlan.store'
+import PlanProgress from './plan-progress.vue'
 import { isStorageEmpty } from '@/shared/hooks/use-syncStorage'
 import type { ITrainPlanData } from '@/shared/types/response/train-plan'
-import PlanProgress from '@/pages/mine/train-plan/plan-progress.vue'
 
 const store = useTrainPlanStore()
 
@@ -21,7 +21,7 @@ onPullDownRefresh(() => {
 function onPlanClick(payload: ITrainPlanData) {
   store.setSelectedPlan(payload)
   uni.navigateTo({
-    url: '/pages/mine/train-plan/plan-detail',
+    url: '/sub1/pages/mine/train-plan/plan-detail',
   })
 }
 </script>

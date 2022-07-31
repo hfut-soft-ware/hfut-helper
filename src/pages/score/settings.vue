@@ -11,7 +11,7 @@ function handleScoreSettingsOpen() {
 
 function handleOpenCustomClick() {
   uni.navigateTo({
-    url: '/pages/score/custom/custom',
+    url: '/sub1/pages/score/custom/custom',
   })
 }
 

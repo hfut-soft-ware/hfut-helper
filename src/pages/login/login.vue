@@ -4,8 +4,8 @@ import { onLoad } from '@dcloudio/uni-app'
 import { computed, ref } from 'vue'
 import { getRandomQAQ } from 'qaq-font'
 import loverImg from './lover.png'
-import normalImg from '@/pages/login/img.png'
-import { useFormValidate } from '@/pages/login/use-formValidate'
+import normalImg from './img.png'
+import { useFormValidate } from './use-formValidate'
 import { useAuthStore } from '@/store/auth.store'
 import StatusBar from '@/components/status-bar/status-bar.vue'
 import { uesLoverStore } from '@/store/lover.store'
@@ -53,7 +53,7 @@ async function onLogin() {
 
 function toDisclaimers() {
   uni.navigateTo({
-    url: '/pages/mine/about/disclaimers/disclaimers',
+    url: '/sub1/pages/mine/about/disclaimers/disclaimers',
   })
 }
 </script>

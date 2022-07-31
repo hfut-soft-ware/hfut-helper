@@ -5,7 +5,7 @@
       "style": {
         "navigationStyle": "custom",
         "enablePullDownRefresh": false,
-        "navigationBarTextStyle":"black"
+        "navigationBarTextStyle": "black"
       }
     },
     {
@@ -15,7 +15,7 @@
         "navigationStyle": "custom",
         "backgroundColor": "#F6F8FA",
         "navigationBarBackgroundColor": "#F6F8FA",
-        "navigationBarTextStyle":"black"
+        "navigationBarTextStyle": "black"
       }
     },
     {
@@ -24,15 +24,7 @@
         "backgroundColorTop": "#F6F8FA",
         "navigationStyle": "custom",
         "backgroundColor": "#F6F8FA",
-        "navigationBarTextStyle":"black"
-      }
-    },
-    {
-      "path": "pages/score/custom/custom",
-      "style": {
-        "navigationBarBackgroundColor": "#283593",
-        "navigationBarTitleText": "自定义成绩",
-        "enablePullDownRefresh": false
+        "navigationBarTextStyle": "black"
       }
     },
     {
@@ -43,118 +35,142 @@
       }
     },
     {
-      "path": "pages/score/semester/semester",
-      "style": {
-        "navigationBarBackgroundColor": "#283593"
-      }
-    },
-    {
-      "path": "pages/score/course/course",
-      "style": {
-        "navigationBarBackgroundColor": "#283593"
-      }
-    },
-    {
       "path": "pages/mine/mine",
       "style": {
         "backgroundColorTop": "#ffffff",
         "navigationStyle": "custom",
         "backgroundColor": "#ffffff",
-        "navigationBarTextStyle":"black"
-      }
-    },
-    {
-      "path": "pages/mine/mooc/mooc",
-      "style": {
-        "enablePullDownRefresh": false,
-        "navigationBarBackgroundColor": "#4981F9",
-        "navigationBarTitleText": "慕课信息"
-      }
-    },
-    {
-      "path": "pages/mine/semester-course/semester-course",
-      "style": {
-        "enablePullDownRefresh": false,
-        "navigationBarBackgroundColor": "#4981F9",
-        "navigationBarTitleText": "本学期课表"
-      }
-    },
-    {
-      "path": "pages/failure-rate/failure-rate",
-      "style": {
-        "enablePullDownRefresh": false,
-        "navigationBarBackgroundColor": "#4981F9",
-        "navigationBarTitleText": "挂科率"
-      }
-    },
-    {
-      "path": "pages/mine/card/card",
-      "style": {
-        "navigationBarBackgroundColor": "#283593",
-        "enablePullDownRefresh": false,
-        "navigationBarTitleText": "一卡通信息"
-      }
-    },
-    {
-      "path": "pages/mine/exam/exam",
-      "style": {
-        "navigationBarBackgroundColor": "#4981F9",
-        "navigationBarTitleText": "考试安排"
-      }
-    },
-    {
-      "path": "pages/mine/about/about",
-      "style": {
-        "navigationBarBackgroundColor": "#4981F9",
-        "navigationBarTitleText": "关于我们"
-      }
-    },
-    {
-      "path": "pages/mine/about/disclaimers/disclaimers",
-      "style": {
-        "navigationBarBackgroundColor": "#4981F9",
-        "navigationBarTitleText": "用户协议"
-      }
-    },
-    {
-      "path": "pages/mine/train-plan/train-plan",
-      "style": {
-        "navigationBarBackgroundColor": "#4981F9",
-        "navigationBarTitleText": "培养方案"
-      }
-    },
-    {
-      "path": "pages/mine/train-plan/plan-detail",
-      "style": {
-        "navigationBarBackgroundColor": "#4981F9",
-        "navigationBarTitleText": "方案详情"
-      }
-    },
-    {
-      "path": "pages/mine/library/library",
-      "style": {
-        "navigationBarBackgroundColor": "#4981F9",
-        "navigationBarTitleText": "图书馆查询"
-      }
-    },
-    {
-      "path": "pages/mine/failureRate/failureRate",
-      "style": {
-        "navigationBarBackgroundColor": "#4981F9",
-        "navigationBarTitleText": "挂科率查询"
-      }
-    },
-    {
-      "path": "pages/mine/course-search/course-search",
-      "style": {
-        "navigationBarBackgroundColor": "#4981F9",
-        "navigationBarTitleText": "全校课表"
+        "navigationBarTextStyle": "black"
       }
     }
   ],
+  "subPackages": [
+    {
+      "root": "sub1",
+      "pages": [
+        {
+          "path": "pages/score/custom/custom",
+          "style": {
+            "navigationBarBackgroundColor": "#283593",
+            "navigationBarTitleText": "自定义成绩",
+            "enablePullDownRefresh": false
+          }
+        },
+        {
+          "path": "pages/score/semester/semester",
+          "style": {
+            "navigationBarBackgroundColor": "#283593"
+          }
+        },
+        {
+          "path": "pages/score/course/course",
+          "style": {
+            "navigationBarBackgroundColor": "#283593"
+          }
+        },
+        {
+          "path": "pages/mine/mooc/mooc",
+          "style": {
+            "enablePullDownRefresh": false,
+            "navigationBarBackgroundColor": "#4981F9",
+            "navigationBarTitleText": "慕课信息"
+          }
+        },
+        {
+          "path": "pages/mine/semester-course/semester-course",
+          "style": {
+            "enablePullDownRefresh": false,
+            "navigationBarBackgroundColor": "#4981F9",
+            "navigationBarTitleText": "本学期课表"
+          }
+        },
+        {
+          "path": "pages/failure-rate/failure-rate",
+          "style": {
+            "enablePullDownRefresh": false,
+            "navigationBarBackgroundColor": "#4981F9",
+            "navigationBarTitleText": "挂科率"
+          }
+        },
+        {
+          "path": "pages/mine/card/card",
+          "style": {
+            "navigationBarBackgroundColor": "#283593",
+            "enablePullDownRefresh": false,
+            "navigationBarTitleText": "一卡通信息"
+          }
+        },
+        {
+          "path": "pages/mine/exam/exam",
+          "style": {
+            "navigationBarBackgroundColor": "#4981F9",
+            "navigationBarTitleText": "考试安排"
+          }
+        },
+        {
+          "path": "pages/mine/about/about",
+          "style": {
+            "navigationBarBackgroundColor": "#4981F9",
+            "navigationBarTitleText": "关于我们"
+          }
+        },
+        {
+          "path": "pages/mine/about/disclaimers/disclaimers",
+          "style": {
+            "navigationBarBackgroundColor": "#4981F9",
+            "navigationBarTitleText": "用户协议"
+          }
+        },
+        {
+          "path": "pages/mine/train-plan/train-plan",
+          "style": {
+            "navigationBarBackgroundColor": "#4981F9",
+            "navigationBarTitleText": "培养方案"
+          }
+        },
+        {
+          "path": "pages/mine/train-plan/plan-detail",
+          "style": {
+            "navigationBarBackgroundColor": "#4981F9",
+            "navigationBarTitleText": "方案详情"
+          }
+        },
+        {
+          "path": "pages/mine/library/library",
+          "style": {
+            "navigationBarBackgroundColor": "#4981F9",
+            "navigationBarTitleText": "图书馆查询"
+          }
+        },
+        {
+          "path": "pages/mine/failureRate/failureRate",
+          "style": {
+            "navigationBarBackgroundColor": "#4981F9",
+            "navigationBarTitleText": "挂科率查询"
+          }
+        },
+        {
+          "path": "pages/mine/course-search/course-search",
+          "style": {
+            "navigationBarBackgroundColor": "#4981F9",
+            "navigationBarTitleText": "全校课表"
+          }
+        }
+      ]
+    }
+  ],
+  "preloadRule": {
+    "pages/day-schedule/index": {
+      "network": "all",
+      "packages": ["sub1"]
+    },
+    "pages/login/login": {
+      "network": "all",
+      "packages": ["sub1"]
+    }
+  },
   "tabBar": {
     "height": "20px",
-    "fontsize": "16px",
     "selectedColor": "#63b1ef",
     "list": [
       {

@@ -52,7 +52,7 @@ function handleCourseClick(item: Score) {
   }
   scoreStore.setCurrentSelectedCourse(item)
   uni.navigateTo({
-    url: '/pages/score/course/course',
+    url: '/sub1/pages/score/course/course',
   })
 }
 </script>

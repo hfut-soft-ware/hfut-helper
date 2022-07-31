@@ -1,8 +1,8 @@
 <script lang='ts' setup>
 // TODO 增加每月消费的卡片
 import { storeToRefs } from 'pinia'
+import { useRecordedList } from './use-recordedList'
 import { useMineStore } from '@/store/mine.store'
-import { useRecordedList } from '@/pages/mine/card/use-recordedList'
 import { useFlowWaterStore } from '@/store/flowWater.store'
 
 const mineStore = useMineStore()

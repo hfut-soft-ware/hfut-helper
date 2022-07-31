@@ -1,6 +1,6 @@
 <script lang='ts' setup>
 import { storeToRefs } from 'pinia'
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { onPullDownRefresh } from '@dcloudio/uni-app'
 import { formatScore, useScoreStore } from '@/store/score.store'
 import BounceBall from '@/components/BounceBall/BounceBall.vue'

@@ -37,19 +37,19 @@ onPullDownRefresh(() => {
 function handleSemesterOpen(index: number) {
   scoreStore.setSelectedSemester(index)
   uni.navigateTo({
-    url: '/pages/score/semester/semester',
+    url: '/sub1/pages/score/semester/semester',
   })
 }
 
 function handleOpenCustomClick() {
   uni.navigateTo({
-    url: '/pages/score/custom/custom',
+    url: '/sub1/pages/score/custom/custom',
   })
 }
 
 const onFailureRateSearchClick = () => {
   uni.navigateTo({
-    url: '/pages/mine/failureRate/failureRate',
+    url: '/sub1/pages/mine/failureRate/failureRate',
   })
 }
 
