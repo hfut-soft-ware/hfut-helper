@@ -1,7 +1,7 @@
 <script lang='ts' setup>
 import Toast from '@vant/weapp/lib/toast/toast'
 import { getRandomQAQ } from 'qaq-font'
-import SettingList from '@/pages/mine/about/SettingList.vue'
+import SettingList from './SettingList.vue'
 
 const list = [
   {
@@ -25,7 +25,7 @@ const list = [
   //   title: '请我们喝咖啡',
   //   cb: () => {
   //     uni.navigateTo({
-  //       url: '/pages/mine/about/donate/donate',
+  //       url: '/sub1/pages/mine/about/donate/donate',
   //     })
   //   },
   // },
@@ -34,13 +34,14 @@ const list = [
     title: '用户协议',
     cb: () => {
       uni.navigateTo({
-        url: '/pages/mine/about/disclaimers/disclaimers',
+        url: '/sub1/pages/mine/about/disclaimers/disclaimers',
       })
     },
   },
 ]
 
 function handleContact(e: any) {
+  // eslint-disable-next-line no-console
   console.log(e)
 }
 </script>

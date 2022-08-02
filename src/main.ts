@@ -24,7 +24,7 @@ import '@/assets/icons/rocket-2.png'
 import '@/assets/icons/flyBall.png'
 
 // imgs
-import '@/pages/mine/about/donate/donate.png'
+// import '@/pages/mine/about/donate/donate.png'
 import '@/assets/imgs/avatar.png'
 
 export function createApp() {

@@ -1,7 +1,7 @@
 <script lang='ts' setup>
 import { storeToRefs } from 'pinia'
-import { useTrainPlanStore } from '@/pages/mine/train-plan/trainPlan.store'
-import PlanProgress from '@/pages/mine/train-plan/plan-progress.vue'
+import PlanProgress from './plan-progress.vue'
+import { useTrainPlanStore } from './trainPlan.store'
 
 const store = useTrainPlanStore()
 

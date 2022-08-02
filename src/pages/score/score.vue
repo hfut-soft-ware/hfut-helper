@@ -7,6 +7,7 @@ import { scoreKey, useScoreStore } from '@/store/score.store'
 import Card from '@/components/Card/Card.vue'
 import { isStorageEmpty } from '@/shared/hooks/use-syncStorage'
 import BounceBall from '@/components/BounceBall/BounceBall.vue'
+import AreaUCharts from '@/pages/score/area-ucharts.vue'
 
 const scoreStore = useScoreStore()
 const {
@@ -37,19 +38,19 @@ onPullDownRefresh(() => {
 function handleSemesterOpen(index: number) {
   scoreStore.setSelectedSemester(index)
   uni.navigateTo({
-    url: '/pages/score/semester/semester',
+    url: '/sub1/pages/score/semester/semester',
   })
 }
 
 function handleOpenCustomClick() {
   uni.navigateTo({
-    url: '/pages/score/custom/custom',
+    url: '/sub1/pages/score/custom/custom',
   })
 }
 
 const onFailureRateSearchClick = () => {
   uni.navigateTo({
-    url: '/pages/mine/failureRate/failureRate',
+    url: '/sub1/pages/mine/failureRate/failureRate',
   })
 }
 
@@ -148,6 +149,9 @@ function changeMaxOrTop() {
       <p class="ml-2 text-sm">
         挂科率查询
       </p>
+    </div>
+    <div class="px-5 py-3">
+      <AreaUCharts />
     </div>
   </div>
   <div class="mt-2 w-full flex justify-center text-xs text-black/80">

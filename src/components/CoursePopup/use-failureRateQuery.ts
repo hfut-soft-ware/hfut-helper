@@ -9,7 +9,7 @@ export function useFailureRateQuery(
 
   const handleFailureRateQueryClick = () => {
     uni.navigateTo({
-      url: '/pages/failure-rate/failure-rate',
+      url: '/sub1/pages/failure-rate/failure-rate',
     })
     courseStoreName.value = courseName
   }

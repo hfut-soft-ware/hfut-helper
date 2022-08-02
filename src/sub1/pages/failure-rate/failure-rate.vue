@@ -2,8 +2,8 @@
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
+import { FailureRateTable } from './constant'
 import { useFailureRateStore } from '@/store/failureRate.store'
-import { FailureRateTable } from '@/pages/failure-rate/constant'
 
 const store = useFailureRateStore()
 

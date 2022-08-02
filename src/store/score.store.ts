@@ -4,7 +4,7 @@ import Toast from '@vant/weapp/lib/toast/toast'
 import { getRandomQAQ } from 'qaq-font'
 import { isNumber } from 'lodash'
 import { getScoreRequest, getSingleScoreRequest } from '@/server/api/score'
-import type { ICompulsoryRank, IScoreData, Score, Score5, Semester } from '@/shared/types/response/score'
+import type { ICompulsoryRank, IScoreData, Score5, Semester } from '@/shared/types/response/score'
 import { useRef } from '@/shared/hooks/useRef'
 import type { ISingleScoreData, SingleScoreDto } from '@/shared/types/response/sing-score'
 import { useSyncStorage } from '@/shared/hooks/use-syncStorage'
@@ -97,7 +97,7 @@ export const useScoreStore = defineStore('scoreStore', () => {
       return defaultData
     }
 
-    console.log(homeScoreRankData.value)
+    // console.log(homeScoreRankData.value)
     return createScoreDetail(homeScoreRankData.value, homeActive.value)
   })
 

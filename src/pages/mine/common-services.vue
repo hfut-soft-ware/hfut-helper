@@ -12,7 +12,7 @@ const { recentExam } = storeToRefs(courseStore)
 
 function onServiceClick(url: string) {
   uni.navigateTo({
-    url: `/pages/mine/${url}`,
+    url: `/sub1/pages/mine/${url}`,
   })
 }
 
