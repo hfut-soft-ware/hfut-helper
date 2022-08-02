@@ -1,7 +1,63 @@
 <script setup lang='ts'>
+import { computed } from 'vue'
+import UCharts from '@/components/qiun-data-charts/components/qiun-data-charts/qiun-data-charts.vue'
+import type { Detail } from '@/shared/types/response/sing-score'
+import type { Series } from '@/shared/types/utils'
 
+type ScoreType = keyof Detail
+
+const props = defineProps<{
+  scoreDetail: Detail[] | undefined
+}>()
+
+const chartData = computed(() => {
+  const scoreDetail = props.scoreDetail!
+  const categories = scoreDetail.map(item => item.name)
+  const series: Series[] = []
+
+  const getScore = (scoreType: ScoreType) => {
+    return scoreDetail.map(item => item[scoreType])
+  }
+
+  series.push({
+    name: '我的',
+    data: getScore('mine'),
+    format: 'seriesFixed',
+  },
+  {
+    name: '平均',
+    data: getScore('avg'),
+    format: 'seriesFixed',
+  },
+  {
+    name: '最高',
+    data: getScore('max'),
+    format: 'seriesFixed',
+  })
+
+  return {
+    categories,
+    series,
+  }
+})
+
+const opts = {
+  padding: [0, 0, 0, 0],
+  legend: {
+    position: 'bottom',
+  },
+  extra: {
+    radar: {
+      gridType: 'circle',
+      gridColor: '#CCCCCC',
+      gridCount: 3,
+      opacity: 0.2,
+      max: 100,
+    },
+  },
+}
 </script>
 
 <template>
-  <div>1</div>
+  <UCharts v-if="scoreDetail" type="radar" :opts="opts" :chartData="chartData" :loadingType="0" />
 </template>

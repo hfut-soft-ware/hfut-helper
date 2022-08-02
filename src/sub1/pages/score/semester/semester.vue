@@ -97,7 +97,9 @@ function handleCourseClick(item: Score) {
                 </div>
               </div>
             </div>
-            <p>{{ item.gpa === null ? '待评教' : item.score }}</p>
+            <p class="mr-6">
+              {{ item.gpa === null ? '待评教' : item.score }}
+            </p>
           </div>
         </div>
       </scroll-view>

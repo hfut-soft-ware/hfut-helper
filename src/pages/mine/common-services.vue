@@ -1,6 +1,6 @@
 <script lang='ts' setup>
 import { storeToRefs } from 'pinia'
-import { servicesList } from '@/pages/mine/constant'
+import { servicesButtonList, servicesList } from '@/pages/mine/constant'
 import { useCourseListStore } from '@/store/courseList.store'
 import { useMineStore } from '@/store/mine.store'
 
@@ -53,6 +53,22 @@ function onServiceClick(url: string) {
         {{ service.title }}
       </p>
       <van-icon name="arrow" />
+    </div>
+  </div>
+
+  <div class="mt-5 py-2 rounded-xl card-shadow flex flex-wrap">
+    <div
+      v-for="service in servicesButtonList"
+      :key="service.icon"
+      class="w-1/4 flex items-center justify-center"
+      @click="onServiceClick(service.url)"
+    >
+      <div class="py-2 px-3 flex flex-col items-center justify-center">
+        <van-icon :name="service.icon" size="2rem" />
+        <p class="text-xs">
+          {{ service.title }}
+        </p>
+      </div>
     </div>
   </div>
 </template>

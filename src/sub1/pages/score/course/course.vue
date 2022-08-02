@@ -4,6 +4,9 @@ import { computed, ref } from 'vue'
 import { onPullDownRefresh } from '@dcloudio/uni-app'
 import { formatScore, useScoreStore } from '@/store/score.store'
 import BounceBall from '@/components/BounceBall/BounceBall.vue'
+import Settings from '@/sub1/pages/score/course/settings.vue'
+import RadarUCharts from '@/sub1/pages/score/course/radar-ucharts.vue'
+import type { RankMode } from '@/shared/types'
 
 const scoreStore = useScoreStore()
 
@@ -18,9 +21,12 @@ onPullDownRefresh(() => {
 })
 
 const headMode = ref<'head' | 'max'>('head')
+const rankMode = ref<RankMode>('major')
 
 const currentCourseDetail = computed(() => {
-  const data = currentScoreData.value.majorRank
+  const data = rankMode.value === 'major'
+    ? currentScoreData.value.majorRank
+    : currentScoreData.value.classRank
 
   if (!data) {
     return {}
@@ -36,9 +42,22 @@ const currentCourseDetail = computed(() => {
     icon: 'fire-o',
   }
 
+  const middleItem = {
+    title: '专业平均',
+    value: parseFloat(score.avg.toString()).toFixed(2),
+    icon: 'friends-o',
+  }
+
   if (headMode.value === 'max') {
     lastItem.title = '专业最高'
     lastItem.value = parseFloat(score.max.toString()).toFixed(2)
+  }
+
+  if (rankMode.value === 'class') {
+    middleItem.title = '教学班平均'
+    if (headMode.value === 'max') {
+      lastItem.title = '教学班最高'
+    }
   }
 
   return {
@@ -52,9 +71,7 @@ const currentCourseDetail = computed(() => {
         icon: 'user-circle-o',
       },
       {
-        title: '专业平均',
-        value: parseFloat(score.avg.toString()).toFixed(2),
-        icon: 'friends-o',
+        ...middleItem,
       },
       {
         ...lastItem,
@@ -79,7 +96,8 @@ function changeHeadAndMax(index: number) {
 
 <template>
   <van-toast id="van-toast" />
-  <div class="w-[95vw] min-h-screen mx-auto py-5 relative flex flex-col gap-5 bg-[#E8EAF6] mt-5 rounded-lg box-border px-3">
+  <Settings v-model:rankMode="rankMode" />
+  <div class="w-[95vw] min-h-screen mx-auto py-5 relative flex flex-col gap-5 bg-[#E8EAF6] my-5 rounded-lg box-border px-3">
     <Card>
       <div class="flex flex-col gap-3 py-1">
         <div class="w-full flex justify-between">
@@ -144,12 +162,12 @@ function changeHeadAndMax(index: number) {
         <div>
           <div
             v-for="item in currentCourseDetail.details"
-            :key="item.details"
+            :key="(item as any).details"
           >
             <div class="w-full flex text-black/85">
               <p
                 v-for="(content, index) in [item.name, item.mine, `${item.rank}/${currentScoreData.majorRank.total}`]"
-                :key="content.name"
+                :key="(content as any).name"
                 class="flex-1"
                 :class="index > 0 ? 'center':''"
               >
@@ -160,6 +178,9 @@ function changeHeadAndMax(index: number) {
           </div>
         </div>
       </div>
+    </div>
+    <div class="px-5 py-3">
+      <RadarUCharts :scoreDetail="currentCourseDetail.details" />
     </div>
   </div>
 </template>

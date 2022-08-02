@@ -5,3 +5,5 @@ export type WeekDays = {
   active: boolean
   idx: number
 }[]
+
+export type RankMode = 'major' | 'class'

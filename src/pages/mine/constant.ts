@@ -1,4 +1,6 @@
-export const servicesList: { icon: string; title: string; url: string }[] = [
+type Service = { icon: string; title: string; url: string }
+
+export const servicesList: Service[] = [
   {
     icon: 'flyship',
     title: '全校课表查询',
@@ -39,4 +41,47 @@ export const servicesList: { icon: string; title: string; url: string }[] = [
   //   title: '空教室查询',
   //   url: 'emptyRoomSearch',
   // },
+]
+
+export const servicesButtonList: Service[] = [
+  {
+    icon: 'notes-o',
+    title: '校历',
+    url: 'school-calendar/school-calendar',
+  },
+  {
+    icon: 'logistics',
+    title: '校车',
+    url: 'school-bus/school-bus',
+  },
+  {
+    icon: 'logistics',
+    title: '校车',
+    url: 'school-bus/school-bus',
+  },
+  {
+    icon: 'logistics',
+    title: '校车',
+    url: 'school-bus/school-bus',
+  },
+  {
+    icon: 'logistics',
+    title: '校车',
+    url: 'school-bus/school-bus',
+  },
+  {
+    icon: 'logistics',
+    title: '校车',
+    url: 'school-bus/school-bus',
+  },
+  {
+    icon: 'logistics',
+    title: '校车',
+    url: 'school-bus/school-bus',
+  },
+  {
+    icon: 'logistics',
+    title: '校车',
+    url: 'school-bus/school-bus',
+  },
 ]

@@ -22,9 +22,9 @@ const greetingWords = computed(() => {
 </script>
 
 <template>
-  <StatusBar />
+  <StatusBar bgColor="" />
   <div class="flex flex-col gap-2 mt-8">
-    <p class="text-xs text-2xl">
+    <p class="text-2xl">
       {{ greetingWords[0] }},
     </p>
     <p class="text-sm">

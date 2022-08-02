@@ -155,6 +155,14 @@
             "navigationBarBackgroundColor": "#4981F9",
             "navigationBarTitleText": "全校课表"
           }
+        },
+        {
+          "path": "pages/mine/school-calendar/school-calendar",
+          "style": {
+            "navigationBarBackgroundColor": "#4981F9",
+            "navigationBarTitleText": "校历",
+            "enablePullDownRefresh": false
+          }
         }
       ]
     }

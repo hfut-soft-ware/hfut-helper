@@ -52,7 +52,7 @@ getUserInfo()
     <van-dialog id="van-dialog" />
     <Header />
 
-    <div class="mt-10 flex flex-col gap-5">
+    <div class="my-10 flex flex-col gap-5">
       <div class="border-box overflow-hidden rounded-xl card-shadow">
         <div class="relative flex justify-center items-center h-[200px] overflow-hidden">
           <img mode="aspectFill" class="w-full bg" src="../../assets/imgs/mine-bg.png">

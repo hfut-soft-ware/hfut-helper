@@ -1,8 +1,15 @@
-<script lang='ts' setup>
+<script setup lang='ts'>
 import { computed, ref } from 'vue'
-import { storeToRefs } from 'pinia'
-import { useScoreStore } from '@/store/score.store'
 import SettingButton from '@/components/base/SettingButton.vue'
+import type { RankMode } from '@/shared/types'
+
+const props = defineProps<{
+  rankMode: RankMode
+}>()
+
+const emits = defineEmits<{
+  (e: 'update:rankMode', mode: RankMode): void
+}>()
 
 const show = ref(false)
 
@@ -10,25 +17,16 @@ function handleScoreSettingsOpen() {
   show.value = true
 }
 
-function handleOpenCustomClick() {
-  uni.navigateTo({
-    url: '/sub1/pages/score/custom/custom',
-  })
-}
-
 function onClose() {
   show.value = false
 }
 
-const scoreStore = useScoreStore()
-const { homeScoreRankDataType } = storeToRefs(scoreStore)
-
-const checked = computed(() => homeScoreRankDataType.value === 'all')
+const checked = computed(() => props.rankMode === 'class')
 function onChange() {
-  if (homeScoreRankDataType.value === 'compulsory') {
-    homeScoreRankDataType.value = 'all'
+  if (props.rankMode === 'class') {
+    emits('update:rankMode', 'major')
   } else {
-    homeScoreRankDataType.value = 'compulsory'
+    emits('update:rankMode', 'class')
   }
 }
 </script>
@@ -47,15 +45,14 @@ function onChange() {
         <h2 class="font-semibold text-base text-center">
           分数设置
         </h2>
-        <div class="flex flex-col">
-          <div class="flex justify-between" @click="handleOpenCustomClick">
-            <p>自定义排名</p>
-            <van-icon name="arrow" />
-          </div>
-        </div>
         <div>
           <div class="flex justify-between">
-            <p>全科排名</p>
+            <p v-if="checked">
+              教学班排名
+            </p>
+            <p v-else>
+              专业排名
+            </p>
             <van-switch :checked="checked" @change="onChange" />
           </div>
         </div>
@@ -64,7 +61,3 @@ function onChange() {
   </div>
   <SettingButton @click="handleScoreSettingsOpen" />
 </template>
-
-<style lang='scss' scoped>
-
-</style>
