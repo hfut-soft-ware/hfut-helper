@@ -9,9 +9,9 @@ const authRequest = createRequest()
 
 export function loginRequest({ studentId, password }: { studentId: string; password: string }) {
   return authRequest({
-    url: '/login',
-    method: 'GET',
-    params: {
+    url: 'v2/login',
+    method: 'POST',
+    data: {
       studentId,
       password,
     },
