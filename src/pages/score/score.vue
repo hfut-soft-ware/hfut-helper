@@ -7,6 +7,7 @@ import { scoreKey, useScoreStore } from '@/store/score.store'
 import Card from '@/components/Card/Card.vue'
 import { isStorageEmpty } from '@/shared/hooks/use-syncStorage'
 import BounceBall from '@/components/BounceBall/BounceBall.vue'
+import AreaUCharts from '@/pages/score/area-ucharts.vue'
 
 const scoreStore = useScoreStore()
 const {
@@ -148,6 +149,9 @@ function changeMaxOrTop() {
       <p class="ml-2 text-sm">
         挂科率查询
       </p>
+    </div>
+    <div class="px-5 py-3">
+      <AreaUCharts />
     </div>
   </div>
   <div class="mt-2 w-full flex justify-center text-xs text-black/80">
