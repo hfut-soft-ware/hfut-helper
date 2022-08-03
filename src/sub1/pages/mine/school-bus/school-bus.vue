@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import { useBusSchedule } from './useBusSchedule'
 import type { BusQueryData } from '@/shared/types/response/bus-query'
-import BounceBall from '@/components/BounceBall/BounceBall.vue'
 
 const {
   busScheduleType,
@@ -72,37 +71,40 @@ const onTabsChange = (e: any) => {
   </van-popup>
   <van-toast id="van-toast" />
   <div class="w-screen min-h-screen">
-    <div class="h-[100px] w-full flex justify-around items-center rounded-b-2xl bg-[#4981F9] text-white">
-      <h2 class="font-bold w-5/12 flex justify-center" @click="handleCampusCheck(true)">
+    <div class="h-[100px] w-full flex items-center rounded-b-2xl bg-[#4981F9] text-white">
+      <h2 class="flex-1 font-bold w-5/12 text-center" @click="handleCampusCheck(true)">
         {{ startCampus }}
       </h2>
-      <div class="h-[40px] w-[40px] relative flex justify-center items-center rounded-full bg-white" @click="handleRotateClick">
-        <BounceBall top />
-        <img src="./bus-icon.png" class="h-[30px] w-[30px]">
+      <div class="p-3 bg-white rounded-full text-black" @click="handleRotateClick">
+        <van-icon class="text-2xl w-[30px] h-[30px] text-black/85" name="replay" />
       </div>
-      <h2 class="font-bold w-5/12 flex justify-center" @click="handleCampusCheck(false)">
+      <h2 class="flex-1 font-bold w-5/12 text-center" @click="handleCampusCheck(false)">
         {{ endCampus }}
       </h2>
     </div>
 
     <van-tabs :active="busScheduleType" @change="onTabsChange">
       <van-tab v-for="item in Object.keys(tabBar)" :key="item" :title="tabBar[item as keyof BusQueryData]" :name="item">
-        <div v-for="schedule in busScheduleList" :key="schedule.startTime" class="flex items-center rounded-xl card-shadow w-[95vw] mx-auto py-2 px-4 border-2 box-border border-gray-100 my-2">
-          <p class="mr-4 w-8 flex items-center justify-center">
-            {{ schedule.startTime }}
-          </p>
-          <div class="w-1 h-12 rounded-full bg-[#4981F9]" />
-          <div class="ml-3">
-            <h3>{{ schedule.runRange[0] }} - {{ schedule.runRange[1] }}</h3>
-            <p v-if="schedule.passPlace" class="text-xs text-gray-400">
-              经停：{{ schedule.passPlace }}
+        <div class="grid gap-3 mt-2">
+          <div v-for="schedule in busScheduleList" :key="schedule.startTime" class="flex gap-2 items-center rounded-xl card-shadow w-[95vw] ml-[2.5vw] box-border p-3">
+            <p class="text-sm text-center">
+              {{ schedule.startTime.padStart(5, '0') }}
             </p>
-            <p v-else class="text-xs text-gray-400">
-              无经停站点
-            </p>
-            <p class="text-xs text-gray-400">
-              {{ schedule.startPlace }} {{ schedule.count }}车
-            </p>
+            <div class="w-1 h-12 rounded-full bg-[#4981F9]" />
+            <div class="ml-3 grid gap-1">
+              <h3 class="text-sm">
+                {{ schedule.runRange[0] }} - {{ schedule.runRange[1] }}
+              </h3>
+              <p v-if="schedule.passPlace" class="text-xs text-gray-400">
+                经停：{{ schedule.passPlace }}
+              </p>
+              <p v-else class="text-xs text-gray-400">
+                无经停站点
+              </p>
+              <p class="text-xs text-gray-400">
+                {{ schedule.startPlace }} {{ schedule.count }}车
+              </p>
+            </div>
           </div>
         </div>
       </van-tab>
