@@ -70,7 +70,7 @@ watchEffect(() => {
   chartDataVal.categories = semesterScoreData.value.map((item) => {
     const regRes = /20([0-9]{2})-20[0-9]{2}学年第(.{1})学期/.exec(item.semesterInfo.semester)
     return `20${regRes![1]}0${regRes![2].replace('一', '1').replace('二', '2')}`
-  })
+  }).reverse()
   const series = [] as Series[]
 
   const getScore = (homeScoreRankDataType: HomeScoreRankDataType, homeActive: HomeActive, scoreType: ScoreType) => {

@@ -105,7 +105,7 @@ export const useScoreStore = defineStore('scoreStore', () => {
     if (!scoreData.value) {
       return [{ semesterInfo: {}, data: defaultData, index: 0 }] as SemesterScore[]
     }
-    return scoreData.value.semesters.reverse().map((item, index) => ({
+    return scoreData.value.semesters.map((item, index) => ({
       semesterInfo: item,
       data: createScoreDetail(item.compulsoryRank, homeActive.value),
       index,
