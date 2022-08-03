@@ -1,7 +1,7 @@
 <script lang='ts' setup>
 import { storeToRefs } from 'pinia'
 import { onShow } from '@dcloudio/uni-app'
-import Toast from '@vant/weapp/lib/toast/toast'
+// import Toast from '@vant/weapp/lib/toast/toast'
 import Setting from './setting.vue'
 import { useCourseSearchStore } from '@/store/courseSearch.store'
 import CourseList from '@/pages/week-schedule/course-list.vue'

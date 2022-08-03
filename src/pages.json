@@ -163,6 +163,13 @@
             "navigationBarTitleText": "校历",
             "enablePullDownRefresh": false
           }
+        },
+        {
+          "path": "pages/mine/school-bus/school-bus",
+          "style": {
+            "navigationBarBackgroundColor": "#4981F9",
+            "navigationBarTitleText": "校车查询"
+          }
         }
       ]
     }

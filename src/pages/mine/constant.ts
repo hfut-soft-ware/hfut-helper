@@ -51,37 +51,7 @@ export const servicesButtonList: Service[] = [
   },
   {
     icon: 'logistics',
-    title: '校车',
-    url: 'school-bus/school-bus',
-  },
-  {
-    icon: 'logistics',
-    title: '校车',
-    url: 'school-bus/school-bus',
-  },
-  {
-    icon: 'logistics',
-    title: '校车',
-    url: 'school-bus/school-bus',
-  },
-  {
-    icon: 'logistics',
-    title: '校车',
-    url: 'school-bus/school-bus',
-  },
-  {
-    icon: 'logistics',
-    title: '校车',
-    url: 'school-bus/school-bus',
-  },
-  {
-    icon: 'logistics',
-    title: '校车',
-    url: 'school-bus/school-bus',
-  },
-  {
-    icon: 'logistics',
-    title: '校车',
+    title: '校车查询',
     url: 'school-bus/school-bus',
   },
 ]
