@@ -49,9 +49,9 @@ export const servicesButtonList: Service[] = [
     title: '校历',
     url: 'school-calendar/school-calendar',
   },
-  // {
-  //   icon: 'logistics',
-  //   title: '校车查询',
-  //   url: 'school-bus/school-bus',
-  // },
+  {
+    icon: 'logistics',
+    title: '校车查询',
+    url: 'school-bus/school-bus',
+  },
 ]
