@@ -21,13 +21,12 @@ const chartData = ref({
 })
 
 const opts = {
+  fontSize: 10,
   xAxis: {
-    disabled: true,
-    // boundaryGap: 'justify',
   },
   yAxis: {
-    disableGrid: true,
-    splitNumber: 3,
+    gridType: 'dash',
+    dashLength: 2,
   },
   extra: {
     area: {
@@ -49,63 +48,64 @@ const opts = {
   padding: [0, 0, 10, 0],
 }
 
+const _pushSeries = (series: Series[], data: Record<'name' | 'data', string | number[]> | Record<'name' | 'data', string | number[]>[]) => {
+  if (!Array.isArray(data)) {
+    data = [data]
+  }
+
+  data.forEach((item) => {
+    series.push({
+      ...item,
+      format: 'seriesFixed',
+      legendShape: 'circle',
+    } as Series)
+  })
+}
+
 watchEffect(() => {
   const chartDataVal = chartData.value
   const homeDetailModeVal = homeDetailMode.value
   const homeScoreRankDataTypeVal = homeScoreRankDataType.value
   const homeActiveVal = homeActive.value
-  chartDataVal.categories = semesterScoreData.value.map(item => item.semesterInfo.semester)
+  chartDataVal.categories = semesterScoreData.value.map((item) => {
+    const regRes = /20([0-9]{2})-20[0-9]{2}学年第(.{1})学期/.exec(item.semesterInfo.semester)
+    return `20${regRes![1]}0${regRes![2].replace('一', '1').replace('二', '2')}`
+  })
   const series = [] as Series[]
 
   const getScore = (homeScoreRankDataType: HomeScoreRankDataType, homeActive: HomeActive, scoreType: ScoreType) => {
     return semesterScoreData.value.map(item => item.semesterInfo[homeScoreRankDataType][homeActive][scoreType]).reverse()
   }
 
-  const pushDate = (homeScoreRankDataType: HomeScoreRankDataType, homeActive: HomeActive) => {
-    series.push(
-      {
-        name: '我的',
-        data: getScore(homeScoreRankDataType, homeActive, 'mine'),
-        format: 'seriesFixed',
-        legendShape: 'circle',
-        pointShape: 'none',
-      }, {
-        name: '平均',
-        data: getScore(homeScoreRankDataType, homeActive, 'avg'),
-        legendShape: 'circle',
-        pointShape: 'none',
-        format: 'seriesFixed',
-      })
+  const pushData = (homeScoreRankDataType: HomeScoreRankDataType, homeActive: HomeActive) => {
+    _pushSeries(series, [
+      { name: '我的', data: getScore(homeScoreRankDataType, homeActive, 'mine') },
+      { name: '平均', data: getScore(homeScoreRankDataType, homeActive, 'avg') },
+    ])
     if (homeDetailModeVal === 'top') {
-      series.push({
+      _pushSeries(series, {
         name: '前10%',
         data: getScore(homeScoreRankDataType, homeActive, 'head'),
-        legendShape: 'circle',
-        pointShape: 'none',
-        format: 'seriesFixed',
       })
     } else {
-      series.push({
+      _pushSeries(series, {
         name: '最高',
         data: getScore(homeScoreRankDataType, homeActive, 'max'),
-        legendShape: 'circle',
-        pointShape: 'none',
-        format: 'seriesFixed',
       })
     }
   }
 
   if (homeScoreRankDataTypeVal === 'compulsory') {
     if (homeActiveVal === 'average') {
-      pushDate('compulsoryRank', 'score')
+      pushData('compulsoryRank', 'score')
     } else if (homeActiveVal === 'gpa') {
-      pushDate('compulsoryRank', 'gpa')
+      pushData('compulsoryRank', 'gpa')
     }
   } else {
     if (homeActiveVal === 'average') {
-      pushDate('totalRank', 'score')
+      pushData('totalRank', 'score')
     } else if (homeActiveVal === 'gpa') {
-      pushDate('totalRank', 'gpa')
+      pushData('totalRank', 'gpa')
     }
   }
 

@@ -11,6 +11,7 @@ import { useGetUserInfo } from '@/pages/mine/use-getUserInfo'
 import { useMineStore } from '@/store/mine.store'
 import BounceBall from '@/components/BounceBall/BounceBall.vue'
 import { useAvatar } from '@/pages/mine/use-avatar'
+
 type TActive = 'commonServices' | 'settings'
 const active = ref<TActive>('commonServices')
 

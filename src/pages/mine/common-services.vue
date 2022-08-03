@@ -38,6 +38,22 @@ function onServiceClick(url: string) {
     </div>
   </div>
 
+  <div class="mt-5 py-2 rounded-xl card-shadow flex flex-wrap">
+    <div
+      v-for="service in servicesButtonList"
+      :key="service.icon"
+      class="w-1/4 flex items-center justify-center"
+      @click="onServiceClick(service.url)"
+    >
+      <div class="py-2 px-3 flex flex-col items-center justify-center">
+        <van-icon :name="service.icon" size="2rem" />
+        <p class="text-xs">
+          {{ service.title }}
+        </p>
+      </div>
+    </div>
+  </div>
+
   <div class="flex flex-col gap-3 mt-5">
     <div
       v-for="service in servicesList"
@@ -55,24 +71,7 @@ function onServiceClick(url: string) {
       <van-icon name="arrow" />
     </div>
   </div>
-
-  <div class="mt-5 py-2 rounded-xl card-shadow flex flex-wrap">
-    <div
-      v-for="service in servicesButtonList"
-      :key="service.icon"
-      class="w-1/4 flex items-center justify-center"
-      @click="onServiceClick(service.url)"
-    >
-      <div class="py-2 px-3 flex flex-col items-center justify-center">
-        <van-icon :name="service.icon" size="2rem" />
-        <p class="text-xs">
-          {{ service.title }}
-        </p>
-      </div>
-    </div>
-  </div>
 </template>
-
 <style lang='scss' scoped>
 .base-info-card {
   @apply flex flex-col items-center gap-1 flex-1;

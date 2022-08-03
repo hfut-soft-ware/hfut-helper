@@ -117,6 +117,9 @@ function changeMaxOrTop() {
       </div>
     </Card>
     <div class="relative mt-5 flex border-[1px] border-[#D3D7EE] rounded-md px-5 py-3 flex-col bg-white">
+      <div class="py-3 bg-white">
+        <AreaUCharts />
+      </div>
       <h3 class="font-semibold">
         成绩列表
       </h3>
@@ -149,9 +152,6 @@ function changeMaxOrTop() {
       <p class="ml-2 text-sm">
         挂科率查询
       </p>
-    </div>
-    <div class="px-5 py-3">
-      <AreaUCharts />
     </div>
   </div>
   <div class="mt-2 w-full flex justify-center text-xs text-black/80">

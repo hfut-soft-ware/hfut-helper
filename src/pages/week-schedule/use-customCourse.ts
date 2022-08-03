@@ -7,7 +7,6 @@ import { addCourseRequest, deleteCourseRequest, updateCourseRequest } from '@/se
 import type { TColors } from '@/shared/constant'
 import { CARD_COLORS } from '@/shared/constant'
 import type { CreateCustomPageEmits } from '@/components/CreateCustomPage/CreateCustomPage.vue'
-import { CourseLayout } from '@/_mock_/layout'
 import { LESSON_INDEX_TO_TIME } from '@/pages/week-schedule/constant'
 
 export type CustomType = 'add' | 'update'

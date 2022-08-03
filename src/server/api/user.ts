@@ -1,6 +1,5 @@
 import { request } from '../base'
 import type { ICourseResponse } from '@/shared/types/response/course'
-import { CourseLayout } from '@/_mock_/layout'
 import type { IUserInfo } from '@/shared/types/response/userInfo'
 import { getLoverToken } from '@/store/lover.store'
 import type { ICardBaseInfoResponse } from '@/shared/types/response/card'
@@ -18,12 +17,6 @@ export function getCourseListRequest(isLover = false, refresh = false) {
     params: {
       refresh,
     },
-  })
-}
-
-export function getCourseListLayoutRequest() {
-  return new Promise((resolve) => {
-    resolve(CourseLayout)
   })
 }
 
