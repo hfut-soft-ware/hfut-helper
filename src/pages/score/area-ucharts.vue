@@ -23,7 +23,9 @@ const chartData = ref({
 const opts = {
   fontSize: 10,
   xAxis: {
+    disableGrid: true,
   },
+  padding: [15, 15, 0, 15],
   yAxis: {
     gridType: 'dash',
     dashLength: 2,
@@ -43,9 +45,6 @@ const opts = {
   legend: {
     position: 'top',
   },
-  // 不显示y轴对应的数据
-  dataLabel: false,
-  padding: [0, 0, 10, 0],
 }
 
 const _pushSeries = (series: Series[], data: Record<'name' | 'data', string | number[]> | Record<'name' | 'data', string | number[]>[]) => {

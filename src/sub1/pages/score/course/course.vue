@@ -147,9 +147,6 @@ function changeHeadAndMax(index: number) {
       </div>
     </Card>
     <div class="mt-5 flex border-[1px] border-[#D3D7EE] rounded-md px-5 py-3 flex-col bg-white">
-      <div class="py-3">
-        <RadarUCharts :scoreDetail="currentCourseDetail.details" />
-      </div>
       <div class="mt-5 flex flex-col gap-5 text-[#616161]">
         <div class="w-full flex text-xs">
           <p class="flex-1">
@@ -179,6 +176,9 @@ function changeHeadAndMax(index: number) {
             </div>
             <van-divider />
           </div>
+        </div>
+        <div class="py-3">
+          <RadarUCharts :scoreDetail="currentCourseDetail.details" />
         </div>
       </div>
     </div>

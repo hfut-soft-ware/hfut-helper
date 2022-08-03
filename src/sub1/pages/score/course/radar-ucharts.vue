@@ -42,17 +42,19 @@ const chartData = computed(() => {
 })
 
 const opts = {
-  padding: [0, 0, 0, 0],
+  color: ['#1890FF', '#91CB74', '#FAC858', '#EE6666', '#73C0DE', '#3CA272', '#FC8452', '#9A60B4', '#ea7ccc'],
+  padding: [5, 5, 5, 5],
   legend: {
-    position: 'bottom',
+    position: 'top',
   },
+  fontSize: 10,
   extra: {
     radar: {
-      gridType: 'circle',
+      gridType: 'radar',
       gridColor: '#CCCCCC',
       gridCount: 3,
-      opacity: 0.2,
       max: 100,
+      border: true,
     },
   },
 }
