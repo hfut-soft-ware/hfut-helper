@@ -2,10 +2,11 @@ import { computed, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import Toast from '@vant/weapp/lib/toast/toast'
 import { getRandomQAQ } from 'qaq-font'
+import { useDebounceFn } from '@vueuse/core'
 import { getCustomScoreRequest } from '@/server/api/score'
+import { formatScore } from '@/store/score.store'
 import type { ICustomScoreData } from '@/shared/types/response/score-custom'
 import type { useScoreStore } from '@/store/score.store'
-import { formatScore } from '@/store/score.store'
 
 export const CUSTOM_SCORE_DEFAULT_DATA = {
   avg: 0,
@@ -115,12 +116,16 @@ export function useCustom(store: ReturnType<typeof useScoreStore>) {
     return res
   })
 
+  const debouncedFn = useDebounceFn(() => {
+    getCustomData()
+  }, 300)
+
   const handleQueryClick = () => {
     if (!selectedScore.value.length) {
       Toast('请至少选择一个自定义课程')
       return
     }
-    getCustomData()
+    debouncedFn()
   }
 
   function changeHeadAndMax(index: number) {

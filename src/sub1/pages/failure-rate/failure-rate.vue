@@ -4,6 +4,7 @@ import { computed } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { FailureRateTable } from './constant'
 import { useFailureRateStore } from '@/store/failureRate.store'
+import { formatSemester } from '@/shared/utils/index'
 
 const store = useFailureRateStore()
 
@@ -16,7 +17,7 @@ onLoad(() => {
 const computedFailureRateData = computed(() => failureRateData.value.map((item) => {
   return {
     semester: item.semesterName,
-    data: [item.semesterName, item.totalCount, item.avgScore.toFixed(2), item.failCount, `${(item.failRate * 100).toFixed(2)}%`],
+    data: [formatSemester(item.semesterName), item.totalCount, item.avgScore.toFixed(2), item.failCount, `${(item.failRate * 100).toFixed(2)}%`],
   }
 }))
 </script>

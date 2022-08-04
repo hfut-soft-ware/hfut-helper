@@ -1,9 +1,10 @@
 <script lang='ts' setup>
-import { watchEffect } from 'vue'
+import { computed } from 'vue'
 import { useCustom } from './use-custom'
 import Card from '@/components/Card/Card.vue'
 import { useScoreStore } from '@/store/score.store'
 import BounceBall from '@/components/BounceBall/BounceBall.vue'
+import type { Score5 } from '@/shared/types/response/score'
 
 const store = useScoreStore()
 const {
@@ -16,14 +17,15 @@ const {
   handleQueryClick,
 } = useCustom(store)
 
-watchEffect(() => {
-  console.log(semesters.value)
+const checkedArr = computed<boolean[]>(() => {
+  return semesters.value.map((semester) => {
+    return semester.scores.every(score => selectedScore.value.includes(score.name))
+  })
 })
 
 function toggle(course: any) {
   const courseName = course.name as string
   const selectedScoreVal = Array.from(selectedScore.value)
-  console.log(course)
   if (selectedScoreVal.includes(courseName)) {
     const idx = selectedScoreVal.findIndex(item => item === courseName)
     selectedScoreVal.splice(idx, 1)
@@ -32,6 +34,24 @@ function toggle(course: any) {
   }
   selectedScore.value = selectedScoreVal
 }
+
+const onChange = (scores: Score5[], index: number) => {
+  const selectedScoreVal = Array.from(selectedScore.value)
+  if (checkedArr.value[index]) {
+    scores.forEach((score) => {
+      const index = selectedScoreVal.findIndex(item => item === score.name)
+      selectedScoreVal.splice(index, 1)
+    })
+  } else {
+    scores.forEach((score) => {
+      if (!selectedScoreVal.includes(score.name)) {
+        selectedScoreVal.push(score.name)
+      }
+    })
+  }
+  selectedScore.value = selectedScoreVal
+}
+
 </script>
 
 <template>
@@ -93,16 +113,18 @@ function toggle(course: any) {
         </div>
       </div>
     </Card>
-
-    <van-checkbox-group :value="selectedScore">
+    <van-checkbox-group ref="checkboxGroupRef" :value="selectedScore">
       <div class="flex flex-col gap-5 mt-5">
         <div
-          v-for="item in semesters"
+          v-for="(item,index) in semesters"
           :key="item.semester"
           class="flex border-[1px] border-[#D3D7EE] rounded-md px-5 py-3 flex-col bg-white"
         >
-          <h2 class="font-semibold">
-            {{ item.semester }}
+          <h2 class="flex justify-between items-center pr-3">
+            <p class="font-semibold">
+              {{ item.semester }}
+            </p>
+            <van-switch :checked="checkedArr[index]" size="20px" @change="onChange(item.scores,index)" />
           </h2>
           <van-cell-group>
             <div class="mt-5 flex flex-col gap-2">

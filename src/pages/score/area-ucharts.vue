@@ -3,6 +3,7 @@ import { storeToRefs } from 'pinia'
 import { ref, watchEffect } from 'vue'
 import { useScoreStore } from '@/store/score.store'
 import UCharts from '@/components/qiun-data-charts/components/qiun-data-charts/qiun-data-charts.vue'
+import { formatSemester } from '@/shared/utils/index'
 import type { Include, Series } from '@/shared/types/utils'
 import type { ICompulsoryRank, Score, Semester } from '@/shared/types/response/score'
 
@@ -32,7 +33,7 @@ const opts = {
   },
   extra: {
     area: {
-      type: 'curve',
+      // type: 'curve',
       opacity: 0.4,
       addLine: true,
       width: 3,
@@ -67,8 +68,7 @@ watchEffect(() => {
   const homeScoreRankDataTypeVal = homeScoreRankDataType.value
   const homeActiveVal = homeActive.value
   chartDataVal.categories = semesterScoreData.value.map((item) => {
-    const regRes = /20([0-9]{2})-20[0-9]{2}学年第(.{1})学期/.exec(item.semesterInfo.semester)
-    return `20${regRes![1]}0${regRes![2].replace('一', '1').replace('二', '2')}`
+    return formatSemester(item.semesterInfo.semester)
   }).reverse()
   const series = [] as Series[]
 
