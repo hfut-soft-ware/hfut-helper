@@ -54,4 +54,9 @@ export const servicesButtonList: Service[] = [
     title: '校车查询',
     url: 'school-bus/school-bus',
   },
+  {
+    icon: 'todo-list-o',
+    title: '第二课堂',
+    url: 'wx1e3feaf804330562',
+  },
 ]

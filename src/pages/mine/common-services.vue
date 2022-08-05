@@ -10,10 +10,16 @@ const { cardInfo } = storeToRefs(mineStore)
 const courseStore = useCourseListStore()
 const { recentExam } = storeToRefs(courseStore)
 
-function onServiceClick(url: string) {
-  uni.navigateTo({
-    url: `/sub1/pages/mine/${url}`,
-  })
+function onServiceClick(url: string, isAppId = false) {
+  if (isAppId) {
+    uni.navigateToMiniProgram({
+      appId: url,
+    })
+  } else {
+    uni.navigateTo({
+      url: `/sub1/pages/mine/${url}`,
+    })
+  }
 }
 
 </script>
@@ -43,7 +49,7 @@ function onServiceClick(url: string) {
       v-for="service in servicesButtonList"
       :key="service.icon"
       class="w-1/4 flex items-center justify-center"
-      @click="onServiceClick(service.url)"
+      @click="onServiceClick(service.url, true)"
     >
       <div class="py-2 px-3 flex flex-col items-center justify-center">
         <van-icon :name="service.icon" size="2rem" />
