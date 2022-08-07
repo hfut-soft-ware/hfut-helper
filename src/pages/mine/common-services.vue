@@ -49,7 +49,7 @@ function onServiceClick(url: string, isAppId = false) {
       v-for="service in servicesButtonList"
       :key="service.icon"
       class="w-1/4 flex items-center justify-center"
-      @click="onServiceClick(service.url, true)"
+      @click="onServiceClick(service.url, !!service.isAppIdUrl)"
     >
       <div class="py-2 px-3 flex flex-col items-center justify-center">
         <van-icon :name="service.icon" size="2rem" />

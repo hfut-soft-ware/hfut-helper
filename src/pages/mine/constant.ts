@@ -1,4 +1,9 @@
-type Service = { icon: string; title: string; url: string }
+type Service = {
+  icon: string
+  title: string
+  url: string
+  isAppIdUrl?: boolean
+}
 
 export const servicesList: Service[] = [
   {
@@ -58,5 +63,6 @@ export const servicesButtonList: Service[] = [
     icon: 'todo-list-o',
     title: '第二课堂',
     url: 'wx1e3feaf804330562',
+    isAppIdUrl: true,
   },
 ]
