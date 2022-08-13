@@ -39,7 +39,7 @@ onLaunch(() => {
 
   updateManager.onUpdateFailed(() => {
     uni.showModal({
-      content: `HfutSpace失败${getRandomQAQ('sadness')[0]}`,
+      content: `HfutSpace更新失败了${getRandomQAQ('sadness')[0]}`,
     })
   })
 })
