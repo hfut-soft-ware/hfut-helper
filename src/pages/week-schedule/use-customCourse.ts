@@ -79,7 +79,7 @@ export function useCustomCourse(
         duration: 0,
         message: '添加成功，重新刷新课表中...',
       })
-      store.getCourseList(true, true).then((res) => {
+      store.getCourseList(false, true).then((res) => {
         Toast.success({
           message: '添加成功',
         })
@@ -101,7 +101,7 @@ export function useCustomCourse(
         duration: 0,
         message: '更新成功，重新刷新课表中...',
       })
-      store.getCourseList(true, true).then((res) => {
+      store.getCourseList(false, true).then((res) => {
         Toast.success({
           message: '课表加载成功',
         })
@@ -139,7 +139,7 @@ export function useCustomCourse(
 
   const deleteCourse = async(diyId: string) => {
     await deleteCourseRequest(diyId).then((res) => {
-      store.getCourseList(true, true).then((res) => {
+      store.getCourseList(false, true).then((res) => {
         Toast.success({
           message: '课表加载成功',
         })

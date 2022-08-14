@@ -17,7 +17,7 @@ export const [
 const calculateProgress = (credit: string, totalCredit: string) => {
   const creditNum = Number(credit)
   const totalCreditNum = Number(totalCredit)
-  return Math.max((creditNum / totalCreditNum) * 100, 100)
+  return Math.min((creditNum / totalCreditNum) * 100, 100)
 }
 
 export const useTrainPlanStore = defineStore('useTrainPlanStore', () => {
@@ -33,10 +33,10 @@ export const useTrainPlanStore = defineStore('useTrainPlanStore', () => {
     data.value.planTypes = data.value.planTypes.map((item) => {
       return {
         ...item,
-        progress: calculateProgress(item.requiredCredit, item.credit),
+        progress: calculateProgress(item.credit, item.requiredCredit),
       }
     })
-
+    console.log(data.value.planTypes)
     return data.value
   })
 

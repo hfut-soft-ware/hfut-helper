@@ -45,7 +45,10 @@ const { selectedPlan } = storeToRefs(store)
             <p>{{ item.name }}</p>
             <div class="flex justify-between text-gray-500 text-xs">
               <p>学分: {{ item.credits }}</p>
-              <p>学期: {{ item.terms[0].replace('TERM_', '') }}</p>
+              <p v-if="item.terms[0]">
+                学期: {{ item.terms[0].replace('TERM_', '') }}
+              </p>
+              <p v-else />
             </div>
           </div>
           <div

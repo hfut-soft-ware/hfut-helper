@@ -7,16 +7,22 @@ import type { IAddCourseDto } from '@/shared/types/dto/course'
 import type { IAllCourseOptionsResponse } from '@/shared/types/response/all-course-options'
 import type { IGetAllCourseDto } from '@/shared/types/dto/getAllCourse'
 import type { ITrainPlanResponse } from '@/shared/types/response/train-plan'
+import type { ISemesters } from '@/shared/types/response/semesters'
 
-export function getCourseListRequest(isLover = false, refresh = false) {
+export function getCourseListRequest(isLover = false, refresh = false, semesterId?: number) {
   const header = isLover ? { authorization: `Bearer ${getLoverToken()}` } : {}
-
+  const params = semesterId
+    ? {
+        refresh,
+        semesterId,
+      }
+    : {
+        refresh,
+      }
   return request<ICourseResponse>({
     url: 'course/all',
     header,
-    params: {
-      refresh,
-    },
+    params,
   })
 }
 
@@ -74,5 +80,11 @@ export function getAllCourseQueryRequest(data: IGetAllCourseDto) {
 export function getTrainPlanRequest() {
   return request<ITrainPlanResponse>({
     url: '/user/trainPlan',
+  })
+}
+
+export function getSemesters() {
+  return request<ISemesters>({
+    url: '/api/semesters',
   })
 }

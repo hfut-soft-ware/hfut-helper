@@ -4,6 +4,7 @@ import { computed, ref } from 'vue'
 import { isUndefined } from 'lodash'
 import Header from './header.vue'
 import Settings from './settings.vue'
+import { useSelectSemester } from './use-selectSemester'
 import { isOdd } from '@/shared/utils'
 import type { CourseData } from '@/store/courseList.store'
 import { formatCourseName, formatRoom, useCourseListStore } from '@/store/courseList.store'
@@ -23,6 +24,8 @@ const store = useCourseListStore()
 const { weekScheduleVisibleWeek, weekSchedule } = storeToRefs(store)
 
 const { onTouchStart, onTouchEnd, onPrev, onNext } = useTouchInteractive(store, 'week')
+
+const { showSelectSemester, semesterColums, selectPickerLoading, closeSelectSemester, selectSemesterShow, onConfirm } = useSelectSemester()
 
 const loverStore = uesLoverStore()
 const { isLover } = storeToRefs(loverStore)
@@ -185,6 +188,15 @@ function onClose() {
       </div>
     </div>
   </van-popup>
+  <van-popup :show="showSelectSemester" round position="bottom" custom-style="height: 40%" @close="closeSelectSemester">
+    <van-picker
+      show-toolbar
+      :columns="semesterColums"
+      :loading="selectPickerLoading"
+      @confirm="onConfirm"
+      @cancel="closeSelectSemester"
+    />
+  </van-popup>
   <Header />
   <div
     class="w-screen overflow-hidden flex relative"
@@ -249,9 +261,12 @@ function onClose() {
       </div>
     </div>
     <div class="fixed bottom-3 w-screen z-[1]">
-      <div class="flex justify-between w-screen">
+      <div class="flex justify-between items-center w-screen">
         <div class="arrow" @click="onPrev">
           <van-icon name="arrow-left" />
+        </div>
+        <div class="bg-gray-300/70 text-black/60 text-center h-8 px-4 rounded-lg leading-8" @click="selectSemesterShow">
+          选择学期
         </div>
         <div class="arrow" @click="onNext">
           <van-icon name="arrow" />
