@@ -31,7 +31,7 @@ onShow(() => {
   <van-toast id="van-toast" />
   <van-dialog id="van-dialog" />
   <template v-if="state && !isLoading">
-    <div class="min-h-screen relative">
+    <div class="relative h-[130vh]">
       <img class="w-screen min-h-screen h-full top-0 fixed" :mode="imgMode" :src="bgImg">
       <div class="absolute z-1">
         <CourseList />
