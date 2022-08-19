@@ -1,4 +1,4 @@
-<!-- 
+<!--
  * qiun-data-charts 秋云高性能跨全端图表组件
  * Copyright (c) 2021 QIUN® 秋云 https://www.ucharts.cn All rights reserved.
  * Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
@@ -7,13 +7,13 @@
  *
  * uCharts®官方网站
  * https://www.uCharts.cn
- * 
+ *
  * 开源地址:
  * https://gitee.com/uCharts/uCharts
- * 
+ *
  * uni-app插件市场地址：
  * http://ext.dcloud.net.cn/plugin?id=271
- * 
+ *
  -->
 <template>
   <view class="chartsview" :id="'ChartBoxId' + cid">
@@ -68,7 +68,7 @@
         :canvasId="cid"
         :width="cWidth * pixel"
         :height="cHeight * pixel"
-        :style="{ width: cWidth + 'px', height: cHeight + 'px', background: background }"
+        :style="{ width: cWidth + 'px', height: cHeight + 'px', background: background, zIndex: 0 }"
         :disable-scroll="disScroll"
         @tap="_tap"
         @touchstart="_touchStart"
@@ -84,7 +84,7 @@
         :canvasId="cid"
         :width="cWidth * pixel"
         :height="cHeight * pixel"
-        :style="{ width: cWidth + 'px', height: cHeight + 'px', background: background }"
+        :style="{ width: cWidth + 'px', height: cHeight + 'px', background: background, zIndex: 0 }"
         :disable-scroll="disScroll"
         @tap="_tap"
         @error="_error"
@@ -99,7 +99,7 @@
         <canvas
           :id="cid"
           :canvasId="cid"
-          :style="{ width: cWidth + 'px', height: cHeight + 'px', background: background }"
+          :style="{ width: cWidth + 'px',zIndex: 0, height: cHeight + 'px', background: background }"
           type="2d"
           :disable-scroll="disScroll"
           @touchstart="_touchStart"
@@ -113,7 +113,7 @@
         <canvas
           :id="cid"
           :canvasId="cid"
-          :style="{ width: cWidth + 'px', height: cHeight + 'px', background: background }"
+          :style="{ width: cWidth + 'px',zIndex: 0, height: cHeight + 'px', background: background }"
           type="2d"
           :disable-scroll="disScroll"
           @error="_error"
@@ -126,7 +126,7 @@
         <canvas
           :id="cid"
           :canvasId="cid"
-          :style="{ width: cWidth + 'px', height: cHeight + 'px', background: background }"
+          :style="{ width: cWidth + 'px',zIndex: 0, height: cHeight + 'px', background: background }"
           @touchstart="_touchStart"
           @touchmove="_touchMove"
           @touchend="_touchEnd"
@@ -139,7 +139,7 @@
         <canvas
           :id="cid"
           :canvasId="cid"
-          :style="{ width: cWidth + 'px', height: cHeight + 'px', background: background }"
+          :style="{ width: cWidth + 'px',zIndex: 0, height: cHeight + 'px', background: background }"
           :disable-scroll="disScroll"
           @tap="_tap"
           @error="_error"

@@ -117,7 +117,7 @@ function changeMaxOrTop() {
       </div>
     </Card>
     <div class="relative mt-5 flex border-[1px] border-[#D3D7EE] rounded-md px-5 py-3 flex-col bg-white">
-      <div class="py-3 bg-white">
+      <div class="py-3 bg-white z-[0]">
         <AreaUCharts />
       </div>
       <h3 class="font-semibold">

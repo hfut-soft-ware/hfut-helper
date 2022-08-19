@@ -41,6 +41,7 @@ function onChange() {
       closeable
       position="bottom"
       custom-style="height: 30%"
+      :z-index="999999999"
       @close="onClose"
     >
       <div class="p-5 flex flex-col gap-5">

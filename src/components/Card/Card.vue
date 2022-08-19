@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-hidden px-4 py-5 bg-[#283593] rounded-2xl flex-col text-white relative">
+  <div class="overflow-hidden z-[0] px-4 py-5 bg-[#283593] rounded-2xl flex-col text-white relative">
     <div class="relative z-[9999]">
       <slot />
     </div>

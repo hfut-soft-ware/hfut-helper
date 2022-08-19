@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 import { ref, watchEffect } from 'vue'
 import { useScoreStore } from '@/store/score.store'
 import UCharts from '@/components/qiun-data-charts/components/qiun-data-charts/qiun-data-charts.vue'
-import { formatSemester } from '@/shared/utils/index'
+import { formatSemester } from '@/shared/utils'
 import type { Include, Series } from '@/shared/types/utils'
 import type { ICompulsoryRank, Score, Semester } from '@/shared/types/response/score'
 
