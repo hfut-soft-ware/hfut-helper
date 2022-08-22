@@ -27,6 +27,22 @@ baseInstance.interceptors.request.use((config: AjaxRequestConfig) => {
   return config
 })
 
+baseInstance.interceptors.response.use(res => res, (err) => {
+  if (err.statusCode === 401) {
+    uni.showModal({
+      title: '你的账号密码似乎已经改了哦~',
+      content: err.data?.msg || '请重新登录',
+      showCancel: false,
+      success() {
+        uni.reLaunch({
+          url: '/pages/login/login',
+        })
+      },
+    })
+  }
+  return err
+})
+
 export function createRequest<T>() {
   return function(config: AjaxRequestConfig, instance: AjaxInstance<any> = baseInstance) {
     if (!config.method) {

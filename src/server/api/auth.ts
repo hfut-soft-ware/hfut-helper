@@ -7,10 +7,6 @@ const instance = createInstance({
 
 const authRequest = createRequest()
 
-instance.interceptors.response.use(res => res, (error) => {
-  return error
-})
-
 export function loginRequest({ studentId, password }: { studentId: string; password: string }) {
   return authRequest({
     url: 'v2/login',
