@@ -175,16 +175,6 @@
       ]
     }
   ],
-  "preloadRule": {
-    "pages/day-schedule/index": {
-      "network": "all",
-      "packages": ["sub1"]
-    },
-    "pages/login/login": {
-      "network": "all",
-      "packages": ["sub1"]
-    }
-  },
   "tabBar": {
     "height": "20px",
     "selectedColor": "#63b1ef",
