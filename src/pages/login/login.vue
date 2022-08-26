@@ -37,7 +37,7 @@ async function onLogin() {
   if (validate()) {
     Toast.loading({
       duration: 0,
-      message: isLover.value ? '正在登录Ta的信息门户，不要急\n(๑•ᴗ•๑)♡' : '第一次登录会花些时间，请耐心等待...\n(๑•̀ㅂ•́)و✧',
+      message: isLover.value ? '正在登录Ta的信息门户，不要急\n(๑•ᴗ•๑)♡' : '第一次登录会花些时间，请耐心等待...\n(๑•̀ㅂ•́)و✧\n(如果长时间没进去，建议去交流群问问情况哦，交流群号在下方)',
       forbidClick: true,
     })
 

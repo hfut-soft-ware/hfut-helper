@@ -80,7 +80,7 @@ export const useAuthStore = defineStore('authStore', () => {
           password,
         } as any)
       }
-      uni.reLaunch({
+      uni.switchTab({
         url: '/pages/day-schedule/index',
       })
     }
