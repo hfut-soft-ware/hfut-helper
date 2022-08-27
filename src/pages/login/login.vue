@@ -77,7 +77,7 @@ function toDisclaimers() {
         color="#1989fa"
         background="#ecf9ff"
         left-icon="info-o"
-        text="忘记密码的话可以去信息门户重置一下噢"
+        text="忘记密码的话可以去信息门户重置一下噢4"
       />
       <van-notice-bar
         wrapable

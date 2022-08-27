@@ -10,6 +10,7 @@ import { useAsync } from '@/shared/hooks/use-async'
 import type { IUserInfo } from '@/shared/types/response/userInfo'
 import { getUserInfo } from '@/server/api/user'
 import { useSyncStorage } from '@/shared/hooks/use-syncStorage'
+import { requestConfig } from '@/shared/config/request'
 
 export const enum AuthStatus {
   // eslint-disable-next-line no-unused-vars
@@ -52,38 +53,42 @@ export const useAuthStore = defineStore('authStore', () => {
   }
 
   const login = async({ studentId, password, callback }: LoginDto & { callback?: (token: string) => void | Promise<void> }) => {
-    const { state, error } = await useAsync(loginRequest({
-      studentId,
-      password,
-    }) as any)
+    uni.request({
+      url: `${requestConfig.baseURL}v2/login`,
+      method: 'POST',
+      data: {
+        studentId,
+        password,
+      },
+      async success(state) {
+        if (state.statusCode !== 200) {
+          Toast.fail({
+            message: `${(state as AjaxResponse).data.msg || '登录失败!'}\n${getRandomQAQ('sadness')[0]}`,
+          })
 
-    if (error.value) {
-      Toast.fail({
-        message: `${(error.value as AjaxResponse).data?.msg || '登录失败!'}\n${getRandomQAQ('sadness')[0]}`,
-      })
-      return
-    }
+          return
+        }
 
-    if (state.value) {
-      const token = (state.value as any).data.data.token as string
+        const token = (state as any).data.data.token as string
 
-      Toast.success({
-        message: `登录成功${getRandomQAQ('happy')[0]}`,
-      })
+        Toast.success({
+          message: `登录成功${getRandomQAQ('happy')[0]}`,
+        })
 
-      if (isFunction(callback)) {
-        await callback(token)
-      } else {
-        setToken(token)
-        setUserAccount({
-          studentId,
-          password,
-        } as any)
-      }
-      uni.switchTab({
-        url: '/pages/day-schedule/index',
-      })
-    }
+        if (isFunction(callback)) {
+          await callback(token)
+        } else {
+          setToken(token)
+          setUserAccount({
+            studentId,
+            password,
+          } as any)
+        }
+        uni.reLaunch({
+          url: '/pages/day-schedule/index',
+        })
+      },
+    })
   }
 
   const getUserData = async() => {
