@@ -54,7 +54,7 @@ function onClose() {
               <template v-if="list.course.course">
                 <div
                   :key="list.course.course.startTime"
-                  :class="`card ${list.course.detail.color} ${list.course.course.wholePoint ? 'mt-2': 'mt-4'}`"
+                  :class="`card ${list.course.detail.color} mt-4`"
                   @click="handleCourseClick(list.course)"
                 >
                   <div class="card-flex">
@@ -76,7 +76,7 @@ function onClose() {
                 </div>
               </template>
               <template v-else>
-                <div class="h-12" />
+                <div class="h-[6rem]" />
               </template>
             </template>
           </template>
@@ -137,7 +137,7 @@ function onClose() {
 .course-list-cards {
   @apply w-full h-full bg-white mt-10 rounded-t-3xl pt-1 pb-5;
   .card-list-container {
-    @apply flex flex-col gap-4 mt-5 w-[90%] m-auto;
+    @apply flex flex-col gap-1 mt-5 w-[90%] m-auto;
     .card-container {
       @apply flex gap-5 text-slate-400 text-xs;
       .time {
@@ -148,7 +148,7 @@ function onClose() {
         }
       }
       .lunch-card {
-        @apply rounded-lg mt-2 h-12 bg-slate-200/50 text-lg flex justify-center items-center text-slate-400;
+        @apply rounded-lg mt-4 h-12 bg-slate-200/50 text-lg flex justify-center items-center text-slate-400;
       }
       .card {
         transition: all .2s;
