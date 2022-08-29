@@ -31,6 +31,9 @@ function onPlanClick(payload: ITrainPlanData) {
   <template v-if="error">
     <van-empty :description="error" />
   </template>
+  <template v-else-if="!data.credit">
+    <van-empty description="你还没有培养方案呢" />
+  </template>
   <template v-else>
     <div class="min-h-screen w-screen bg-gray-100">
       <div class="grid gap-3 p-3">
