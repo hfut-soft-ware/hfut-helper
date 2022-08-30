@@ -5,19 +5,22 @@ import type { CourseData } from '@/store/courseList.store'
 import { formatCourseName, formatRoom, getTeachers, useCourseListStore } from '@/store/courseList.store'
 import { dayHours } from '@/shared/constant'
 import CoursePopup from '@/components/CoursePopup/course-popup.vue'
+import BounceBall from '@/components/BounceBall/BounceBall.vue'
 
 const store = useCourseListStore()
 
 const { todayCourse } = storeToRefs(store)
 
+const show = ref(false)
+
+const courseData = ref<CourseData>()
+const conflictCourse = ref<CourseData[]>([])
+const conflictCourseShow = ref(false)
+
 const courseList = computed(() => dayHours.map(hour => ({
   time: hour,
   course: store.getCourseByHourIndex(hour.index),
 })))
-
-const show = ref(false)
-
-const courseData = ref<CourseData>()
 
 function handleCourseClick(course: CourseData) {
   courseData.value = course
@@ -29,10 +32,61 @@ function onClose() {
   show.value = false
 }
 
+function handleConflict(courses: CourseData[]) {
+  conflictCourseShow.value = true
+  conflictCourse.value = courses
+}
+
+function closeConflictCourseShow() {
+  conflictCourseShow.value = false
+}
 </script>
 
 <template>
   <course-popup v-if="show" :show="show" :data="courseData" @close="onClose" />
+  <van-popup
+    :show="conflictCourseShow"
+    round
+    closeable
+    position="bottom"
+    custom-style="height: 40%"
+    @close="closeConflictCourseShow"
+  >
+    <div class="p-3 mt-3 flex flex-col gap-5">
+      <h2 class="font-semibold text-center">
+        课程详情
+      </h2>
+      <div class="flex flex-col gap-3">
+        <div
+          v-for="item in conflictCourse"
+          :key="item.detail?.courseName"
+          class="flex justify-between items-center"
+        >
+          <div class="flex flex-col gap-1">
+            <p>{{ item.detail?.courseName }}</p>
+            <div class="flex flex-col text-xs text-[#666666] gap-1">
+              <div class="flex gap-1">
+                <van-icon name="clock-o" />
+                <p>{{ item.course?.startTime }}-{{ item.course?.endTime }}</p>
+              </div>
+              <div class="flex gap-1">
+                <van-icon name="location-o" />
+                <p>{{ item.course?.room }}</p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="px-4 py-2 bg-[#E5F1FE] rounded-full text-[#0C84FF] text-sm" @click="() => {
+              handleCourseClick(item)
+              closeConflictCourseShow()
+            }"
+          >
+            详情
+          </div>
+        </div>
+      </div>
+    </div>
+  </van-popup>
   <div class="course-list-cards">
     <template v-if="todayCourse?.length">
       <div class="card-list-container">
@@ -51,32 +105,45 @@ function onClose() {
               </div>
             </template>
             <template v-else>
-              <template v-if="list.course.course">
-                <div
-                  :key="list.course.course.startTime"
-                  :class="`card ${list.course.detail.color} mt-4`"
-                  @click="handleCourseClick(list.course)"
-                >
-                  <div class="card-flex">
-                    <div class="flex justify-between items-center text-xs">
-                      <div>
-                        {{ list.course.course.startTime }} - {{ list.course.course.endTime }}
-                      </div>
-                      <div>
-                        {{ list.course.detail?.detailInfo.teachers && getTeachers(list.course.detail.detailInfo.teachers) }}
-                      </div>
-                    </div>
-                    <div class="font-semibold text-base">
-                      {{ list.course.detail?.courseName && formatCourseName(list.course.detail?.courseName) }}
-                    </div>
-                    <div>
-                      {{ formatRoom(list.course.course.room) }}
-                    </div>
-                  </div>
+              <template v-if="list.course.length > 1">
+                <div class="card red flex-col justify-center mt-4 relative" @click="handleConflict(list.course)">
+                  <bounce-ball class="top-2 right-0 absolute" />
+                  <p class="font-semibold text-base">
+                    这里有{{ list.course.length }}门课冲突
+                  </p>
+                  <p>
+                    点击查看详情
+                  </p>
                 </div>
               </template>
               <template v-else>
-                <div class="h-[6rem]" />
+                <template v-if="list.course.length === 1">
+                  <div
+                    :key="list.course[0].course?.startTime"
+                    :class="`card ${(list.course[0] as any).detail.color} mt-4`"
+                    @click="handleCourseClick(list.course[0])"
+                  >
+                    <div class="card-flex">
+                      <div class="flex justify-between items-center text-xs">
+                        <div>
+                          {{ list.course[0].course?.startTime }} - {{ list.course[0].course?.endTime }}
+                        </div>
+                        <div>
+                          {{ list.course[0].detail?.detailInfo.teachers && getTeachers(list.course[0].detail.detailInfo.teachers) }}
+                        </div>
+                      </div>
+                      <div class="font-semibold text-base">
+                        {{ list.course[0].detail?.courseName && formatCourseName(list.course[0].detail?.courseName) }}
+                      </div>
+                      <div>
+                        {{ formatRoom(list.course[0].course!.room) }}
+                      </div>
+                    </div>
+                  </div>
+                </template>
+                <template v-else>
+                  <div class="h-[6rem]" />
+                </template>
               </template>
             </template>
           </template>

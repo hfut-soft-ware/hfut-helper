@@ -63,7 +63,7 @@ type Actions = {
   setDaySchedule: (daySchedule: VisibleSchedule) => void
   setWeekSchedule: (weekSchedule: VisibleSchedule) => void
   getCourseDetailByIdx: (idx?: number) => ILesson | undefined
-  getCourseByHourIndex: (hourIndex: number) => CourseData
+  getCourseByHourIndex: (hourIndex: number) => CourseData[]
   initStore: (data: ICourse, payload?: { week: number; day: number }) => void
   initCachedStore: () => void
   changeStatus: (isLover: boolean) => void
@@ -318,12 +318,13 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
       return { ...detail, color }
     },
     getCourseByHourIndex(index: number) {
-      const course = this.todayCourse.find(course => course.index === index)
-
-      return {
-        course,
-        detail: this.getCourseDetailByIdx(course?.lessonIndex),
-      }
+      const courses = this.todayCourse.filter(course => course.index === index)
+      return courses.map((course) => {
+        return {
+          course,
+          detail: this.getCourseDetailByIdx(course.lessonIndex),
+        }
+      })
     },
   },
 })

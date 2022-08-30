@@ -160,19 +160,19 @@ function onClose() {
       <div class="flex flex-col gap-3">
         <div
           v-for="item in conflictCourse"
-          :key="item.detail.courseName"
+          :key="item.detail?.courseName"
           class="flex justify-between items-center"
         >
           <div class="flex flex-col gap-1">
-            <p>{{ item.detail.courseName }}</p>
+            <p>{{ item.detail?.courseName }}</p>
             <div class="flex flex-col text-xs text-[#666666] gap-1">
               <div class="flex gap-1">
                 <van-icon name="clock-o" />
-                <p>{{ item.course.startTime }}-{{ item.course.endTime }}</p>
+                <p>{{ item.course?.startTime }}-{{ item.course?.endTime }}</p>
               </div>
               <div class="flex gap-1">
                 <van-icon name="location-o" />
-                <p>{{ item.course.room }}</p>
+                <p>{{ item.course?.room }}</p>
               </div>
             </div>
           </div>
@@ -219,8 +219,8 @@ function onClose() {
         <template v-if="course?.detail">
           <div
             class="relative rounded-md px-1 text-xs flex flex-col gap-2 pt-1"
-            :class="`${course.detail?.color} ${course.detail?.type === 'Exam' ? 'exam-card' : ''}`"
-            :style="{height: `${course.course.height}px`, opacity: settings.alpha / 100}"
+            :class="`${course.detail.color} ${course.detail?.type === 'Exam' ? 'exam-card' : ''}`"
+            :style="{height: `${course.course?.height}px`, opacity: settings.alpha / 100}"
           >
             <div v-if="course.detail?.type === 'Exam'" class="animate-bounce absolute right-2 flex justify-items-end items-center">
               <span class="animate-ping h-2 w-2 absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
@@ -240,12 +240,12 @@ function onClose() {
                 {{ formatCourseName(course.detail?.courseName) }}
               </p>
               <p class="text-[11px]">
-                {{ formatRoom(course.course?.room) }}
+                {{ formatRoom(course.course.room) }}
               </p>
             </template>
             <template v-else>
               <p class="font-bold">
-                这里有{{ course.course.extraCourse.length }}门课冲突
+                这里有{{ course.course?.extraCourse.length }}门课冲突
               </p>
               <p class="text-[11px]">
                 点击查看详情
