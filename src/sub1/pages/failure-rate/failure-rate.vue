@@ -17,7 +17,7 @@ onLoad(() => {
 const computedFailureRateData = computed(() => failureRateData.value.map((item) => {
   return {
     semester: item.semesterName,
-    data: [formatSemester(item.semesterName), item.totalCount, item.avgScore.toFixed(2), item.failCount, `${(item.failRate * 100).toFixed(2)}%`],
+    data: [`20${formatSemester(item.semesterName)}`, item.totalCount, item.avgScore.toFixed(2), item.failCount, `${(item.failRate * 100).toFixed(2)}%`],
   }
 }))
 </script>

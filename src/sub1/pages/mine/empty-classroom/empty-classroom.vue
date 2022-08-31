@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div>aaa</div>
+  <van-empty description="敬请期待,＞﹏＜" />
 </template>
 
 <style lang='less' scoped></style>

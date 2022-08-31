@@ -15,7 +15,6 @@ export function useGetUserInfo() {
     grade: '',
     name: '',
   } as IUserInfo)
-
   watchEffect(() => {
     if (userInfoError.value) {
       Toast.fail({
@@ -26,6 +25,5 @@ export function useGetUserInfo() {
 
   return {
     state,
-
   }
 }
