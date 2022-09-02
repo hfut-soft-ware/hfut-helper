@@ -36,7 +36,6 @@ export const useTrainPlanStore = defineStore('useTrainPlanStore', () => {
         progress: calculateProgress(item.credit, item.requiredCredit),
       }
     })
-    console.log(data.value.planTypes)
     return data.value
   })
 

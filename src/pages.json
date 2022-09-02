@@ -176,7 +176,7 @@
           "path": "pages/mine/empty-classroom/empty-classroom",
           "style": {
             "navigationBarBackgroundColor": "#4981F9",
-            "navigationBarTitleText": "空教室查询",
+            "navigationBarTitleText": "教室查询",
             "enablePullDownRefresh": false
           }
         }

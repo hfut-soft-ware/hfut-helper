@@ -67,7 +67,7 @@ export const servicesButtonList: Service[] = [
   },
   {
     icon: 'debit-pay',
-    title: '空教室查询',
+    title: '教室查询',
     url: 'empty-classroom/empty-classroom',
   },
 ]

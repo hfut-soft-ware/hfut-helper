@@ -16,13 +16,13 @@ const { selectedPlan } = storeToRefs(store)
         <p>{{ selectedPlan.name }}</p>
         <div class="flex text-sm mt-2">
           <p class="flex-1">
-            学分: {{ selectedPlan.requiredCredit }} / {{ selectedPlan.credit }}
+            学分: {{ selectedPlan.credit }}/{{ selectedPlan.requiredCredit }}
           </p>
           <p class="flex-1">
             课数: {{ selectedPlan.courseCount }}门
           </p>
           <p class="flex-1">
-            要求学分: {{ selectedPlan.credit }}
+            要求学分: {{ selectedPlan.requiredCredit }}
           </p>
         </div>
         <div class="relative w-full">
