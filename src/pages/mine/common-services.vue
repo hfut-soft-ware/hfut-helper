@@ -62,7 +62,7 @@ function onServiceClick(url: string, isAppId = false) {
       </div>
     </div>
     <div v-if="(state as any).campus === '宣城校区'" class="w-1/4 flex items-center justify-center" @click="onServiceClick('wx996c3ddcd3a607c4', true)">
-      <div class="py-2 px-3 flex flex-col items-center justify-center">
+      <div class="py-2 px-3 grid gap-1 text-center">
         <van-icon name="star-o" size="2rem" />
         <p class="text-xs">
           校园云外卖

@@ -126,38 +126,25 @@ const onChange = (event: any) => {
       @change="onChange"
     />
   </van-popup>
-  <div class="w-screen min-h-screen flex flex-col">
-    <div class=" w-[95vw] mx-auto flex gap-3 flex-wrap py-3">
-      <div class="flex items-center h-6 px-3 rounded-full border-[#e9e8ef] border-[1px]" @click="openPickerClick(0)">
-        <van-icon name="location-o" size="12px" />
-        <p class="text-xs align-middle">
-          {{ campusName }}
-        </p>
-      </div>
-      <div class="flex items-center h-6 px-3 rounded-full border-[#e9e8ef] border-[1px]" @click="openPickerClick(1)">
-        <van-icon name="wap-home-o" size="14px" />
-        <p class="text-xs align-middle">
-          {{ towerName }}
-        </p>
-      </div>
-      <div class="flex items-center h-6 px-3 rounded-full border-[#e9e8ef] border-[1px]" @click="openPickerClick(2)">
-        <van-icon name="calendar-o" size="14px" />
-        <p class="text-xs align-middle">
-          {{ `第${params.week}周` }}
-        </p>
-      </div>
-      <div class="flex items-center h-6 px-3 rounded-full border-[#e9e8ef] border-[1px]" @click="openPickerClick(3)">
-        <van-icon name="notes-o" size="12px" />
-        <p class="text-xs align-middle">
-          {{ weekDays[params.weekDay - 1] }}
-        </p>
-      </div>
-      <div class="flex items-center h-6 px-3 rounded-full border-[#e9e8ef] border-[1px]" @click="openPickerClick(4)">
-        <van-icon name="points" size="12px" />
-        <p class="text-xs align-middle">
-          {{ `${fromIndex}~${toIndex}` }}
-        </p>
-      </div>
+  <div class="w-screen min-h-screen flex flex-col box-border px-[5vw]">
+    <div class="flex gap-3 flex-wrap py-3 box-border">
+      <template
+        v-for="(item, index) in [
+          {icon: 'location-o', value: campusName},
+          {icon: 'wap-home-o', value: towerName},
+          {icon: 'calendar-o', value: `第${params.week}周`},
+          {icon:'notes-o', value: weekDays[params.weekDay - 1]},
+          {icon: 'points', value: `${fromIndex}~${toIndex}`}
+        ]"
+        :key="item.icon"
+      >
+        <div class="flex gap-1 items-center bg-[#4297FD] h-6 px-3 rounded-full border-[#e9e8ef] border-[1px]" @click="openPickerClick(index)">
+          <van-icon class="text-white" :name="item.icon" size="14px" />
+          <p class="text-xs text-center text-white">
+            {{ item.value }}
+          </p>
+        </div>
+      </template>
       <!-- <div v-for="(button, index) in pickerButtons" :key="button.icon" class="button" @click="openPickerClick(index)">
         <van-icon name="location-o" :size="button.iconSize" />
         <p class="button-text">
@@ -166,18 +153,23 @@ const onChange = (event: any) => {
       </div> -->
     </div>
     <div class="h-[2px] w-screen bg-[#e9e8ef]" />
-    <div class="w-[95vw] mx-auto mb-2 flex items-center justify-between">
+    <div class="mb-2 flex items-center justify-between">
       <p class="text-[10px] font-light">
         数据仅供参考 {{ towerName }} {{ campusName }}
       </p>
-      <div class="mt-2 bg-[#fad7d1] p-2 rounded-lg text-gray-600  text-sm leading-[14px]">
+      <div class="mt-2 bg-[#FBD6D2] px-3 py-2 rounded-md font-bold text-[#C15238] text-xs">
         有课
       </div>
     </div>
-    <div class="w-[95vw] mx-auto flex flex-col rounded-2xl p-4">
-      <div v-for="(roomList, index) in classroomList" :key="index" class="flex gap-3 flex-wrap mb-3">
-        <div v-for="room in roomList" :key="room" class="bg-[#fad7d1] p-2 rounded-lg text-gray-600 text-sm leading-[14px]">
-          {{ room }}
+    <div class="grid gap-2 rounded-2xl py-2">
+      <div v-for="(roomList, index) in classroomList" :key="index" class="grid gap-2">
+        <p class="text-sm font-bold">
+          第{{ index + 1 }}层
+        </p>
+        <div class="flex gap-3 flex-wrap mb-3">
+          <div v-for="room in roomList" :key="room" class="bg-[#FBD6D2] p-2 rounded-md font-bold text-[#C15238] text-xs">
+            {{ room }}
+          </div>
         </div>
       </div>
     </div>
