@@ -12,10 +12,10 @@ const classmatesList = shallowRef<Classmate[]>([])
 
 getClassmatesAll(classmatesStore.couresId).then(({ data }) => {
   classmatesList.value = data.data
-}).catch(() => {
+}).catch((err) => {
   classmatesList.value = []
   Toast.fail({
-    message: `加载失败\n${getRandomQAQ('sadness')[0]}`,
+    message: `加载失败\n${err.data.msg}\n${getRandomQAQ('sadness')[0]}`,
   })
 })
 </script>

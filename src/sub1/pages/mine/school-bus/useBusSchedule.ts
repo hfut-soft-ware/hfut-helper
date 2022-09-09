@@ -49,15 +49,21 @@ export function useBusSchedule() {
   }
 
   const getBusSchedule = () => {
+    Toast.loading({
+      message: '加载培养方案中...',
+      duration: 0,
+    })
     getBusRequest().then(({ data }) => {
       const busInfo = data.data[busScheduleType.value][0]
       startCampus.value = busInfo.runRange[0]
       endCampus.value = busInfo.runRange[1]
+      Toast.clear()
       Toast.success({
         message: `加载完成\n${getRandomQAQ('happy')[0]}`,
       })
       busSchedule.value = data.data
     }).catch(() => {
+      Toast.clear()
       Toast.fail({
         message: `加载失败\n${getRandomQAQ('sadness')[0]}`,
         duration: 1000,

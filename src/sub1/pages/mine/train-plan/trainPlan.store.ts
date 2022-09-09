@@ -53,6 +53,7 @@ export const useTrainPlanStore = defineStore('useTrainPlanStore', () => {
       error.value = null
     }).catch((err) => {
       error.value = (err as any).data.msg
+      Toast.clear()
     }).finally(() => {
       uni.stopPullDownRefresh()
     })
