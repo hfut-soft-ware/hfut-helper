@@ -48,29 +48,21 @@ export function useBusSchedule() {
     }
   }
 
-  const getBusSchedule = (pullRefresh = false) => {
-    Toast.loading({
-      message: `获取校车信息...\n${getRandomQAQ('happy')[0]}`,
-      forbidClick: true,
-    })
+  const getBusSchedule = () => {
     getBusRequest().then(({ data }) => {
       const busInfo = data.data[busScheduleType.value][0]
       startCampus.value = busInfo.runRange[0]
       endCampus.value = busInfo.runRange[1]
-      Toast.clear()
       Toast.success({
         message: `加载完成\n${getRandomQAQ('happy')[0]}`,
       })
       busSchedule.value = data.data
     }).catch(() => {
-      Toast.clear()
       Toast.fail({
         message: `加载失败\n${getRandomQAQ('sadness')[0]}`,
+        duration: 1000,
       })
     })
-    if (pullRefresh) {
-      uni.stopPullDownRefresh()
-    }
   }
 
   return {

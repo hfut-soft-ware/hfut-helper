@@ -40,17 +40,8 @@ baseInstance.interceptors.response.use(res => res, (err) => {
       },
     })
   }
-  return err
+  throw err
 })
-
-export function createRequest<T>() {
-  return function(config: AjaxRequestConfig, instance: AjaxInstance<any> = baseInstance) {
-    if (!config.method) {
-      config.method = 'GET'
-    }
-    return instance<T>(config)
-  }
-}
 
 export function request<T>(config: AjaxRequestConfig, instance: AjaxInstance<any> = baseInstance) {
   if (!config.method) {

@@ -179,6 +179,14 @@
             "navigationBarTitleText": "教室查询",
             "enablePullDownRefresh": false
           }
+        },
+        {
+          "path": "pages/classmates/classmates",
+          "style": {
+            "navigationBarBackgroundColor": "#4981F9",
+            "navigationBarTitleText": "同班同学",
+            "enablePullDownRefresh": false
+          }
         }
       ]
     }

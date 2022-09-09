@@ -12,6 +12,7 @@ const store = useCourseListStore()
 const { todayCourse } = storeToRefs(store)
 
 const show = ref(false)
+const isCustom = ref(false)
 
 const courseData = ref<CourseData>()
 const conflictCourse = ref<CourseData[]>([])
@@ -24,7 +25,12 @@ const courseList = computed(() => dayHours.map(hour => ({
 
 function handleCourseClick(course: CourseData) {
   courseData.value = course
-
+  // 处理自定义课程
+  if (course?.detail?.type === 'Diy') {
+    isCustom.value = true
+  } else {
+    isCustom.value = false
+  }
   show.value = true
 }
 
@@ -43,7 +49,7 @@ function closeConflictCourseShow() {
 </script>
 
 <template>
-  <course-popup v-if="show" :show="show" :data="courseData" @close="onClose" />
+  <course-popup v-if="show" :show="show" :is-custom="isCustom" :data="courseData" @close="onClose" />
   <van-popup
     :show="conflictCourseShow"
     round

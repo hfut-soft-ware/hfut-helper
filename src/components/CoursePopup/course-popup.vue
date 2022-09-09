@@ -8,6 +8,7 @@ import CourseDetail from '@/components/CourseDetail/course-detail.vue'
 import { useEditSchedule } from '@/components/CoursePopup/use-editSchedule'
 import CreateCustomPage from '@/components/CreateCustomPage/CreateCustomPage.vue'
 import { useFailureRateQuery } from '@/components/CoursePopup/use-failureRateQuery'
+import { useClassmateQuery } from '@/components/CoursePopup/use-classmatesQuery'
 import { useFailureRateStore } from '@/store/failureRate.store'
 import { useCourseSearchStore } from '@/store/courseSearch.store'
 
@@ -24,6 +25,8 @@ interface Emits {
 
 const courseStore = useCourseListStore()
 const { weekSchedule } = storeToRefs(courseStore)
+
+const { handleClassmatesQueryClick } = useClassmateQuery()
 
 const { data, show, isCustom, weekday } = defineProps<Props>()
 const emit = defineEmits<Emits>()
@@ -228,13 +231,21 @@ const { handleFailureRateQueryClick } = useFailureRateQuery(failureRateStore, da
       >
         修改日程
       </div>
-      <div
-        v-if="!isCustom"
-        class="border-2 mt-3 border-[#5079D0] font-bold text-center py-3 px-5 rounded-full text-[#4C81F8]"
-        :class="isExam ? 'failure-rate-query-exam' : ''"
-        @click="handleFailureRateQueryClick"
-      >
-        挂科率查询
+      <div v-if="!isCustom" class="flex gap-2 mb-4">
+        <div
+          class="flex-1 border-2 mt-3 border-[#5079D0] font-bold text-center py-3 px-5 rounded-full text-[#4C81F8]"
+          :class="isExam ? 'failure-rate-query-exam' : ''"
+          @click="handleClassmatesQueryClick(data.detail?.id)"
+        >
+          同班同学
+        </div>
+        <div
+          class="flex-1 border-2 mt-3 border-[#5079D0] font-bold text-center py-3 px-5 rounded-full text-[#4C81F8]"
+          :class="isExam ? 'failure-rate-query-exam' : ''"
+          @click="handleFailureRateQueryClick"
+        >
+          挂科率查询
+        </div>
       </div>
     </div>
   </van-popup>
