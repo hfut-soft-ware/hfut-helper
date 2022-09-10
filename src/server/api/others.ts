@@ -17,7 +17,7 @@ export function getClassroomRequest(params: IEmptyClassroomDto) {
   })
 }
 
-export function getClassmatesAll(courseId: number) {
+export function getClassmatesAll(courseId: string) {
   return request<IClassmateAllResponse>({
     url: '/classmate/all',
     params: {

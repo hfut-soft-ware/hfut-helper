@@ -1,23 +1,24 @@
 <script setup lang='ts'>
 import { shallowRef } from 'vue'
 import Toast from '@vant/weapp/lib/toast/toast'
+import { onLoad } from '@dcloudio/uni-app'
 import { getRandomQAQ } from 'qaq-font'
-import { useClassmatesStore } from '@/store/classmates.store'
 import { getClassmatesAll } from '@/server/api/others'
 import type { Classmate } from '@/shared/types/response/classmate-all'
 
-const classmatesStore = useClassmatesStore()
-
 const classmatesList = shallowRef<Classmate[]>([])
 
-getClassmatesAll(classmatesStore.couresId).then(({ data }) => {
-  classmatesList.value = data.data
-}).catch((err) => {
-  classmatesList.value = []
-  Toast.fail({
-    message: `加载失败\n${err.data.msg}\n${getRandomQAQ('sadness')[0]}`,
+onLoad((query) => {
+  getClassmatesAll(query.couresId!).then(({ data }) => {
+    classmatesList.value = data.data
+  }).catch((err) => {
+    classmatesList.value = []
+    Toast.fail({
+      message: `加载失败\n${err.data.msg}\n${getRandomQAQ('sadness')[0]}`,
+    })
   })
 })
+
 </script>
 
 <template>

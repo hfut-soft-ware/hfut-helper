@@ -50,7 +50,7 @@ export function useBusSchedule() {
 
   const getBusSchedule = () => {
     Toast.loading({
-      message: '加载培养方案中...',
+      message: '加载校车中...',
       duration: 0,
     })
     getBusRequest().then(({ data }) => {

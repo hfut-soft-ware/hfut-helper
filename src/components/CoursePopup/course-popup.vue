@@ -235,7 +235,7 @@ const { handleFailureRateQueryClick } = useFailureRateQuery(failureRateStore, da
         <div
           class="flex-1 border-2 mt-3 border-[#5079D0] font-bold text-center py-3 px-5 rounded-full text-[#4C81F8]"
           :class="isExam ? 'failure-rate-query-exam' : ''"
-          @click="handleClassmatesQueryClick(data.detail?.id)"
+          @click="handleClassmatesQueryClick(data.detail?.id!)"
         >
           同班同学
         </div>
