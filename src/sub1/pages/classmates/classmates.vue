@@ -28,26 +28,26 @@ onLoad((query) => {
   </template>
   <template v-else>
     <div class="h-screen w-screen flex flex-col">
-      <div class="h-10 flex w-full border-b border-slate-300 px-3">
-        <p class="flex-1 leading-10">
+      <div class="h-10 box-border flex w-full border-b border-slate-300 px-3">
+        <p class="flex-[2_2_0%] leading-10">
           学号
         </p>
-        <p class="flex-1 leading-10">
+        <p class="flex-[2_2_0%] leading-10">
           姓名
         </p>
-        <p class="flex-1 leading-10">
+        <p class="flex-[3_3_0%] leading-10">
           班级
         </p>
       </div>
       <div class="flex-1 w-full pb-4 overflow-y-scroll">
-        <div v-for="classmate in classmatesList" :key="classmate.id" class="flex h-10 border-b border-slate-100 px-3 text-slate-500 ">
-          <p class="flex-1 leading-10">
+        <div v-for="classmate in classmatesList" :key="classmate.id" class="flex box-border h-10 border-b border-slate-100 px-3 text-slate-500 ">
+          <p class="flex-[2_2_0%] truncate leading-10 text-xs">
             {{ classmate.id }}
           </p>
-          <p class="flex-1 leading-10">
+          <p class="flex-[2_2_0%] truncate leading-10 text-xs">
             {{ classmate.name }}
           </p>
-          <p class="flex-1 leading-10">
+          <p class="flex-[3_3_0%] truncate leading-10 text-xs">
             {{ classmate.adminClass }}
           </p>
         </div>
