@@ -9,3 +9,5 @@ export type Series = {
 }
 
 export type Include<T, U extends keyof T> = U
+
+export type HelpType = 'common' | 'login' | 'score' | 'course'
