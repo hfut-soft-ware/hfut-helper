@@ -54,6 +54,12 @@ const onFailureRateSearchClick = () => {
   })
 }
 
+const onHelpClick = () => {
+  uni.navigateTo({
+    url: '/sub1/pages/mine/help/help?type=score',
+  })
+}
+
 function changeMaxOrTop() {
   if (homeDetailMode.value === 'top') {
     homeDetailMode.value = 'max'
@@ -151,6 +157,15 @@ function changeMaxOrTop() {
       <img class="w-[30px] h-[30px]" src="../../assets/icons/telescope.png">
       <p class="ml-2 text-sm">
         挂科率查询
+      </p>
+    </div>
+    <div
+      class="card-shadow bg-white rounded-full py-2 px-5 flex items-center"
+      @click="onHelpClick"
+    >
+      <img class="w-[30px] h-[30px]" src="../../assets/icons/astronaut.png">
+      <p class="ml-2 text-sm">
+        帮助
       </p>
     </div>
   </div>

@@ -56,6 +56,12 @@ function toDisclaimers() {
     url: '/sub1/pages/mine/about/disclaimers/disclaimers',
   })
 }
+
+function onHelpClick() {
+  uni.navigateTo({
+    url: '/sub1/pages/mine/help/help?type=login',
+  })
+}
 </script>
 
 <template>
@@ -114,6 +120,9 @@ function toDisclaimers() {
     </div>
     <p class="text-center text-blue-500 underline text-sm mt-10" @click="toDisclaimers">
       用户协议
+    </p>
+    <p class="text-center text-blue-500 underline text-sm mt-10" @click="onHelpClick">
+      帮助
     </p>
     <p class="absolute bottom-16 text-xs text-gray-500 mt-20">
       登录遇到了问题？可以加入交流群656140321问问 {{ getRandomQAQ('happy')[0] }}

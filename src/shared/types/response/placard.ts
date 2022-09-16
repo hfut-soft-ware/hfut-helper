@@ -1,4 +1,4 @@
-export interface TextResponse {
+export interface PlacardResponse {
   code: number
   msg: string
   data: string

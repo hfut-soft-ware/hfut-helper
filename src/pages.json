@@ -187,6 +187,14 @@
             "navigationBarTitleText": "同班同学",
             "enablePullDownRefresh": false
           }
+        },
+        {
+          "path": "pages/mine/help/help",
+          "style": {
+            "navigationBarBackgroundColor": "#4981F9",
+            "navigationBarTitleText": "帮助",
+            "enablePullDownRefresh": false
+          }
         }
       ]
     }

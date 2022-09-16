@@ -70,4 +70,9 @@ export const servicesButtonList: Service[] = [
     title: '教室查询',
     url: 'empty-classroom/empty-classroom',
   },
+  {
+    icon: 'flag-o',
+    title: '帮助',
+    url: 'help/help',
+  },
 ]

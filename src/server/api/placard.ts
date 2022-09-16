@@ -1,8 +1,8 @@
 import { request } from '@/server/base'
-import type { TextResponse } from '@/shared/types/response/text'
+import type { PlacardResponse } from '@/shared/types/response/placard'
 
 export function getPlacard() {
-  return request<TextResponse>({
+  return request<PlacardResponse>({
     url: '/api/placard',
   })
 }
