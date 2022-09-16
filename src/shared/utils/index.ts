@@ -17,5 +17,5 @@ export const isOdd = (num: number) => num % 2 !== 0
 
 export const formatSemester = (semester: string) => {
   const regRes = /20([0-9]{2})-20[0-9]{2}学年第(.{1})学期/.exec(semester)
-  return `${regRes![1]}-${regRes![2].replace('一', '上').replace('二', '下')}`
+  return `${regRes![1]}-${regRes![2].replace('一', '1').replace('二', '2')}`
 }
