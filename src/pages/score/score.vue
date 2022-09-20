@@ -126,9 +126,21 @@ function changeMaxOrTop() {
       <div class="py-3 bg-white z-[0]">
         <AreaUCharts />
       </div>
-      <h3 class="font-semibold">
-        成绩列表
-      </h3>
+
+      <div class="flex justify-between items-center">
+        <h3 class="font-semibold">
+          成绩列表
+        </h3>
+        <div
+          class="card-shadow bg-white rounded-full py-1 px-3 flex items-center"
+          @click="onHelpClick"
+        >
+          <img class="w-[20px] h-[20px]" src="../../assets/icons/astronaut.png">
+          <p class="ml-2 text-sm">
+            帮助
+          </p>
+        </div>
+      </div>
       <div class="mt-5">
         <div
           v-for="item in semesterScoreData"
@@ -157,15 +169,6 @@ function changeMaxOrTop() {
       <img class="w-[30px] h-[30px]" src="../../assets/icons/telescope.png">
       <p class="ml-2 text-sm">
         挂科率查询
-      </p>
-    </div>
-    <div
-      class="card-shadow bg-white rounded-full py-2 px-5 flex items-center"
-      @click="onHelpClick"
-    >
-      <img class="w-[30px] h-[30px]" src="../../assets/icons/astronaut.png">
-      <p class="ml-2 text-sm">
-        帮助
       </p>
     </div>
   </div>

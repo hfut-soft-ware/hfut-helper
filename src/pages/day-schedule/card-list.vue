@@ -1,15 +1,17 @@
 <script lang='ts' setup>
 import { computed, ref } from 'vue'
 import { storeToRefs } from 'pinia'
+import { useDayHours } from './use-dayHours'
 import type { CourseData } from '@/store/courseList.store'
 import { formatCourseName, formatRoom, getTeachers, useCourseListStore } from '@/store/courseList.store'
-import { dayHours } from '@/shared/constant'
 import CoursePopup from '@/components/CoursePopup/course-popup.vue'
 import BounceBall from '@/components/BounceBall/BounceBall.vue'
 
 const store = useCourseListStore()
 
 const { todayCourse } = storeToRefs(store)
+
+const { dayHours } = useDayHours()
 
 const show = ref(false)
 const isCustom = ref(false)
@@ -18,10 +20,12 @@ const courseData = ref<CourseData>()
 const conflictCourse = ref<CourseData[]>([])
 const conflictCourseShow = ref(false)
 
-const courseList = computed(() => dayHours.map(hour => ({
-  time: hour,
-  course: store.getCourseByHourIndex(hour.index),
-})))
+const courseList = computed(() => dayHours.map((hour) => {
+  return {
+    time: hour,
+    course: store.getCourseByHourIndex(hour.index),
+  }
+}))
 
 function handleCourseClick(course: CourseData) {
   courseData.value = course
@@ -105,7 +109,7 @@ function closeConflictCourseShow() {
             {{ list.time.start }}
           </div>
           <template v-if="list.time.start !== '22:00'">
-            <template v-if="list.time.start === '12:00'">
+            <template v-if="list.time.start === '12:00' || list.time.start==='12:10'">
               <div class="lunch-card" style="flex: 6">
                 午休
               </div>
@@ -126,7 +130,7 @@ function closeConflictCourseShow() {
                 <template v-if="list.course.length === 1">
                   <div
                     :key="list.course[0].course?.startTime"
-                    :class="`card ${(list.course[0] as any).detail.color} mt-4`"
+                    :class="`card ${(list.course[0] as any).detail.color} ${list.course[0].course?.startTime === list.time.start ? 'mt-2': 'mt-4'}`"
                     @click="handleCourseClick(list.course[0])"
                   >
                     <div class="card-flex">
@@ -221,7 +225,7 @@ function closeConflictCourseShow() {
         }
       }
       .lunch-card {
-        @apply rounded-lg mt-4 h-12 bg-slate-200/50 text-lg flex justify-center items-center text-slate-400;
+        @apply rounded-lg mt-2 h-12 bg-slate-200/50 text-lg flex justify-center items-center text-slate-400;
       }
       .card {
         transition: all .2s;
