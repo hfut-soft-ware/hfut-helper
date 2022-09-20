@@ -23,6 +23,12 @@ import '@/assets/icons/satellite-orbit.png'
 import '@/assets/icons/detour.png'
 import '@/assets/icons/rocket-2.png'
 import '@/assets/icons/flyBall.png'
+import '@/assets/icons/frenchFries.png'
+import '@/assets/icons/bus.png'
+import '@/assets/icons/search-room.png'
+import '@/assets/icons/calendar.png'
+import '@/assets/icons/ipad.png'
+import '@/assets/icons/help.png'
 
 // imgs
 // import '@/pages/mine/about/donate/donate.png'

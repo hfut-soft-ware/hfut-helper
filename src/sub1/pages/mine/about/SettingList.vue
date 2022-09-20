@@ -5,18 +5,18 @@ interface Props {
     leftIcon: string
     cb: () => void
     forbidRightIcon?: boolean
-  }
+  }[]
 }
 
-const { list } = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   list: [] as any,
 })
 </script>
 
 <template>
-  <div v-if="list.length" class="list-card card-shadow text-lg flex-col bg-white rounded-lg p-3 gap-3">
+  <div v-if="props.list.length" class="list-card card-shadow text-lg flex-col bg-white rounded-lg p-3 gap-3">
     <div
-      v-for="item in list"
+      v-for="item in props.list"
       :key="item.title"
       class="flex justify-between items-center"
       @click="item.cb"

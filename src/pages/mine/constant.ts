@@ -8,17 +8,17 @@ type Service = {
 export const servicesList: Service[] = [
   {
     icon: 'flyship',
-    title: '全校课表查询',
+    title: '全校课表',
     url: 'course-search/course-search',
   },
   {
     icon: 'telescope',
-    title: '挂科率查询',
+    title: '挂科率',
     url: 'failureRate/failureRate',
   },
   {
     icon: 'galaxy',
-    title: '我的慕课(包含部分选修课)',
+    title: '我的慕课',
     url: 'mooc/mooc',
   },
   {
@@ -28,7 +28,7 @@ export const servicesList: Service[] = [
   },
   {
     icon: 'rocket-2',
-    title: '图书馆馆藏查询',
+    title: '图书馆藏',
     url: 'library/library',
   },
   {
@@ -50,28 +50,28 @@ export const servicesList: Service[] = [
 
 export const servicesButtonList: Service[] = [
   {
-    icon: 'notes-o',
+    icon: 'calendar',
     title: '校历',
     url: 'school-calendar/school-calendar',
   },
   {
-    icon: 'logistics',
+    icon: 'bus',
     title: '校车查询',
     url: 'school-bus/school-bus',
   },
   {
-    icon: 'todo-list-o',
+    icon: 'ipad',
     title: '第二课堂',
     url: 'wx1e3feaf804330562',
     isAppIdUrl: true,
   },
   {
-    icon: 'debit-pay',
-    title: '教室查询',
+    icon: 'search-room',
+    title: '空教室',
     url: 'empty-classroom/empty-classroom',
   },
   {
-    icon: 'flag-o',
+    icon: 'help',
     title: '帮助',
     url: 'help/help',
   },

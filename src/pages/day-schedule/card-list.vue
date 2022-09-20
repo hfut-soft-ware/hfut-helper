@@ -173,23 +173,14 @@ function closeConflictCourseShow() {
   border-left: 2px solid $color;
 }
 
-.yellow {
-  @include generateCardStyle(#FE9900);
-}
 .light-yellow {
   @include generateCardStyle(#FD9800);
 }
 .light-blue {
   @include generateCardStyle(#00A5F1);
 }
-.blue {
-  @include generateCardStyle(#00A5F1);
-}
 .pink {
   @include generateCardStyle(#F167BA);
-}
-.red {
-  @include generateCardStyle(#EF5B75);
 }
 .grown {
   @include generateCardStyle(#CBA713);
@@ -197,14 +188,23 @@ function closeConflictCourseShow() {
 .light-green {
   @include generateCardStyle(#3CB3C9);
 }
-.green {
-  @include generateCardStyle(#27BCA9);
-}
 .blue {
   @include generateCardStyle(#00A6F2);
 }
 .purple {
   @include generateCardStyle(#B967E3);
+}
+.yellow {
+  @include generateCardStyle(#F8A043);
+}
+.red {
+  @include generateCardStyle(#F88C8E);
+}
+.green {
+  @include generateCardStyle(#3EB770);
+}
+.blue {
+  @include generateCardStyle(#63B1EF);
 }
 
 .course-list-cards {

@@ -104,7 +104,6 @@ export const useAuthStore = defineStore('authStore', () => {
       Toast.fail({
         message: `获取学生信息失败\n${getRandomQAQ('sadness')[0]}`,
       })
-      return {}
     }
   }
 
