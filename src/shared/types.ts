@@ -7,3 +7,8 @@ export type WeekDays = {
 }[]
 
 export type RankMode = 'major' | 'class'
+
+export type Tab = {
+  key: RankMode
+  name: string
+}

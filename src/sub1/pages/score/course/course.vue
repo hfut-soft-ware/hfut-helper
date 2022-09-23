@@ -2,10 +2,11 @@
 import { storeToRefs } from 'pinia'
 import { computed, ref } from 'vue'
 import { onPullDownRefresh } from '@dcloudio/uni-app'
+import Tabs from './tabs.vue'
 import { formatScore, useScoreStore } from '@/store/score.store'
 import BounceBall from '@/components/BounceBall/BounceBall.vue'
-import Settings from '@/sub1/pages/score/course/settings.vue'
 import RadarUCharts from '@/sub1/pages/score/course/radar-ucharts.vue'
+import { tabs } from '@/shared/constant'
 import type { RankMode } from '@/shared/types'
 
 const scoreStore = useScoreStore()
@@ -96,7 +97,6 @@ function changeHeadAndMax(index: number) {
 
 <template>
   <van-toast id="van-toast" />
-  <Settings v-model:rankMode="rankMode" />
   <div class="w-[95vw] min-h-screen mx-auto py-5 relative flex flex-col gap-5 bg-[#E8EAF6] my-5 rounded-lg box-border px-3">
     <Card>
       <div class="flex flex-col gap-3 py-1">
@@ -121,10 +121,11 @@ function changeHeadAndMax(index: number) {
             </div>
           </div>
         </div>
-        <div>
+        <div class="w-full flex justify-between items-center">
           <h3 class="font-semibold text-2xl text-white">
             {{ currentCourseDetail.score?.rank }} / {{ currentCourseDetail.total }}
           </h3>
+          <Tabs v-model:activeKey="rankMode" :tabs="tabs" />
         </div>
         <div class="bg-[#3F51B5] p-2 rounded-md flex">
           <div

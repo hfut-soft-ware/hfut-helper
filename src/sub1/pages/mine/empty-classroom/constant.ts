@@ -6,4 +6,6 @@ export const campusInfo = [
 
 export const lessonStartTimePrefixs = [0, 8, 9, 10, 11, 14, 15, 16, 17, 19, 20, 21]
 
+export const courseStartTimePrefixs = [8, 10, 14, 16, 19]
+
 export const weekDays = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']

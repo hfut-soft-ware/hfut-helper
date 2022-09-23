@@ -1,3 +1,5 @@
+import type { Tab } from './types'
+
 export const TOKEN_KEY = '__TOKEN__'
 
 export const COURSE_KEY = '__COURSE__'
@@ -58,3 +60,14 @@ export const campusInfo = [
 export const lessonStartTimePrefixs = [0, 8, 9, 10, 11, 14, 15, 16, 17, 19, 20, 21]
 
 export const weekDays = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+
+export const tabs: Tab[] = [
+  {
+    key: 'major',
+    name: '专业排名',
+  },
+  {
+    key: 'class',
+    name: '教学班排名',
+  },
+]

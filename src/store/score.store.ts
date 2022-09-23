@@ -113,7 +113,6 @@ export const useScoreStore = defineStore('scoreStore', () => {
   })
 
   const selectedSemesterData = computed(() => {
-    console.log(semesterScoreData.value)
     return semesterScoreData.value[selectedSemester.value]
   })
 

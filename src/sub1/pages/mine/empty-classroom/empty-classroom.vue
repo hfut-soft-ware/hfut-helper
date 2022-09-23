@@ -3,39 +3,14 @@ import { computed, ref } from 'vue'
 import { useEmptyClassroom } from './use-emptyClassroom'
 import { campusInfo, weekDays } from './constant'
 
-const { fromIndex, toIndex, classroomList, params, towerName, campusName, towerList, campusList, getClassroom } = useEmptyClassroom()
+const { fromIndex, toIndex, classroomList, params, towerName, campusName, towerList, campusList, daySchedule, getClassroom } = useEmptyClassroom()
 
 getClassroom()
 
 const pickerShow = ref(false)
 const columnsIndex = ref(0)
-// const pickerButtons = ref([
-//   {
-//     icon: 'location-o',
-//     iconSize: '12px',
-//     text: campusName.value,
-//   },
-//   {
-//     icon: 'wap-home-o',
-//     iconSize: '14px',
-//     text: towerName.value,
-//   },
-//   {
-//     icon: 'calendar-o',
-//     iconSize: '14px',
-//     text: `第${params.value.week}周`,
-//   },
-//   {
-//     icon: 'notes-o',
-//     iconSize: '12px',
-//     text: weekDays[params.value.weekDay - 1],
-//   },
-//   {
-//     icon: 'points',
-//     iconSize: '12px',
-//     text: `${fromIndex.value}~${toIndex.value}`,
-//   },
-// ])
+// picker 组件的默认选中项， 不生效
+const defaultIndex = ref(0)
 const fromToList = Array.from<number[], number[]>({ length: 2 }, () => Array.from<number[], number>({ length: 11 }, (_, i) => i + 1))
 const columns = computed(() => {
   switch (columnsIndex.value) {
@@ -49,14 +24,15 @@ const columns = computed(() => {
       return Array.from({ length: 7 }, (_, i) => weekDays[i])
     case 4:
       return [
-
         {
           values: fromToList[0],
-          className: 'column1',
+          // 默认选中项
+          defaultIndex: fromIndex.value - 1,
         },
         {
           values: fromToList[1],
-          className: 'column1',
+          // 默认选中项
+          defaultIndex: toIndex.value - 1,
         },
       ]
     default:
@@ -97,8 +73,32 @@ const onConfirm = (event: any) => {
 }
 
 const openPickerClick = (index: number) => {
+  // 修改对应的默认选中项
+  if (index === 4) {
+    defaultIndex.value = 0
+  } else {
+    switch (index) {
+      case 0:
+        // eslint-disable-next-line no-case-declarations
+        const name = campusInfo.find(campus => campus.campusCode === params.value.campusCode)!.campusName
+        defaultIndex.value = campusList.findIndex(campus => campus === name)
+        break
+      case 1:
+        defaultIndex.value = towerList.value.findIndex(tower => tower === towerName.value)
+        break
+      case 2:
+        defaultIndex.value = daySchedule.weekIdx!
+        break
+      case 3:
+        defaultIndex.value = daySchedule.dayIdx!
+        break
+      default:
+        break
+    }
+  }
   columnsIndex.value = index
   pickerShow.value = true
+  console.log(defaultIndex.value)
 }
 
 const onChange = (event: any) => {
@@ -121,6 +121,7 @@ const onChange = (event: any) => {
     <van-picker
       show-toolbar
       :columns="columns"
+      :default-index="defaultIndex"
       @confirm="onConfirm"
       @cancel="closePicker"
       @change="onChange"
@@ -134,7 +135,7 @@ const onChange = (event: any) => {
           {icon: 'wap-home-o', value: towerName},
           {icon: 'calendar-o', value: `第${params.week}周`},
           {icon:'notes-o', value: weekDays[params.weekDay - 1]},
-          {icon: 'points', value: `${fromIndex}~${toIndex}`}
+          {icon: 'points', value: `${fromIndex}~${toIndex}节`}
         ]"
         :key="item.icon"
       >
@@ -145,12 +146,6 @@ const onChange = (event: any) => {
           </p>
         </div>
       </template>
-      <!-- <div v-for="(button, index) in pickerButtons" :key="button.icon" class="button" @click="openPickerClick(index)">
-        <van-icon name="location-o" :size="button.iconSize" />
-        <p class="button-text">
-          {{ button.text }}
-        </p>
-      </div> -->
     </div>
     <div class="h-[2px] w-screen bg-[#e9e8ef]" />
     <div class="mb-2 flex items-center justify-between">
@@ -163,14 +158,16 @@ const onChange = (event: any) => {
     </div>
     <div class="grid gap-2 rounded-2xl py-2">
       <div v-for="(roomList, index) in classroomList" :key="index" class="grid gap-2">
-        <p class="text-sm font-bold">
-          第{{ index + 1 }}层
-        </p>
-        <div class="flex gap-3 flex-wrap mb-3">
-          <div v-for="room in roomList" :key="room" class="bg-[#FBD6D2] p-2 rounded-md font-bold text-[#C15238] text-xs">
-            {{ room }}
+        <template v-if="roomList.length">
+          <p class="text-sm font-bold">
+            第{{ index + 1 }}层
+          </p>
+          <div class="flex gap-3 flex-wrap mb-3">
+            <div v-for="room in roomList" :key="room.id" class="bg-[#FBD6D2] p-2 rounded-md font-bold text-[#C15238] text-xs">
+              {{ room.id }}
+            </div>
           </div>
-        </div>
+        </template>
       </div>
     </div>
   </div>
