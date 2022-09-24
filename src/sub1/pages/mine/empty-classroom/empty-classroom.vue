@@ -1,5 +1,6 @@
 <script setup lang='ts'>
 import { computed, ref } from 'vue'
+import type { IClassroom } from './use-emptyClassroom'
 import { useEmptyClassroom } from './use-emptyClassroom'
 import { campusInfo, weekDays } from './constant'
 
@@ -123,6 +124,14 @@ const onChange = (event: any) => {
   const toList = fromToList[0].filter(item => item >= value[0])
   picker.setColumnValues(1, toList)
 }
+
+const handleRoomCardClick = (room: IClassroom) => {
+  uni.showModal({
+    title: `${towerName.value} ${room.id}`,
+    content: `上课节数: ${room.lessonIndex}`,
+    showCancel: false,
+  })
+}
 </script>
 
 <template>
@@ -163,8 +172,18 @@ const onChange = (event: any) => {
       <p class="text-[10px] font-light">
         数据仅供参考 {{ towerName }} {{ campusName }}
       </p>
-      <div class="mt-2 bg-[#FBD6D2] px-3 py-2 rounded-md font-bold text-[#C15238] text-xs">
-        有课
+      <div class="flex gap-2">
+        <template
+          v-for="item in [
+            {class: 'empty-full', content: '有课'},
+            {class: 'empty-partial', content: '部分有课'}
+          ]"
+          :key="item.class"
+        >
+          <div :class="`mt-2 px-3 py-2 rounded-md font-bold text-xs ${item.class}`">
+            {{ item.content }}
+          </div>
+        </template>
       </div>
     </div>
     <template v-if="classroomList.length">
@@ -175,7 +194,11 @@ const onChange = (event: any) => {
               第{{ index + 1 }}层
             </p>
             <div class="flex gap-3 flex-wrap mb-3">
-              <div v-for="room in roomList" :key="room.id" class="bg-[#FBD6D2] p-2 rounded-md font-bold text-[#C15238] text-xs">
+              <div
+                v-for="room in roomList" :key="room.id"
+                :class="`p-2 rounded-md font-bold text-center text-sm ${room.type === 'full' ? 'empty-full' : 'empty-partial'}`"
+                @click="handleRoomCardClick(room)"
+              >
                 {{ room.id }}
               </div>
             </div>
@@ -188,3 +211,13 @@ const onChange = (event: any) => {
     </template>
   </div>
 </template>
+
+<style scoped>
+.empty-full {
+  @apply text-[#C15238] bg-[#FBD6D2];
+}
+
+.empty-partial {
+  @apply text-[#B97C26] bg-[#FFF2C6];
+}
+</style>

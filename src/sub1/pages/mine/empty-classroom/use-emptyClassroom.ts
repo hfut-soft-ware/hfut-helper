@@ -10,9 +10,9 @@ import { ascend } from '@/shared/utils/index'
 import type { IEmptyClassroomDto } from '@/shared/types/dto/empty-classroom'
 import type { Datum } from '@/shared/types/response/empty-classroom'
 
-interface Classroom {
+export interface IClassroom {
   id: number
-  // 类型
+  // 部分有课 | 满课
   type: 'partial' | 'full'
   // 哪几节课
   lessonIndex: number[]
@@ -29,7 +29,7 @@ function handleClassroom(map: Map<number, Course>, fromIndex: number, toIndex: n
     set.add(Math.floor(id / 100))
   }
   const layers = ascend(Array.from(set))
-  const classrooms = Array.from<Classroom[], Classroom[]>({ length: layers.length ? layers.pop()! : 0 }, () => [])
+  const classrooms = Array.from<IClassroom[], IClassroom[]>({ length: layers.length ? layers.pop()! : 0 }, () => [])
   for (const id of map.keys()) {
     classrooms[Math.floor(id / 100) - 1].push({
       id,
@@ -40,7 +40,7 @@ function handleClassroom(map: Map<number, Course>, fromIndex: number, toIndex: n
   return classrooms
 }
 
-function judgeRoomType(startPrefix: number[], fromIndex: number, toIndex: number): Classroom['type'] {
+function judgeRoomType(startPrefix: number[], fromIndex: number, toIndex: number): IClassroom['type'] {
   if (fromIndex === toIndex) {
     return 'full'
   }
