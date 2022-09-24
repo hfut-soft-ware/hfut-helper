@@ -17,7 +17,7 @@ const changeActiveKey = (key: string) => {
 </script>
 
 <template>
-  <div class="flex">
+  <div class="flex justify-between">
     <div
       v-for="tab in tabs"
       :key="tab.key"

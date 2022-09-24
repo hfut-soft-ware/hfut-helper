@@ -41,6 +41,7 @@ export interface Detail {
   mine: number
   avg: number
   max: number
+  actualNum: number
 }
 
 export interface ClassRank {
@@ -70,4 +71,5 @@ export interface Detail2 {
   mine: number
   avg: number
   max: number
+  actualNum: number
 }

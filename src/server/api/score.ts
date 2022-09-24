@@ -4,6 +4,7 @@ import type { ICustomScoreResponse } from '@/shared/types/response/score-custom'
 import type { IFailureRateResponse } from '@/shared/types/response/failure-rate'
 import type { IFailureRateSearchResponse } from '@/shared/types/response/failure-rate-search'
 import type { IScoreResponseData } from '@/shared/types/response/score'
+import type { ISingleScoreSchoolResponse } from '@/shared/types/response/single-score-school'
 
 export function getScoreRequest(refresh = true) {
   return request<IScoreResponseData>({
@@ -20,6 +21,13 @@ export function getSingleScoreRequest(singleScoreDto: SingleScoreDto) {
     params: {
       ...singleScoreDto,
     },
+  })
+}
+
+export function getSingleScoreSchoolRequest(singleScoreDto: SingleScoreDto) {
+  return request<ISingleScoreSchoolResponse>({
+    url: '/score/rank/single/school',
+    params: singleScoreDto,
   })
 }
 

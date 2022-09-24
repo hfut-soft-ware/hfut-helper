@@ -27,7 +27,9 @@ const rankMode = ref<RankMode>('major')
 const currentCourseDetail = computed(() => {
   const data = rankMode.value === 'major'
     ? currentScoreData.value.majorRank
-    : currentScoreData.value.classRank
+    : rankMode.value === 'class'
+      ? currentScoreData.value.classRank
+      : currentScoreData.value.schoolRank
 
   if (!data) {
     return {}
@@ -37,28 +39,33 @@ const currentCourseDetail = computed(() => {
     ? { ...data.score, myScore: currentSelectedCourse.value.score }
     : { ...data.gpa, myScore: currentSelectedCourse.value.gpa }
 
-  const lastItem = {
-    title: '前10%',
-    value: parseFloat(score.head.toString()).toFixed(2),
-    icon: 'fire-o',
-  }
-
   const middleItem = {
     title: '专业平均',
     value: parseFloat(score.avg.toString()).toFixed(2),
     icon: 'friends-o',
   }
 
+  const lastItem = {
+    title: '前10%',
+    value: parseFloat(score.head.toString()).toFixed(2),
+    icon: 'fire-o',
+  }
+
   if (headMode.value === 'max') {
-    lastItem.title = '专业最高'
     lastItem.value = parseFloat(score.max.toString()).toFixed(2)
+    if (rankMode.value === 'major') {
+      lastItem.title = '专业最高'
+    } else if (rankMode.value === 'class') {
+      lastItem.title = '教学班最高'
+    } else {
+      lastItem.title = '全校最高'
+    }
   }
 
   if (rankMode.value === 'class') {
     middleItem.title = '教学班平均'
-    if (headMode.value === 'max') {
-      lastItem.title = '教学班最高'
-    }
+  } else if (rankMode.value === 'school') {
+    middleItem.title = '全校平均'
   }
 
   return {
@@ -121,12 +128,10 @@ function changeHeadAndMax(index: number) {
             </div>
           </div>
         </div>
-        <div class="w-full flex justify-between items-center">
-          <h3 class="font-semibold text-2xl text-white">
-            {{ currentCourseDetail.score?.rank }} / {{ currentCourseDetail.total }}
-          </h3>
-          <Tabs v-model:activeKey="rankMode" :tabs="tabs" />
-        </div>
+        <h3 class="font-semibold text-2xl text-white">
+          {{ currentCourseDetail.score?.rank }} / {{ currentCourseDetail.total }}
+        </h3>
+        <Tabs v-model:activeKey="rankMode" :tabs="tabs" />
         <div class="bg-[#3F51B5] p-2 rounded-md flex">
           <div
             v-for="(item, index) in currentCourseDetail.detailInfo"
@@ -167,7 +172,7 @@ function changeHeadAndMax(index: number) {
           >
             <div class="w-full flex text-black/85">
               <p
-                v-for="(content, index) in [item.name, item.mine, `${item.rank}/${currentScoreData.majorRank.total}`]"
+                v-for="(content, index) in [item.name, item.mine, `${item.rank}/${item.actualNum}`]"
                 :key="(content as any).name"
                 class="flex-1"
                 :class="index > 0 ? 'center':''"

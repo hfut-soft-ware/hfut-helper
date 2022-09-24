@@ -6,7 +6,7 @@ export type WeekDays = {
   idx: number
 }[]
 
-export type RankMode = 'major' | 'class'
+export type RankMode = 'major' | 'class' | 'school'
 
 export type Tab = {
   key: RankMode

@@ -70,4 +70,8 @@ export const tabs: Tab[] = [
     key: 'class',
     name: '教学班排名',
   },
+  {
+    key: 'school',
+    name: '全校排名',
+  },
 ]
