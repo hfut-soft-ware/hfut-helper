@@ -19,3 +19,7 @@ export const formatSemester = (semester: string) => {
   const regRes = /20([0-9]{2})-20[0-9]{2}学年第(.{1})学期/.exec(semester)
   return `${regRes![1]}-${regRes![2].replace('一', '1').replace('二', '2')}`
 }
+
+export const ascend = (arr: number[]) => {
+  return arr.sort((a, b) => a - b)
+}

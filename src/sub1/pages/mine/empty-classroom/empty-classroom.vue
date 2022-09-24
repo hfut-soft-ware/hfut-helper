@@ -3,7 +3,18 @@ import { computed, ref } from 'vue'
 import { useEmptyClassroom } from './use-emptyClassroom'
 import { campusInfo, weekDays } from './constant'
 
-const { fromIndex, toIndex, classroomList, params, towerName, campusName, towerList, campusList, daySchedule, getClassroom } = useEmptyClassroom()
+const {
+  fromIndex,
+  toIndex,
+  classroomList,
+  params,
+  towerName,
+  campusName,
+  towerList,
+  campusList,
+  daySchedule,
+  getClassroom,
+} = useEmptyClassroom()
 
 getClassroom()
 
@@ -98,7 +109,6 @@ const openPickerClick = (index: number) => {
   }
   columnsIndex.value = index
   pickerShow.value = true
-  console.log(defaultIndex.value)
 }
 
 const onChange = (event: any) => {
@@ -127,6 +137,7 @@ const onChange = (event: any) => {
       @change="onChange"
     />
   </van-popup>
+
   <div class="w-screen min-h-screen flex flex-col box-border px-[5vw]">
     <div class="flex gap-3 flex-wrap py-3 box-border">
       <template
@@ -156,19 +167,24 @@ const onChange = (event: any) => {
         有课
       </div>
     </div>
-    <div class="grid gap-2 rounded-2xl py-2">
-      <div v-for="(roomList, index) in classroomList" :key="index" class="grid gap-2">
-        <template v-if="roomList.length">
-          <p class="text-sm font-bold">
-            第{{ index + 1 }}层
-          </p>
-          <div class="flex gap-3 flex-wrap mb-3">
-            <div v-for="room in roomList" :key="room.id" class="bg-[#FBD6D2] p-2 rounded-md font-bold text-[#C15238] text-xs">
-              {{ room.id }}
+    <template v-if="classroomList.length">
+      <div class="grid gap-2 rounded-2xl py-2">
+        <div v-for="(roomList, index) in classroomList" :key="index" class="grid gap-2">
+          <template v-if="roomList.length">
+            <p class="text-sm font-bold">
+              第{{ index + 1 }}层
+            </p>
+            <div class="flex gap-3 flex-wrap mb-3">
+              <div v-for="room in roomList" :key="room.id" class="bg-[#FBD6D2] p-2 rounded-md font-bold text-[#C15238] text-xs">
+                {{ room.id }}
+              </div>
             </div>
-          </div>
-        </template>
+          </template>
+        </div>
       </div>
-    </div>
+    </template>
+    <template v-else>
+      <van-empty description="教室都在空闲中" />
+    </template>
   </div>
 </template>

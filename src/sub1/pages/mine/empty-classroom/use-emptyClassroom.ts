@@ -5,36 +5,46 @@ import { campusInfo, courseStartTimePrefixs, lessonStartTimePrefixs } from './co
 import { getClassroomRequest } from '@/server/api/others'
 import { useCourseListStore } from '@/store/courseList.store'
 import { getUserData } from '@/store/auth.store'
+import { ascend } from '@/shared/utils/index'
 
 import type { IEmptyClassroomDto } from '@/shared/types/dto/empty-classroom'
 import type { Datum } from '@/shared/types/response/empty-classroom'
 
 interface Classroom {
   id: number
+  // 类型
   type: 'partial' | 'full'
+  // 哪几节课
+  lessonIndex: number[]
 }
 
-function handleClassroom(map: Map<number, number[]>, fromIndex: number, toIndex: number) {
+interface Course {
+  startPrefixs: number[]
+  lessonIndex: number[]
+}
+
+function handleClassroom(map: Map<number, Course>, fromIndex: number, toIndex: number) {
   const set = new Set<number>()
   for (const id of map.keys()) {
     set.add(Math.floor(id / 100))
   }
-  const layers = Array.from(set).sort((a, b) => a - b)
+  const layers = ascend(Array.from(set))
   const classrooms = Array.from<Classroom[], Classroom[]>({ length: layers.length ? layers.pop()! : 0 }, () => [])
   for (const id of map.keys()) {
     classrooms[Math.floor(id / 100) - 1].push({
       id,
-      type: judgeRoomType(map.get(id)!, fromIndex, toIndex, id),
+      type: judgeRoomType(map.get(id)!.startPrefixs, fromIndex, toIndex),
+      lessonIndex: ascend(map.get(id)!.lessonIndex),
     })
   }
   return classrooms
 }
 
-function judgeRoomType(startPrefix: number[], fromIndex: number, toIndex: number, id: number): Classroom['type'] {
+function judgeRoomType(startPrefix: number[], fromIndex: number, toIndex: number): Classroom['type'] {
   if (fromIndex === toIndex) {
     return 'full'
   }
-  startPrefix.sort((a, b) => a - b)
+  ascend(startPrefix)
   const matchArr = courseStartTimePrefixs.slice(searchIndex(lessonStartTimePrefixs[fromIndex], courseStartTimePrefixs, true), searchIndex(lessonStartTimePrefixs[toIndex], courseStartTimePrefixs, true) + 1)
   if (matchArr.every((value, index) => value === startPrefix[index])) {
     return 'full'
@@ -96,25 +106,48 @@ export function useEmptyClassroom() {
   })
 
   const classroomList = computed(() => {
+    const map = new Map<number, Course>()
+    const fromIndexVal = fromIndex.value
+    const toIndexVal = toIndex.value
+
     const towerMatchedClassroom = getClassroomData.value.filter(classroom => classroom.towerName === towerName.value)
-    const map = new Map<number, number[]>()
-    const fromPrefix = lessonStartTimePrefixs[fromIndex.value]
-    const toPrefix = lessonStartTimePrefixs[toIndex.value]
+    const fromPrefix = lessonStartTimePrefixs[fromIndexVal]
+    const toPrefix = lessonStartTimePrefixs[toIndexVal]
     towerMatchedClassroom.forEach((classroom) => {
       classroom.values.forEach((lesson) => {
         const startTimePrefix = parseInt(lesson.startTime.split(':')[0])
         const endTimePrefix = parseInt(lesson.endTime.split(':')[0])
-        if ((fromPrefix >= startTimePrefix && fromPrefix <= endTimePrefix) || (toPrefix >= startTimePrefix && toPrefix <= endTimePrefix)) {
-          if (map.has(classroom.roomId)) {
-            map.get(classroom.roomId)!.push(startTimePrefix)
+        if ((startTimePrefix >= fromPrefix && startTimePrefix <= toPrefix) || (endTimePrefix >= fromPrefix && endTimePrefix <= toPrefix)) {
+        // if ((fromPrefix >= startTimePrefix && fromPrefix <= endTimePrefix) || (toPrefix >= startTimePrefix && toPrefix <= endTimePrefix)) {
+          if (!map.has(classroom.roomId)) {
+            map.set(classroom.roomId, {
+              startPrefixs: [],
+              lessonIndex: [],
+            })
+          }
+
+          map.get(classroom.roomId)!.startPrefixs.push(startTimePrefix)
+          const lessonIndex = map.get(classroom.roomId)!.lessonIndex
+          const startIndex = searchIndex(startTimePrefix, lessonStartTimePrefixs, true)
+          const endIndex = searchIndex(endTimePrefix, lessonStartTimePrefixs, true)
+          if (endIndex - startIndex > 1) {
+            for (let i = startIndex; i <= endIndex; i++) {
+              if (i >= fromIndexVal && i <= toIndexVal) {
+                lessonIndex.push(i)
+              }
+            }
           } else {
-            map.set(classroom.roomId, <number[]>[])
-            map.get(classroom.roomId)!.push(startTimePrefix)
+            if (startIndex >= fromIndexVal && startIndex <= toIndexVal) {
+              lessonIndex.push(startIndex)
+            }
+            if (endIndex >= fromIndexVal && endIndex <= toIndexVal) {
+              lessonIndex.push(endIndex)
+            }
           }
         }
       })
     })
-    return handleClassroom(map, fromIndex.value, toIndex.value)
+    return handleClassroom(map, fromIndexVal, toIndexVal)
   })
 
   function getClassroom() {
