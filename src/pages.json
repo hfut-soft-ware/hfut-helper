@@ -195,6 +195,14 @@
             "navigationBarTitleText": "帮助",
             "enablePullDownRefresh": false
           }
+        },
+        {
+          "path": "pages/score/convert/convert",
+          "style": {
+            "navigationBarBackgroundColor": "#4981F9",
+            "navigationBarTitleText": "成绩换算",
+            "enablePullDownRefresh": false
+          }
         }
       ]
     }

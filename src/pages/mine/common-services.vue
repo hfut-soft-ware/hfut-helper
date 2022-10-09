@@ -3,15 +3,12 @@ import { storeToRefs } from 'pinia'
 import { servicesButtonList, servicesList } from '@/pages/mine/constant'
 import { useCourseListStore } from '@/store/courseList.store'
 import { useMineStore } from '@/store/mine.store'
-import { useGetUserInfo } from '@/pages/mine/use-getUserInfo'
 
 const mineStore = useMineStore()
 const { cardInfo } = storeToRefs(mineStore)
 
 const courseStore = useCourseListStore()
 const { recentExam } = storeToRefs(courseStore)
-
-const { state } = useGetUserInfo()
 
 function onServiceClick(url: string, isAppId = false) {
   if (isAppId) {
@@ -61,17 +58,6 @@ function onServiceClick(url: string, isAppId = false) {
         >
         <p class="text-xs mt-2">
           {{ service.title }}
-        </p>
-      </div>
-    </div>
-    <div v-if="(state as any).campus === '宣城校区'" class="w-1/4" @click="onServiceClick('wx996c3ddcd3a607c4', true)">
-      <div class="py-2 px-3 flex flex-col items-center justify-center">
-        <img
-          class="w-[30px] h-[30px]"
-          :src="`../../assets/icons/frenchFries.png`"
-        >
-        <p class="text-xs mt-2">
-          校园云外卖
         </p>
       </div>
     </div>

@@ -48,6 +48,7 @@
     "@vueuse/core": "^8.2.5",
     "@vueuse/shared": "^8.9.4",
     "date-fns": "^2.28.0",
+    "fuse.js": "^6.6.2",
     "lodash": "^4.17.21",
     "pinia": "^2.0.13",
     "qaq-font": "^1.0.2",

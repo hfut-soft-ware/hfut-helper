@@ -42,21 +42,9 @@ function handleSemesterOpen(index: number) {
   })
 }
 
-function handleOpenCustomClick() {
+const onNavigateClick = (path: string) => {
   uni.navigateTo({
-    url: '/sub1/pages/score/custom/custom',
-  })
-}
-
-const onFailureRateSearchClick = () => {
-  uni.navigateTo({
-    url: '/sub1/pages/mine/failureRate/failureRate',
-  })
-}
-
-const onHelpClick = () => {
-  uni.navigateTo({
-    url: '/sub1/pages/mine/help/help?type=score',
+    url: path,
   })
 }
 
@@ -133,7 +121,7 @@ function changeMaxOrTop() {
         </h3>
         <div
           class="card-shadow bg-white rounded-full py-1 px-3 flex items-center"
-          @click="onHelpClick"
+          @click="onNavigateClick('/sub1/pages/mine/help/help?type=score')"
         >
           <img class="w-[20px] h-[20px]" src="../../assets/icons/astronaut.png">
           <p class="ml-2 text-sm">
@@ -157,18 +145,27 @@ function changeMaxOrTop() {
       </div>
       <p
         class="text-center text-sm text-[#3F51B5] font-semibold"
-        @click="handleOpenCustomClick"
+        @click="onNavigateClick('/sub1/pages/score/custom/custom')"
       >
         自定义排名<van-icon name="arrow" />
       </p>
     </div>
     <div
       class="card-shadow bg-white rounded-full py-2 px-5 flex items-center"
-      @click="onFailureRateSearchClick"
+      @click="onNavigateClick('/sub1/pages/mine/failureRate/failureRate')"
     >
       <img class="w-[30px] h-[30px]" src="../../assets/icons/telescope.png">
       <p class="ml-2 text-sm">
         挂科率查询
+      </p>
+    </div>
+    <div
+      class="card-shadow bg-white rounded-full py-2 px-5 flex items-center"
+      @click="onNavigateClick('/sub1/pages/score/convert/convert')"
+    >
+      <img class="w-[30px] h-[30px]" src="../../assets/icons/galaxy.png">
+      <p class="ml-2 text-sm">
+        成绩换算
       </p>
     </div>
   </div>

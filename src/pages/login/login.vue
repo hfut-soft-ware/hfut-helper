@@ -101,7 +101,7 @@ function onHelpClick() {
           left-icon="user-circle-o"
           :placeholder="fieldProps.studentId"
           :values="form.username"
-          @change="(e) => form.username = e.detail"
+          @change="(e:any) => form.username = e.detail"
         />
       </div>
 
@@ -110,7 +110,7 @@ function onHelpClick() {
           type="password"
           left-icon="shield-o"
           :placeholder="fieldProps.password"
-          @change="(e) => form.password = e.detail"
+          @change="(e:any) => form.password = e.detail"
         />
       </div>
 
@@ -118,14 +118,14 @@ function onHelpClick() {
         登录
       </div>
     </div>
-    <p class="text-center text-blue-500 underline text-sm mt-10" @click="toDisclaimers">
-      用户协议
+    <p class=" text-xs text-gray-500 mt-5">
+      登录遇到了问题？可以加入交流群656140321问问 {{ getRandomQAQ('happy')[0] }}
     </p>
-    <p class="text-center text-blue-500 underline text-sm mt-10" @click="onHelpClick">
+    <p class="text-center text-blue-500 underline text-sm mt-5" @click="onHelpClick">
       帮助
     </p>
-    <p class="absolute bottom-16 text-xs text-gray-500 mt-20">
-      登录遇到了问题？可以加入交流群656140321问问 {{ getRandomQAQ('happy')[0] }}
+    <p class="text-center text-blue-500 underline text-sm my-5" @click="toDisclaimers">
+      用户协议
     </p>
   </div>
 </template>

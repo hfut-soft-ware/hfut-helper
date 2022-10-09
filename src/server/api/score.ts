@@ -5,6 +5,7 @@ import type { IFailureRateResponse } from '@/shared/types/response/failure-rate'
 import type { IFailureRateSearchResponse } from '@/shared/types/response/failure-rate-search'
 import type { IScoreResponseData } from '@/shared/types/response/score'
 import type { ISingleScoreSchoolResponse } from '@/shared/types/response/single-score-school'
+import type { ITokenTipsResponse } from '@/shared/types/response/token-tips'
 
 export function getScoreRequest(refresh = true) {
   return request<IScoreResponseData>({
@@ -56,5 +57,11 @@ export function getFailureRateSearchRequest(courseName: string) {
     params: {
       courseName,
     },
+  })
+}
+
+export function getTokenTips() {
+  return request<ITokenTipsResponse>({
+    url: '/score/tokenTips',
   })
 }
