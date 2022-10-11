@@ -1,1 +1,1 @@
-export const symbols = ['<-', '[', ']', '+', '-', '*', '/']
+export const symbols = ['<-', '(', ')', '`', '+', '-', '*', '/']

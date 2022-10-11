@@ -86,7 +86,7 @@ export function confirmGrammer(data: IExpressionDto) {
     msg: string
     data: null
   }>({
-    url: '/score/confirm',
+    url: '/score/v2/confirm',
     method: 'POST',
     data,
   })

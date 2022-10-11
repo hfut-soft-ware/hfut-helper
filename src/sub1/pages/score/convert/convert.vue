@@ -1,6 +1,13 @@
 <script setup lang='ts'>
+import { storeToRefs } from 'pinia'
+import { ref } from 'vue'
 import { useExpression } from './use-expression'
 import { symbols } from './constant'
+import { useScoreStore } from '@/store/score.store'
+import { onNavigateClick } from '@/shared/utils/index'
+
+const scoreStore = useScoreStore()
+const { scoreData } = storeToRefs(scoreStore)
 
 const {
   expression,
@@ -18,6 +25,11 @@ const {
   editStatement,
 } = useExpression()
 
+const activeSemesterName = ref<string[]>([])
+
+const onCollapseChange = (event: { detail: string[] }) => {
+  activeSemesterName.value = event.detail
+}
 </script>
 
 <template>
@@ -40,6 +52,7 @@ const {
         </template>
       </van-field>
     </div>
+
     <div class="relative">
       <div v-if="tipShow" class="absolute w-[90vw]  h-[160px] bg-white border border-slate-200 rounded-md top-1 left-1/2 -translate-x-1/2">
         <div v-for="tip in tipList" :key="tip.item.name" class="flex items-center justify-between h-8 px-3" @click.stop="handleTipClick(tip.item.name)">
@@ -50,18 +63,24 @@ const {
         </div>
       </div>
     </div>
-    <div class=" flex items-center justify-around mt-2 h-10 border border-slate-200 rounded-[20px]">
+
+    <div class=" flex items-center justify-around mt-2 h-14 border border-slate-200 rounded-[20px]">
       <div v-for="symbol in symbols" :key="symbol" class="p-1" @click="handleSymbolClick(symbol)">
         {{ symbol }}
       </div>
     </div>
+
     <div class=" p-3 box-border min-h-[100px] text-sm" :class="grammerCheckMsg === '语法校验成功!' ? 'text-green-500' : 'text-red-500'">
       {{ grammerCheckMsg }}
     </div>
+
     <div v-if="statementsListShow" class="mt-4 p-3 box-border card-shadow border border-slate-200 rounded-xl">
-      <div class="mb-3 flex items-center justify-between">
-        <div class="font-semibold">
+      <div class="mb-3 flex items-center">
+        <div class="flex-1 font-semibold">
           表达式列表
+        </div>
+        <div class="text-green-500 p-2 mr-2" @click="onNavigateClick('/sub1/pages/mine/help/help?type=grammar')">
+          帮助
         </div>
         <div class="text-blue-500 p-2" @click="handleConfirm">
           提交
@@ -78,6 +97,16 @@ const {
           删除
         </div>
       </div>
+    </div>
+
+    <div class="my-5 p-3 card-shadow border border-slate-200 rounded-xl">
+      <van-collapse :border="false" :value="activeSemesterName" @change="onCollapseChange">
+        <van-collapse-item v-for="caaLog in scoreData.calculateLogs" :key="caaLog.semesterName" :title="caaLog.semesterName" :name="caaLog.semesterName">
+          <p v-for="(item, index) in caaLog.scoreDetails" :key="index" class="text-[#616161] text-sm pl-4 py-2">
+            {{ item }}
+          </p>
+        </van-collapse-item>
+      </van-collapse>
     </div>
   </div>
 </template>

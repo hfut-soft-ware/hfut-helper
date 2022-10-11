@@ -201,8 +201,11 @@ function isRegMatchEqual(prev: RegExpMatchArray[], current: RegExpMatchArray[]) 
 }
 
 function strReplace(str: string, searchVal: RegExpMatchArray, replaceVal: string) {
-  const index = searchVal.index!
+  let index = searchVal.index!
+  if (index > 0 && str[index - 1] === '`') {
+    index--
+  }
   const left = str.slice(0, index)
   const right = str.slice(index + searchVal.length)
-  return left + replaceVal + right
+  return `${left}\`${replaceVal}\`${right}`
 }

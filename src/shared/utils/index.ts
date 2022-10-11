@@ -23,3 +23,9 @@ export const formatSemester = (semester: string) => {
 export const ascend = (arr: number[]) => {
   return arr.sort((a, b) => a - b)
 }
+
+export const onNavigateClick = (path: string) => {
+  uni.navigateTo({
+    url: path,
+  })
+}

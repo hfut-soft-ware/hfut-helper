@@ -8,6 +8,7 @@ import Card from '@/components/Card/Card.vue'
 import { isStorageEmpty } from '@/shared/hooks/use-syncStorage'
 import BounceBall from '@/components/BounceBall/BounceBall.vue'
 import AreaUCharts from '@/pages/score/area-ucharts.vue'
+import { onNavigateClick } from '@/shared/utils/index'
 
 const scoreStore = useScoreStore()
 const {
@@ -39,12 +40,6 @@ function handleSemesterOpen(index: number) {
   scoreStore.setSelectedSemester(index)
   uni.navigateTo({
     url: '/sub1/pages/score/semester/semester',
-  })
-}
-
-const onNavigateClick = (path: string) => {
-  uni.navigateTo({
-    url: path,
   })
 }
 
