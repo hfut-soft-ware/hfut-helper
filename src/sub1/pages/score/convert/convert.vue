@@ -8,6 +8,7 @@ const {
   tipShow,
   statements,
   grammerCheckMsg,
+  statementsListShow,
   handleTipClick,
   handleSymbolClick,
   inputClear,
@@ -57,7 +58,7 @@ const {
     <div class=" p-3 box-border min-h-[100px] text-sm" :class="grammerCheckMsg === '语法校验成功!' ? 'text-green-500' : 'text-red-500'">
       {{ grammerCheckMsg }}
     </div>
-    <div v-if="statements.length" class="mt-4 p-3 box-border card-shadow border border-slate-200 rounded-xl">
+    <div v-if="statementsListShow" class="mt-4 p-3 box-border card-shadow border border-slate-200 rounded-xl">
       <div class="mb-3 flex items-center justify-between">
         <div class="font-semibold">
           表达式列表
