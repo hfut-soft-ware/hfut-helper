@@ -1,8 +1,10 @@
 import { ref, shallowRef, watch } from 'vue'
 import Toast from '@vant/weapp/lib/toast/toast'
+import Dialog from '@vant/weapp/dist/dialog/dialog'
 import { getRandomQAQ } from 'qaq-font'
 import Fuse from 'fuse.js'
-import { getTokenTips } from '@/server/api/score'
+import { useDebounceFn } from '@vueuse/core'
+import { confirmGrammer, getStatements, getTokenTips, grammerCheck } from '@/server/api/score'
 
 import type { Course } from '@/shared/types/response/token-tips'
 
@@ -15,10 +17,12 @@ export function useExpression() {
   const expression = ref('')
   const tipList = shallowRef<Fuse.FuseResult<Course>[]>([])
   const tipShow = ref(false)
+  const statements = ref<string[]>([])
+  const grammerCheckMsg = ref('')
 
   let trainPlansFuse: Fuse<Course> | null = null
   let mineFuse: Fuse<Course> | null = null
-  let prevMatchRes: RegExpMatchArray | null = null
+  let prevMatchRes: RegExpMatchArray[] | null = null
   let tipClick = false
   let matchChangeIndex = 0
 
@@ -31,7 +35,7 @@ export function useExpression() {
       tipClick = false
       return
     }
-    const matchRes = newVal.match(courseReg)
+    const matchRes = Array.from(newVal.matchAll(courseReg))
     if (!matchRes) {
       return
     }
@@ -43,16 +47,20 @@ export function useExpression() {
     if (prevMatchRes && isRegMatchEqual(prevMatchRes, matchRes)) {
       return
     }
+    // 粘贴过滤
+    if (!prevMatchRes && matchRes.length > 1) {
+      return
+    }
 
     if (matchRes.length === 1) {
-      tipList.value = trainPlansFuse.search(matchRes[0]).splice(0, 5)
+      tipList.value = trainPlansFuse.search(matchRes[0][0]).splice(0, 5)
     } else {
       if (!prevMatchRes) {
         return
       }
       const index = getCompareIndex(prevMatchRes, matchRes)
       matchChangeIndex = index
-      tipList.value = mineFuse.search(matchRes[index]).splice(0, 5)
+      tipList.value = mineFuse.search(matchRes[index][0]).splice(0, 5)
     }
     tipShow.value = true
     prevMatchRes = matchRes
@@ -62,7 +70,13 @@ export function useExpression() {
     trainPlansFuse = new Fuse(data.data.trainPlans, fuseOptions)
     mineFuse = new Fuse(data.data.mine, fuseOptions)
   }).catch(() => {
-    Toast.fail(`糟糕，没有拿到信息\n ${getRandomQAQ('sadness')[0]}`)
+    Toast.fail(`糟糕，没有拿到课程信息\n ${getRandomQAQ('sadness')[0]}`)
+  })
+
+  getStatements().then(({ data }) => {
+    statements.value = data.data.statements
+  }).catch(() => {
+    Toast.fail(`糟糕，没有拿到表达式信息\n ${getRandomQAQ('sadness')[0]}`)
   })
 
   const handleTipClick = (courseName: string) => {
@@ -79,10 +93,64 @@ export function useExpression() {
     prevMatchRes = null
     matchChangeIndex = 0
     tipShow.value = false
+    grammerCheckMsg.value = ''
   }
 
-  const handleConfirm = () => {
+  const handleCheck = useDebounceFn(async() => {
+    const expressionVal = expression.value
+    try {
+      const { data } = await grammerCheck({
+        statements: [expressionVal],
+      })
+      const res = data.data
+      grammerCheckMsg.value = res
+      if (res === '语法校验成功!') {
+        Toast.success(res)
+        statements.value.unshift(expressionVal)
+        inputClear()
+      } else {
+        Toast.fail(`语法校验失败\n ${getRandomQAQ('sadness')[0]}`)
+      }
+    } catch (error) {
+      Toast.fail(`语法校验出错\n ${getRandomQAQ('sadness')[0]}`)
+    }
+  }, 1000)
 
+  const handleConfirm = useDebounceFn(() => {
+    confirmGrammer({
+      statements: statements.value,
+    }).then(({ data }) => {
+      const msg = data.msg
+      if (msg === '成功') {
+        Toast.success(`提交成功\n ${getRandomQAQ('happy')[0]}`)
+      } else {
+        Toast.fail(`${msg}\n ${getRandomQAQ('sadness')[0]}`)
+      }
+    }).catch(() => {
+      Toast.fail(`提交出错\n ${getRandomQAQ('sadness')[0]}`)
+    })
+  }, 1000)
+
+  const deleteStatement = (index: number) => {
+    return statements.value.splice(index, 1)
+  }
+
+  const editStatement = (index: number) => {
+    if (expression.value) {
+      Dialog.confirm({
+        title: '提示',
+        message: '输入框中有内容，是否替换',
+      })
+        .then(() => {
+          inputClear()
+          expression.value = deleteStatement(index)[0]
+        })
+        .catch(() => {
+        })
+    } else {
+      inputClear()
+      expression.value = deleteStatement(index)[0]
+    }
   }
 
   return {
@@ -90,29 +158,43 @@ export function useExpression() {
     tipList,
     tipShow,
     tipClick,
+    statements,
+    grammerCheckMsg,
     handleTipClick,
     handleSymbolClick,
     inputClear,
+    handleCheck,
     handleConfirm,
+    deleteStatement,
+    editStatement,
   }
 }
 
-function getCompareIndex(prev: RegExpMatchArray, current: RegExpMatchArray): number {
+function getCompareIndex(prev: RegExpMatchArray[], current: RegExpMatchArray[]): number {
   let res = 0
   current.forEach((value, index) => {
-    if (value !== prev[index]) {
+    if (!prev[index]) {
+      res = index
+      return
+    }
+    if (value[0] !== prev[index][0]) {
       res = index
     }
   })
   return res
 }
 
-function isRegMatchEqual(prev: RegExpMatchArray, current: RegExpMatchArray) {
-  return current.every((value, index) => value === prev[index])
+function isRegMatchEqual(prev: RegExpMatchArray[], current: RegExpMatchArray[]) {
+  return current.every((value, index) => {
+    if (!prev[index]) {
+      return false
+    }
+    return value[0] === prev[index][0]
+  })
 }
 
-function strReplace(str: string, searchVal: string, replaceVal: string) {
-  const index = str.indexOf(searchVal)
+function strReplace(str: string, searchVal: RegExpMatchArray, replaceVal: string) {
+  const index = searchVal.index!
   const left = str.slice(0, index)
   const right = str.slice(index + searchVal.length)
   return left + replaceVal + right

@@ -20,6 +20,14 @@ import CustomCourse from '@/pages/week-schedule/custom-course.vue'
 import { uesLoverStore } from '@/store/lover.store'
 import { useCourseSearchStore } from '@/store/courseSearch.store'
 
+interface Props {
+  courseSearch: boolean
+}
+
+withDefaults(defineProps<Props>(), {
+  courseSearch: false,
+})
+
 const store = useCourseListStore()
 const { weekScheduleVisibleWeek, weekSchedule } = storeToRefs(store)
 
@@ -265,7 +273,7 @@ function onClose() {
         <div class="arrow" @click="onPrev">
           <van-icon name="arrow-left" />
         </div>
-        <div class="bg-gray-300/70 text-black/60 text-center h-8 px-4 rounded-lg leading-8" @click="selectSemesterShow">
+        <div v-if="!courseSearch" class="bg-gray-300/70 text-black/60 text-center h-8 px-4 rounded-lg leading-8" @click="selectSemesterShow">
           选择学期
         </div>
         <div class="arrow" @click="onNext">

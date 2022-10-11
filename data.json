@@ -1,0 +1,1097 @@
+{
+  "code": 0,
+  "msg": "成功",
+  "data": {
+    "compulsoryRank": {
+      "score": {
+        "rank": 1,
+        "mine": 97.9675,
+        "max": 97.9675,
+        "avg": 79.79973672509564,
+        "head": 88.08101851851852,
+        "actualNum": 234
+      },
+      "gpa": {
+        "rank": 3,
+        "mine": 3.9587500000000015,
+        "max": 4.020833333333332,
+        "avg": 3.0568074424121296,
+        "head": 3.700000000000001,
+        "actualNum": 234
+      },
+      "total": 234
+    },
+    "calculateLogs": [
+      {
+        "semesterName": "2020-2021学年第一学期",
+        "scoreDetails": [
+          "高等数学A（上）:333.00 * 6.00",
+          "形势与政策（1）:88.00 * 0.25",
+          "大学体育（1）:79.00 * 0.50",
+          "大学生心理健康:94.00 * 2.00",
+          "军事理论:79.00 * 2.00",
+          "军事训练:89.00 * 2.00",
+          "程序设计基础:85.00 * 3.50",
+          "大学英语（1）:82.00 * 2.00",
+          "程序设计课程设计:80.00 * 1.00",
+          "计算机科学与技术专业导论:80.00 * 0.00",
+          "思想道德修养与法律基础:85.00 * 3.00"
+        ]
+      },
+      {
+        "semesterName": "2020-2021学年第二学期",
+        "scoreDetails": [
+          "形势与政策（2）:86.00 * 0.25",
+          "线性代数:90.00 * 2.50",
+          "创新创业:96.00 * 2.00",
+          "大学生劳动教育:85.00 * 1.00",
+          "数据结构:87.00 * 4.50",
+          "认知实习:90.00 * 1.00",
+          "电路与电子技术基础:76.00 * 3.00",
+          "中国近现代史纲要:79.00 * 3.00",
+          "数据结构课程设计:90.00 * 1.00",
+          "大学英语（2）:80.00 * 2.00",
+          "大学体育（2）:82.00 * 0.50",
+          "工程训练C:81.00 * 2.00"
+        ]
+      },
+      {
+        "semesterName": "2021-2022学年第一学期",
+        "scoreDetails": [
+          "形势与政策（3）:80.00 * 0.25",
+          "汇编语言程序设计:85.00 * 2.00",
+          "马克思主义基本原理概论:89.00 * 3.00",
+          "数字逻辑:87.00 * 2.50",
+          "大学体育（3）:76.00 * 0.50",
+          "概率论与数理统计:75.00 * 3.00",
+          "大学英语（3）:77.00 * 2.00",
+          "程序设计艺术与方法:80.00 * 2.00",
+          "电子实习:87.00 * 1.00",
+          "大学物理实验（上）:83.00 * 1.00",
+          "离散数学:87.00 * 4.00",
+          "大学物理C:82.00 * 5.00",
+          "机器人技术:83.00 * 2.00"
+        ]
+      },
+      {
+        "semesterName": "2021-2022学年第二学期",
+        "scoreDetails": [
+          "大学物理实验（下）:84.00 * 1.00",
+          "组合数学:70.00 * 2.00",
+          "毛泽东思想与中国特色社会主义理论体系概论:83.00 * 5.00",
+          "形势与政策（4）:77.00 * 0.25",
+          "计算机组成原理 :76.00 * 4.00",
+          "大学英语（4）:72.00 * 2.00",
+          "计算机与信息类专业创新实践:90.00 * 2.00",
+          "编译原理课程设计:70.00 * 1.00",
+          "嵌入式系统原理:89.00 * 3.00",
+          "嵌入式系统课程设计:80.00 * 1.00",
+          "机器学习:74.00 * 2.00",
+          "编译原理:85.00 * 3.00",
+          "大学体育（4）:84.00 * 0.50"
+        ]
+      }
+    ],
+    "totalRank": {
+      "score": {
+        "rank": 1,
+        "mine": 96.3471615720524,
+        "max": 96.3471615720524,
+        "avg": 80.60238641804824,
+        "head": 88.53292181069959,
+        "actualNum": 234
+      },
+      "gpa": {
+        "rank": 4,
+        "mine": 3.9019650655021847,
+        "max": 3.994979079497907,
+        "avg": 3.0831219688747873,
+        "head": 3.705809128630705,
+        "actualNum": 234
+      },
+      "total": 234
+    },
+    "semesters": [
+      {
+        "semester": "2021-2022学年第二学期",
+        "semesterId": 174,
+        "compulsoryRank": {
+          "score": {
+            "rank": 113,
+            "mine": 80.30841121495327,
+            "max": 92.9027027027027,
+            "avg": 79.74795208424456,
+            "head": 87.55140186915888,
+            "actualNum": 232
+          },
+          "gpa": {
+            "rank": 119,
+            "mine": 3.032710280373832,
+            "max": 4.0427027027027025,
+            "avg": 3.027941106511834,
+            "head": 3.685046728971962,
+            "actualNum": 232
+          },
+          "total": 234
+        },
+        "totalRank": {
+          "score": {
+            "rank": 120,
+            "mine": 81.0,
+            "max": 92.90575916230367,
+            "avg": 80.86371989698043,
+            "head": 88.12422360248448,
+            "actualNum": 232
+          },
+          "gpa": {
+            "rank": 118,
+            "mine": 3.1051282051282048,
+            "max": 4.041361256544502,
+            "avg": 3.093614766584707,
+            "head": 3.7017699115044245,
+            "actualNum": 232
+          },
+          "total": 234
+        },
+        "scores": [
+          {
+            "name": "大学体育（4）",
+            "lessonId": "5100171B",
+            "teachingClassId": "5100171B--003",
+            "credit": "0.5",
+            "gpa": "3.3",
+            "score": "84",
+            "details": [
+              { "type": "期末考试", "score": "85" },
+              { "type": "课堂测试", "score": "49" },
+              { "type": "实验预习", "score": "100" },
+              { "type": "实际操作", "score": "100" }
+            ]
+          },
+          {
+            "name": "编译原理",
+            "lessonId": "0529892B",
+            "teachingClassId": "0529892B--001",
+            "credit": "3.0",
+            "gpa": "3.7",
+            "score": "85",
+            "details": [
+              { "type": "期末考试", "score": "73" },
+              { "type": "课堂测试", "score": "97" },
+              { "type": "作业撰写", "score": "92" },
+              { "type": "实验分析报告", "score": "89" }
+            ]
+          },
+          {
+            "name": "机器学习",
+            "lessonId": "0509910X",
+            "teachingClassId": "0509910X--002",
+            "credit": "2.0",
+            "gpa": "2.3",
+            "score": "74",
+            "details": [
+              { "type": "平时成绩", "score": "中" },
+              { "type": "课堂测试", "score": "83" },
+              { "type": "作业撰写", "score": "中" },
+              { "type": "期末报告", "score": "70" },
+              { "type": "答辩", "score": "良" }
+            ]
+          },
+          {
+            "name": "中国文化概论",
+            "lessonId": "12092191",
+            "teachingClassId": "12092191--009",
+            "credit": "1.5",
+            "gpa": "4",
+            "score": "90",
+            "details": [
+              { "type": "期末考试", "score": "91" },
+              { "type": "作业撰写", "score": "90" },
+              { "type": "论文撰写", "score": "88" }
+            ]
+          },
+          {
+            "name": "嵌入式系统课程设计",
+            "lessonId": "0529843B",
+            "teachingClassId": "0529843B--003",
+            "credit": "1.0",
+            "gpa": "3",
+            "score": "良",
+            "details": [
+              { "type": "设计报告", "score": "良" },
+              { "type": "验收", "score": "良" }
+            ]
+          },
+          {
+            "name": "嵌入式系统原理",
+            "lessonId": "0529872B",
+            "teachingClassId": "0529872B--003",
+            "credit": "3.0",
+            "gpa": "3.7",
+            "score": "89",
+            "details": [
+              { "type": "期末考试", "score": "76" },
+              { "type": "课堂测试", "score": "96" },
+              { "type": "作业撰写", "score": "95" },
+              { "type": "实验报告", "score": "100" }
+            ]
+          },
+          {
+            "name": "编译原理课程设计",
+            "lessonId": "0529903B",
+            "teachingClassId": "0529903B--002",
+            "credit": "1.0",
+            "gpa": "2",
+            "score": "中",
+            "details": [
+              { "type": "设计报告", "score": "中" },
+              { "type": "验收", "score": "中" }
+            ]
+          },
+          {
+            "name": "计算机与信息类专业创新实践",
+            "lessonId": "0520012C",
+            "teachingClassId": "0520012C--002",
+            "credit": "2.0",
+            "gpa": "3.9",
+            "score": "优",
+            "details": [
+              { "type": "设计报告", "score": "90" },
+              { "type": "验收", "score": "90" }
+            ]
+          },
+          {
+            "name": "大学英语（4）",
+            "lessonId": "1500291B",
+            "teachingClassId": "1500291B--012",
+            "credit": "2.0",
+            "gpa": "2.3",
+            "score": "72",
+            "details": [
+              { "type": "试验/上机成绩", "score": "95" },
+              { "type": "平时成绩", "score": "78" },
+              { "type": "期末考试", "score": "59" },
+              { "type": "作业撰写", "score": "87" },
+              { "type": "口试", "score": "84" }
+            ]
+          },
+          {
+            "name": "计算机组成原理 ",
+            "lessonId": "0509052B",
+            "teachingClassId": "0509052B--002",
+            "credit": "4.0",
+            "gpa": "2.7",
+            "score": "76",
+            "details": [
+              { "type": "平时成绩", "score": "92" },
+              { "type": "期末考试", "score": "68" },
+              { "type": "期中考试", "score": "77" },
+              { "type": "作业撰写", "score": "75" },
+              { "type": "实验报告", "score": "88" }
+            ]
+          },
+          {
+            "name": "形势与政策（4）",
+            "lessonId": "1201141B",
+            "teachingClassId": "1201141B--002",
+            "credit": "0.25",
+            "gpa": "2.7",
+            "score": "77",
+            "details": [
+              { "type": "课堂测试", "score": "70" },
+              { "type": "作业撰写", "score": "84" }
+            ]
+          },
+          {
+            "name": "毛泽东思想与中国特色社会主义理论体系概论",
+            "lessonId": "1201191B",
+            "teachingClassId": "1201191B--009",
+            "credit": "5.0",
+            "gpa": "3.3",
+            "score": "83",
+            "details": [
+              { "type": "期末考试", "score": "80.5" },
+              { "type": "课堂测试", "score": "78" },
+              { "type": "课堂演讲", "score": "91" },
+              { "type": "论文撰写", "score": "89" }
+            ]
+          },
+          {
+            "name": "组合数学",
+            "lessonId": "0521230X",
+            "teachingClassId": "0521230X--001",
+            "credit": "2.0",
+            "gpa": "2",
+            "score": "70",
+            "details": [
+              { "type": "期末考试", "score": "59" },
+              { "type": "作业撰写", "score": "80" }
+            ]
+          },
+          {
+            "name": "大学物理实验（下）",
+            "lessonId": "1000023B",
+            "teachingClassId": "1000023B--014",
+            "credit": "1.0",
+            "gpa": "3.3",
+            "score": "84",
+            "details": [
+              { "type": "期末考试", "score": "85" },
+              { "type": "实验操作", "score": "82" },
+              { "type": "实验报告", "score": "83" }
+            ]
+          },
+          {
+            "name": "习近平新时代中国特色社会主义思想概论",
+            "lessonId": "1200019M",
+            "teachingClassId": "1200019M--001",
+            "credit": "1.0",
+            "gpa": "3.7",
+            "score": "86",
+            "details": [
+              { "type": "期末考试", "score": "75" },
+              { "type": "课堂测试", "score": "99.5" },
+              { "type": "提问及讨论", "score": "100" }
+            ]
+          }
+        ]
+      },
+      {
+        "semester": "2021-2022学年第一学期",
+        "semesterId": 154,
+        "compulsoryRank": {
+          "score": {
+            "rank": 105,
+            "mine": 83.02654867256638,
+            "max": 93.96460176991151,
+            "avg": 81.03052198147893,
+            "head": 90.070796460177,
+            "actualNum": 234
+          },
+          "gpa": {
+            "rank": 99,
+            "mine": 3.336283185840708,
+            "max": 4.124778761061947,
+            "avg": 3.1515932622627356,
+            "head": 3.8584070796460175,
+            "actualNum": 234
+          },
+          "total": 234
+        },
+        "totalRank": {
+          "score": {
+            "rank": 109,
+            "mine": 82.70229007633588,
+            "max": 93.96460176991151,
+            "avg": 81.53109805778303,
+            "head": 90.16030534351145,
+            "actualNum": 234
+          },
+          "gpa": {
+            "rank": 103,
+            "mine": 3.3038167938931293,
+            "max": 4.124778761061947,
+            "avg": 3.1581282486176088,
+            "head": 3.8585585585585584,
+            "actualNum": 234
+          },
+          "total": 234
+        },
+        "scores": [
+          {
+            "name": "机器人技术",
+            "lessonId": "0521960X",
+            "teachingClassId": "0521960X--001",
+            "credit": "2.0",
+            "gpa": "3.3",
+            "score": "83",
+            "details": [
+              { "type": "期末考试", "score": "88" },
+              { "type": "课堂测试", "score": "90" },
+              { "type": "作业撰写", "score": "69" },
+              { "type": "实验分析报告", "score": "78" }
+            ]
+          },
+          {
+            "name": "劳动通论",
+            "lessonId": "0700016M",
+            "teachingClassId": "0700016M--001",
+            "credit": "1.5",
+            "gpa": "3.3",
+            "score": "83",
+            "details": [
+              { "type": "期末考试", "score": "76" },
+              { "type": "课堂测试", "score": "99.2" },
+              { "type": "提问及讨论", "score": "80" }
+            ]
+          },
+          {
+            "name": "《共产党宣言》导读",
+            "lessonId": "0700031M",
+            "teachingClassId": "0700031M--001",
+            "credit": "1.5",
+            "gpa": "2.7",
+            "score": "75",
+            "details": [
+              { "type": "期末考试", "score": "64" },
+              { "type": "课堂测试", "score": "100" },
+              { "type": "提问及讨论", "score": "75" }
+            ]
+          },
+          {
+            "name": "大学物理C",
+            "lessonId": "1000251B",
+            "teachingClassId": "1000251B--003",
+            "credit": "5.0",
+            "gpa": "3.3",
+            "score": "82",
+            "details": [
+              { "type": "平时成绩", "score": "97" },
+              { "type": "期末考试", "score": "84" },
+              { "type": "期中考试", "score": "70" }
+            ]
+          },
+          {
+            "name": "离散数学",
+            "lessonId": "0509072B",
+            "teachingClassId": "0509072B--002",
+            "credit": "4.0",
+            "gpa": "3.7",
+            "score": "87",
+            "details": [
+              { "type": "试验/上机成绩", "score": "100" },
+              { "type": "平时成绩", "score": "100" },
+              { "type": "期末考试", "score": "74" }
+            ]
+          },
+          {
+            "name": "大学物理实验（上）",
+            "lessonId": "1000013B",
+            "teachingClassId": "1000013B--012",
+            "credit": "1.0",
+            "gpa": "3.3",
+            "score": "83",
+            "details": [
+              { "type": "平时成绩", "score": "80" },
+              { "type": "实验操作", "score": "90" }
+            ]
+          },
+          {
+            "name": "电子实习",
+            "lessonId": "5300053B",
+            "teachingClassId": "5300053B--007",
+            "credit": "1.0",
+            "gpa": "3.7",
+            "score": "87",
+            "details": [{ "type": "实际操作", "score": "87" }]
+          },
+          {
+            "name": "程序设计艺术与方法",
+            "lessonId": "0529880X",
+            "teachingClassId": "0529880X--002",
+            "credit": "2.0",
+            "gpa": "3",
+            "score": "良",
+            "details": [
+              { "type": "平时成绩", "score": "91" },
+              { "type": "课堂测试", "score": "80" },
+              { "type": "实验分析报告", "score": "良" },
+              { "type": "期末报告", "score": "中" },
+              { "type": "课堂演讲", "score": "中" }
+            ]
+          },
+          {
+            "name": "大学英语（3）",
+            "lessonId": "1500281B",
+            "teachingClassId": "1500281B--012",
+            "credit": "2.0",
+            "gpa": "2.7",
+            "score": "77",
+            "details": [
+              { "type": "试验/上机成绩", "score": "90" },
+              { "type": "平时成绩", "score": "81" },
+              { "type": "期末考试", "score": "71" },
+              { "type": "作业撰写", "score": "90" },
+              { "type": "口试", "score": "79" }
+            ]
+          },
+          {
+            "name": "概率论与数理统计",
+            "lessonId": "1400091B",
+            "teachingClassId": "1400091B--009",
+            "credit": "3.0",
+            "gpa": "2.7",
+            "score": "75",
+            "details": [
+              { "type": "期末考试", "score": "69" },
+              { "type": "课堂测试", "score": "73" },
+              { "type": "作业撰写", "score": "94" },
+              { "type": "期末报告", "score": "85" }
+            ]
+          },
+          {
+            "name": "中国道路",
+            "lessonId": "5300028M",
+            "teachingClassId": "5300028M--001",
+            "credit": "1.5",
+            "gpa": "3.3",
+            "score": "84",
+            "details": [
+              { "type": "期末考试", "score": "78" },
+              { "type": "课堂测试", "score": "99.2" },
+              { "type": "提问及讨论", "score": "80" }
+            ]
+          },
+          {
+            "name": "大学体育（3）",
+            "lessonId": "5100161B",
+            "teachingClassId": "5100161B--003",
+            "credit": "0.5",
+            "gpa": "2.7",
+            "score": "76",
+            "details": [
+              { "type": "期末考试", "score": "80" },
+              { "type": "课堂测试", "score": "19" },
+              { "type": "实验预习", "score": "100" },
+              { "type": "实际操作", "score": "100" }
+            ]
+          },
+          {
+            "name": "数字逻辑",
+            "lessonId": "0509092B",
+            "teachingClassId": "0509092B--002",
+            "credit": "2.5",
+            "gpa": "3.7",
+            "score": "87",
+            "details": [
+              { "type": "期末考试", "score": "83" },
+              { "type": "课堂测试", "score": "90" },
+              { "type": "作业撰写", "score": "90" },
+              { "type": "实验报告", "score": "90" }
+            ]
+          },
+          {
+            "name": "马克思主义基本原理概论",
+            "lessonId": "1200021B",
+            "teachingClassId": "1200021B--005",
+            "credit": "3.0",
+            "gpa": "3.7",
+            "score": "89",
+            "details": [
+              { "type": "期末考试", "score": "87.5" },
+              { "type": "课堂测试", "score": "90" },
+              { "type": "作业撰写", "score": "90" },
+              { "type": "课堂演讲", "score": "90" },
+              { "type": "其他", "score": "90" }
+            ]
+          },
+          {
+            "name": "汇编语言程序设计",
+            "lessonId": "0509860X",
+            "teachingClassId": "0509860X--002",
+            "credit": "2.0",
+            "gpa": "3.7",
+            "score": "85",
+            "details": [
+              { "type": "期末考试", "score": "87" },
+              { "type": "课堂测试", "score": "69" },
+              { "type": "作业撰写", "score": "91" },
+              { "type": "实验分析报告", "score": "95" }
+            ]
+          },
+          {
+            "name": "形势与政策（3）",
+            "lessonId": "1201131B",
+            "teachingClassId": "1201131B--008",
+            "credit": "0.25",
+            "gpa": "3",
+            "score": "80",
+            "details": [
+              { "type": "平时成绩", "score": "84" },
+              { "type": "期末考试", "score": "76" }
+            ]
+          }
+        ]
+      },
+      {
+        "semester": "2020-2021学年第二学期",
+        "semesterId": 134,
+        "compulsoryRank": {
+          "score": {
+            "rank": 74,
+            "mine": 84.52747252747253,
+            "max": 94.97101449275362,
+            "avg": 79.34542570140657,
+            "head": 89.5040650406504,
+            "actualNum": 233
+          },
+          "gpa": {
+            "rank": 70,
+            "mine": 3.447252747252748,
+            "max": 4.1173913043478265,
+            "avg": 3.0579346093559066,
+            "head": 3.818461538461538,
+            "actualNum": 233
+          },
+          "total": 233
+        },
+        "totalRank": {
+          "score": {
+            "rank": 78,
+            "mine": 85.0909090909091,
+            "max": 94.38636363636365,
+            "avg": 80.75045631499974,
+            "head": 89.59354838709677,
+            "actualNum": 233
+          },
+          "gpa": {
+            "rank": 73,
+            "mine": 3.4933884297520676,
+            "max": 4.051592356687899,
+            "avg": 3.0947273449029855,
+            "head": 3.787586206896552,
+            "actualNum": 233
+          },
+          "total": 233
+        },
+        "scores": [
+          {
+            "name": "工程训练C",
+            "lessonId": "5300033B",
+            "teachingClassId": "5300033B--004",
+            "credit": "2.0",
+            "gpa": "3",
+            "score": "81",
+            "details": [{ "type": "实际操作", "score": "81.1" }]
+          },
+          {
+            "name": "大学体育（2）",
+            "lessonId": "5100151B",
+            "teachingClassId": "5100151B--056",
+            "credit": "0.5",
+            "gpa": "3.3",
+            "score": "82",
+            "details": [
+              { "type": "期末考试", "score": "82" },
+              { "type": "课堂测试", "score": "48" },
+              { "type": "实验预习", "score": "100" },
+              { "type": "实际操作", "score": "100" }
+            ]
+          },
+          {
+            "name": "大学英语（2）",
+            "lessonId": "1500271B",
+            "teachingClassId": "1500271B--012",
+            "credit": "2.0",
+            "gpa": "3",
+            "score": "80",
+            "details": [
+              { "type": "试验/上机成绩", "score": "66" },
+              { "type": "平时成绩", "score": "100" },
+              { "type": "期末考试", "score": "82" },
+              { "type": "作业撰写", "score": "67" },
+              { "type": "口试", "score": "80" }
+            ]
+          },
+          {
+            "name": "数据结构课程设计",
+            "lessonId": "0500533B",
+            "teachingClassId": "0500533B--008",
+            "credit": "1.0",
+            "gpa": "3.9",
+            "score": "优",
+            "details": [{ "type": "验收", "score": "优" }]
+          },
+          {
+            "name": "中国近现代史纲要",
+            "lessonId": "1201201B",
+            "teachingClassId": "1201201B--011",
+            "credit": "3.0",
+            "gpa": "3",
+            "score": "79",
+            "details": [
+              { "type": "平时成绩", "score": "100" },
+              { "type": "期末考试", "score": "63.5" },
+              { "type": "课堂测试", "score": "99" },
+              { "type": "作业撰写", "score": "85" }
+            ]
+          },
+          {
+            "name": "Java技术",
+            "lessonId": "0509820X",
+            "teachingClassId": "0509820X--003",
+            "credit": "2.0",
+            "gpa": "3.7",
+            "score": "85",
+            "details": [
+              { "type": "试验/上机成绩", "score": "60" },
+              { "type": "期末考试", "score": "87" },
+              { "type": "期中考试", "score": "98" },
+              { "type": "作业撰写", "score": "100" }
+            ]
+          },
+          {
+            "name": "电路与电子技术基础",
+            "lessonId": "0529890X",
+            "teachingClassId": "0529890X--001",
+            "credit": "3.0",
+            "gpa": "2.7",
+            "score": "76",
+            "details": [
+              { "type": "期末考试", "score": "57" },
+              { "type": "课堂测试", "score": "100" },
+              { "type": "作业撰写", "score": "90" },
+              { "type": "实验报告", "score": "90" }
+            ]
+          },
+          {
+            "name": "认知实习",
+            "lessonId": "0529893B",
+            "teachingClassId": "0529893B--004",
+            "credit": "1.0",
+            "gpa": "3.9",
+            "score": "优",
+            "details": [
+              { "type": "实习日记", "score": "优" },
+              { "type": "实习报告", "score": "良" }
+            ]
+          },
+          {
+            "name": "数据结构",
+            "lessonId": "0529822B",
+            "teachingClassId": "0529822B--001",
+            "credit": "4.5",
+            "gpa": "3.7",
+            "score": "87",
+            "details": [
+              { "type": "试验/上机成绩", "score": "100" },
+              { "type": "期末考试", "score": "77" },
+              { "type": "课堂测试", "score": "100" },
+              { "type": "期中考试", "score": "93" },
+              { "type": "作业撰写", "score": "100" }
+            ]
+          },
+          {
+            "name": "高等数学A（下）",
+            "lessonId": "1400221B",
+            "teachingClassId": "1400221B--002",
+            "credit": "6.0",
+            "gpa": "3",
+            "score": "78",
+            "details": [
+              { "type": "期末考试", "score": "67" },
+              { "type": "课堂测试", "score": "96" },
+              { "type": "作业撰写", "score": "96" },
+              { "type": "其他", "score": "80" }
+            ]
+          },
+          {
+            "name": "大学生劳动教育",
+            "lessonId": "5300011B",
+            "teachingClassId": "5300011B--034",
+            "credit": "1.0",
+            "gpa": "3.7",
+            "score": "85",
+            "details": [{ "type": "评阅教师成绩", "score": "85.4" }]
+          },
+          {
+            "name": "创新创业",
+            "lessonId": "9900054B",
+            "teachingClassId": "9900054B--015",
+            "credit": "2.0",
+            "gpa": "4.3",
+            "score": "96",
+            "details": [
+              { "type": "平时成绩", "score": "100" },
+              { "type": "期末考试", "score": "93" },
+              { "type": "课堂测试", "score": "97.3" },
+              { "type": "提问及讨论", "score": "100" },
+              { "type": "其他", "score": "100" }
+            ]
+          },
+          {
+            "name": "脑洞大开背后的创新思维",
+            "lessonId": "0700067M",
+            "teachingClassId": "0700067M--001",
+            "credit": "1.0",
+            "gpa": "3.7",
+            "score": "87",
+            "details": [
+              { "type": "平时成绩", "score": "100" },
+              { "type": "期末考试", "score": "70" },
+              { "type": "课堂测试", "score": "95.8" },
+              { "type": "提问及讨论", "score": "100" }
+            ]
+          },
+          {
+            "name": "线性代数",
+            "lessonId": "1400071B",
+            "teachingClassId": "1400071B--010",
+            "credit": "2.5",
+            "gpa": "4",
+            "score": "90",
+            "details": [
+              { "type": "期末考试", "score": "88" },
+              { "type": "课堂测试", "score": "82" },
+              { "type": "作业撰写", "score": "100" },
+              { "type": "期末报告", "score": "100" }
+            ]
+          },
+          {
+            "name": "形势与政策（2）",
+            "lessonId": "1201121B",
+            "teachingClassId": "1201121B--002",
+            "credit": "0.25",
+            "gpa": "3.7",
+            "score": "86",
+            "details": [
+              { "type": "课堂测试", "score": "85" },
+              { "type": "作业撰写", "score": "87" }
+            ]
+          },
+          {
+            "name": "批创思维导论",
+            "lessonId": "0700077M",
+            "teachingClassId": "0700077M--001",
+            "credit": "1.0",
+            "gpa": "3.7",
+            "score": "89",
+            "details": [
+              { "type": "平时成绩", "score": "100" },
+              { "type": "期末考试", "score": "73" },
+              { "type": "课堂测试", "score": "99.6" },
+              { "type": "提问及讨论", "score": "100" }
+            ]
+          },
+          {
+            "name": "素描技法",
+            "lessonId": "0809806X",
+            "teachingClassId": "0809806X--001",
+            "credit": "1.5",
+            "gpa": "3.9",
+            "score": "优",
+            "details": [
+              { "type": "平时成绩", "score": "良" },
+              { "type": "期末考试", "score": "优" }
+            ]
+          },
+          {
+            "name": "大学生创新创业教育基础",
+            "lessonId": "9900011C",
+            "teachingClassId": "9900011C--005",
+            "credit": "2.0",
+            "gpa": "4",
+            "score": "90",
+            "details": [
+              { "type": "课堂测试", "score": "100" },
+              { "type": "课堂演讲", "score": "85" },
+              { "type": "设计报告", "score": "83" },
+              { "type": "提问及讨论", "score": "95" }
+            ]
+          },
+          {
+            "name": "大学语文",
+            "lessonId": "5202012B",
+            "teachingClassId": "5202012B--004",
+            "credit": "2.0",
+            "gpa": "3",
+            "score": "80",
+            "details": [
+              { "type": "平时成绩", "score": "100" },
+              { "type": "期末考试", "score": "63" },
+              { "type": "作业撰写", "score": "87" },
+              { "type": "论文撰写", "score": "85" }
+            ]
+          }
+        ]
+      },
+      {
+        "semester": "2020-2021学年第一学期",
+        "semesterId": 114,
+        "compulsoryRank": {
+          "score": {
+            "rank": 1,
+            "mine": 151.91011235955057,
+            "max": 151.91011235955057,
+            "avg": 79.87711786551482,
+            "head": 86.23076923076923,
+            "actualNum": 233
+          },
+          "gpa": {
+            "rank": 1,
+            "mine": 6.3853932584269675,
+            "max": 6.3853932584269675,
+            "avg": 3.0077930661809664,
+            "head": 3.5898876404494384,
+            "actualNum": 233
+          },
+          "total": 234
+        },
+        "totalRank": {
+          "score": {
+            "rank": 1,
+            "mine": 151.91011235955057,
+            "max": 151.91011235955057,
+            "avg": 80.22221348504958,
+            "head": 86.3883495145631,
+            "actualNum": 233
+          },
+          "gpa": {
+            "rank": 1,
+            "mine": 6.3853932584269675,
+            "max": 6.3853932584269675,
+            "avg": 3.00270682791749,
+            "head": 3.6036144578313256,
+            "actualNum": 233
+          },
+          "total": 234
+        },
+        "scores": [
+          {
+            "name": "思想道德修养与法律基础",
+            "lessonId": "1200051B",
+            "teachingClassId": "1200051B--002",
+            "credit": "3.0",
+            "gpa": "3.7",
+            "score": "85",
+            "details": [
+              { "type": "平时成绩", "score": "60" },
+              { "type": "期末考试", "score": "93" },
+              { "type": "课堂测试", "score": "84" },
+              { "type": "课堂演讲", "score": "82" },
+              { "type": "设计报告", "score": "86" }
+            ]
+          },
+          {
+            "name": "计算机科学与技术专业导论",
+            "lessonId": "0529832B",
+            "teachingClassId": "0529832B--001",
+            "credit": "0.0",
+            "gpa": "3",
+            "score": "良",
+            "details": [{ "type": "期末报告", "score": "良" }]
+          },
+          {
+            "name": "程序设计课程设计",
+            "lessonId": "0529842B",
+            "teachingClassId": "0529842B--001",
+            "credit": "1.0",
+            "gpa": "3",
+            "score": "良",
+            "details": [
+              { "type": "设计报告", "score": "75" },
+              { "type": "答辩", "score": "80" }
+            ]
+          },
+          {
+            "name": "大学英语（1）",
+            "lessonId": "1500261B",
+            "teachingClassId": "1500261B--012",
+            "credit": "2.0",
+            "gpa": "3.3",
+            "score": "82",
+            "details": [
+              { "type": "试验/上机成绩", "score": "88" },
+              { "type": "平时成绩", "score": "100" },
+              { "type": "期末考试", "score": "72" },
+              { "type": "作业撰写", "score": "92" },
+              { "type": "口试", "score": "90" }
+            ]
+          },
+          {
+            "name": "高等数学A（上）",
+            "lessonId": "1400211B",
+            "teachingClassId": "1400211B--002",
+            "credit": "6.0",
+            "gpa": "3",
+            "score": "81",
+            "details": [
+              { "type": "期末考试", "score": "65" },
+              { "type": "课堂测试", "score": "100" },
+              { "type": "作业撰写", "score": "100" },
+              { "type": "其他", "score": "95.2" }
+            ]
+          },
+          {
+            "name": "程序设计基础",
+            "lessonId": "0509042B",
+            "teachingClassId": "0509042B--001",
+            "credit": "3.5",
+            "gpa": "3.7",
+            "score": "85",
+            "details": [
+              { "type": "期末考试", "score": "75" },
+              { "type": "课堂测试", "score": "93" },
+              { "type": "作业撰写", "score": "95" }
+            ]
+          },
+          {
+            "name": "军事训练",
+            "lessonId": "5200023B",
+            "teachingClassId": "5200023B--050",
+            "credit": "2.0",
+            "gpa": "3.7",
+            "score": "89",
+            "details": [{ "type": "其他", "score": "89" }]
+          },
+          {
+            "name": "军事理论",
+            "lessonId": "5700021B",
+            "teachingClassId": "5700021B--008",
+            "credit": "2.0",
+            "gpa": "3",
+            "score": "79",
+            "details": [
+              { "type": "期末考试", "score": "75" },
+              { "type": "课堂测试", "score": "87.5" },
+              { "type": "作业撰写", "score": "86" },
+              { "type": "论文撰写", "score": "80" },
+              { "type": "提问及讨论", "score": "83" }
+            ]
+          },
+          {
+            "name": "大学生心理健康",
+            "lessonId": "5700011B",
+            "teachingClassId": "5700011B--013",
+            "credit": "2.0",
+            "gpa": "4",
+            "score": "94",
+            "details": [
+              { "type": "平时成绩", "score": "91" },
+              { "type": "期末考试", "score": "98" },
+              { "type": "作业撰写", "score": "91" },
+              { "type": "课堂演讲", "score": "85" },
+              { "type": "其他", "score": "98.2" }
+            ]
+          },
+          {
+            "name": "大学体育（1）",
+            "lessonId": "5100141B",
+            "teachingClassId": "5100141B--056",
+            "credit": "0.5",
+            "gpa": "3",
+            "score": "79",
+            "details": [
+              { "type": "期末考试", "score": "72" },
+              { "type": "课堂测试", "score": "56" },
+              { "type": "实验预习", "score": "100" },
+              { "type": "实际操作", "score": "100" }
+            ]
+          },
+          {
+            "name": "形势与政策（1）",
+            "lessonId": "1201111B",
+            "teachingClassId": "1201111B--003",
+            "credit": "0.25",
+            "gpa": "3.7",
+            "score": "88",
+            "details": [
+              { "type": "课堂测试", "score": "89" },
+              { "type": "作业撰写", "score": "86" }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -6,6 +6,8 @@ import type { IFailureRateSearchResponse } from '@/shared/types/response/failure
 import type { IScoreResponseData } from '@/shared/types/response/score'
 import type { ISingleScoreSchoolResponse } from '@/shared/types/response/single-score-school'
 import type { ITokenTipsResponse } from '@/shared/types/response/token-tips'
+import type { IExpressionDto } from '@/shared/types/dto/expression'
+import type { IStatementsResponse } from '@/shared/types/response/statements'
 
 export function getScoreRequest(refresh = true) {
   return request<IScoreResponseData>({
@@ -63,5 +65,35 @@ export function getFailureRateSearchRequest(courseName: string) {
 export function getTokenTips() {
   return request<ITokenTipsResponse>({
     url: '/score/tokenTips',
+  })
+}
+
+export function grammerCheck(data: IExpressionDto) {
+  return request<{
+    code: number
+    msg: string
+    data: string
+  }>({
+    url: '/score/check',
+    method: 'POST',
+    data,
+  })
+}
+
+export function confirmGrammer(data: IExpressionDto) {
+  return request<{
+    code: number
+    msg: string
+    data: null
+  }>({
+    url: '/score/confirm',
+    method: 'POST',
+    data,
+  })
+}
+
+export function getStatements() {
+  return request<IStatementsResponse>({
+    url: '/score/statements',
   })
 }

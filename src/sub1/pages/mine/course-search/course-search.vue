@@ -22,7 +22,7 @@ onShow(() => {
 <template>
   <van-toast id="van-toast" />
   <img class="w-screen min-h-screen h-full top-0 fixed" :mode="imgMode" :src="bgImg">
-  <CourseList />
+  <CourseList course-search />
   <Setting />
 </template>
 

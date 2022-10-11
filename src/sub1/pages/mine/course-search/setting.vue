@@ -96,7 +96,7 @@ function handleQueryClick() {
             :title="item.title"
             :columns="item.columns"
             :default-index="0"
-            @change="(e) => item.value = e.detail.value"
+            @change="(e: any) => item.value = e.detail.value"
             @confirm="item.show = false"
             @cancel="item.show = false"
           />

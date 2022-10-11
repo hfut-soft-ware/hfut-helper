@@ -8,6 +8,12 @@ export interface IScoreData {
   compulsoryRank: ICompulsoryRank
   totalRank: TotalRank
   semesters: Semester[]
+  calculateLogs: CalculateLogs[]
+}
+
+export interface CalculateLogs {
+  semesterName: string
+  scoreDetails: string[]
 }
 
 export interface ICompulsoryRank {

@@ -21,7 +21,7 @@ function onClose() {
 }
 
 const scoreStore = useScoreStore()
-const { homeScoreRankDataType } = storeToRefs(scoreStore)
+const { homeScoreRankDataType, scoreData } = storeToRefs(scoreStore)
 
 const checked = computed(() => homeScoreRankDataType.value === 'all')
 function onChange() {
@@ -40,24 +40,29 @@ function onChange() {
       round
       closeable
       position="bottom"
-      custom-style="height: 30%"
+      custom-style="height: 90%"
       :z-index="999999999"
       @close="onClose"
     >
-      <div class="p-5 flex flex-col gap-5">
+      <div class="p-5 h-[80vh] flex flex-col gap-5">
         <h2 class="font-semibold text-base text-center">
           分数设置
         </h2>
-        <div class="flex flex-col">
-          <div class="flex justify-between" @click="handleOpenCustomClick">
-            <p>自定义排名</p>
-            <van-icon name="arrow" />
-          </div>
+        <div class="flex justify-between py-2" @click="handleOpenCustomClick">
+          <p>自定义排名</p>
+          <van-icon name="arrow" />
         </div>
-        <div>
-          <div class="flex justify-between">
-            <p>全科排名</p>
-            <van-switch :checked="checked" @change="onChange" />
+        <div class="flex items-center justify-between">
+          <p>全科排名</p>
+          <van-switch :checked="checked" @change="onChange" />
+        </div>
+        <h3>成绩计算日志</h3>
+        <div v-if="scoreData.calculateLogs.length" class="flex-1 grid gap-3 overflow-y-auto">
+          <div v-for="caaLog in scoreData.calculateLogs" :key="caaLog.semesterName">
+            <h4>{{ caaLog.semesterName }}</h4>
+            <p v-for="(item, index) in caaLog.scoreDetails" :key="index" class="text-[#616161] text-sm pl-4 py-2">
+              {{ item }}
+            </p>
           </div>
         </div>
       </div>
