@@ -15,7 +15,6 @@ const {
   tipShow,
   statements,
   grammerCheckMsg,
-  statementsListShow,
   handleTipClick,
   handleSymbolClick,
   inputClear,
@@ -74,7 +73,7 @@ const onCollapseChange = (event: { detail: string[] }) => {
       {{ grammerCheckMsg }}
     </div>
 
-    <div v-if="statementsListShow" class="mt-4 p-3 box-border card-shadow border border-slate-200 rounded-xl">
+    <div class="mt-4 p-3 box-border card-shadow border border-slate-200 rounded-xl">
       <div class="mb-3 flex items-center">
         <div class="flex-1 font-semibold">
           表达式列表

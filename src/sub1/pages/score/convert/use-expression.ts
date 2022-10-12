@@ -19,7 +19,6 @@ export function useExpression() {
   const tipShow = ref(false)
   const statements = ref<string[]>([])
   const grammerCheckMsg = ref('')
-  const statementsListShow = ref(false)
 
   let trainPlansFuse: Fuse<Course> | null = null
   let mineFuse: Fuse<Course> | null = null
@@ -37,6 +36,7 @@ export function useExpression() {
       return
     }
     const matchRes = Array.from(newVal.matchAll(courseReg))
+    // console.log(matchRes)
     if (!matchRes) {
       return
     }
@@ -75,11 +75,7 @@ export function useExpression() {
   })
 
   getStatements().then(({ data }) => {
-    const statementsData = data.data.statements
-    if (statementsData.length) {
-      statementsListShow.value = true
-    }
-    statements.value = statementsData
+    statements.value = data.data.statements
   }).catch(() => {
     Toast.fail(`糟糕，没有拿到表达式信息\n ${getRandomQAQ('sadness')[0]}`)
   })
@@ -112,7 +108,6 @@ export function useExpression() {
       if (res === '语法校验成功!') {
         Toast.success(res)
         statements.value.unshift(expressionVal)
-        statementsListShow.value = true
         inputClear()
       } else {
         Toast.fail(`语法校验失败\n ${getRandomQAQ('sadness')[0]}`)
@@ -166,7 +161,6 @@ export function useExpression() {
     tipClick,
     statements,
     grammerCheckMsg,
-    statementsListShow,
     handleTipClick,
     handleSymbolClick,
     inputClear,
@@ -201,11 +195,12 @@ function isRegMatchEqual(prev: RegExpMatchArray[], current: RegExpMatchArray[]) 
 }
 
 function strReplace(str: string, searchVal: RegExpMatchArray, replaceVal: string) {
+  // console.log(str, searchVal, replaceVal)
   let index = searchVal.index!
   if (index > 0 && str[index - 1] === '`') {
     index--
   }
   const left = str.slice(0, index)
-  const right = str.slice(index + searchVal.length)
+  const right = str.slice(index + searchVal[0].length)
   return `${left}\`${replaceVal}\`${right}`
 }
