@@ -32,6 +32,9 @@ export function useSelectSemester() {
 
   const onConfirm = (event: any) => {
     const index = event.detail.index as number
+    if (!semesters.value.length) {
+      return
+    }
     const id = semesters.value[index].id
     showSelectSemester.value = false
     Toast.loading('正在加载数据')

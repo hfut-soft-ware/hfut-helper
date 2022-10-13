@@ -33,11 +33,11 @@ baseInstance.interceptors.response.use(res => res, (err) => {
       title: '你的账号密码似乎已经改了哦~',
       content: err.data?.msg || '请重新登录',
       showCancel: false,
-      success() {
-        uni.reLaunch({
-          url: '/pages/login/login',
-        })
-      },
+      // success() {
+      //   uni.reLaunch({
+      //     url: '/pages/login/login',
+      //   })
+      // },
     })
   }
   throw err
