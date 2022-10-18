@@ -14,6 +14,8 @@ export const USER_CARD_BASE_INFO = '__USER_CARD_BASE_INFO__'
 
 export const PLACARD = '__PLACARD__'
 
+export const SCHOOL_BUS_KEY = '__SCHOOL_BUS__'
+
 export const dayHours = Array.from({ length: 8 }, (_, idx) => {
   let index: any = idx + 1
   let start

@@ -1,5 +1,6 @@
 <script setup lang='ts'>
 import { ref } from 'vue'
+import { onPullDownRefresh } from '@dcloudio/uni-app'
 import { useBusSchedule } from './useBusSchedule'
 import type { BusQueryData } from '@/shared/types/response/bus-query'
 
@@ -14,6 +15,7 @@ const {
   defaultIndex,
   getBusSchedule,
   calculateDefaultIndex,
+  initData,
 } = useBusSchedule()
 
 const tabBar: Record<keyof BusQueryData, string> = {
@@ -24,8 +26,8 @@ const tabBar: Record<keyof BusQueryData, string> = {
 
 const show = ref(false)
 
-// onPullDownRefresh(() => getBusSchedule(true))
-getBusSchedule()
+onPullDownRefresh(() => getBusSchedule())
+initData()
 
 const handleRotateClick = () => {
   [endCampus.value, startCampus.value] = [startCampus.value, endCampus.value];

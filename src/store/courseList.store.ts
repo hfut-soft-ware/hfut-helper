@@ -1,5 +1,5 @@
 import { defineStore, storeToRefs } from 'pinia'
-import { addDays, isToday } from 'date-fns'
+import { addDays, differenceInCalendarDays, isToday } from 'date-fns'
 import type { ICourse, IExam, ILesson, IMainInfo, IMooc, ISchedule } from '@/shared/types/response/course'
 import { getCourseListRequest } from '@/server/api/user'
 import { isNullOrUndefined, isObject } from '@/shared/utils/'
@@ -261,10 +261,12 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
     },
     initStore(data: ICourse, payload?: { week: number; day: number }) {
       this.list = data
+      const semesterStartDate = data.mainInfo.semesterStartDate
 
+      const { week, day } = calculateWeekAndDay(new Date(semesterStartDate))
       const scheduleIdx = {
-        weekIdx: payload?.week || data.mainInfo.curWeek - 1,
-        dayIdx: payload?.day || data.mainInfo.curDayIndex - 1,
+        weekIdx: payload?.week || week,
+        dayIdx: payload?.day || day,
       }
       this.daySchedule = scheduleIdx
       this.weekSchedule = scheduleIdx
@@ -341,4 +343,20 @@ export function getTeachers(teachers: string[]) {
 
 export function getStorageCourse() {
   return uni.getStorageSync(COURSE_KEY) as ICourse
+}
+
+export function calculateWeekAndDay(startDate: Date) {
+  const differenceDays = differenceInCalendarDays(new Date(), startDate)
+  if (differenceDays < 0) {
+    return {
+      week: 0,
+      day: 0,
+    }
+  }
+  const week = Math.floor(differenceDays / 7)
+  const day = differenceDays % 7
+  return {
+    week: week > 19 ? 19 : week,
+    day,
+  }
 }

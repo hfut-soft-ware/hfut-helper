@@ -3,6 +3,10 @@ import Toast from '@vant/weapp/dist/toast/toast'
 import { getRandomQAQ } from 'qaq-font'
 import { getBusRequest } from '@/server/api/others'
 import type { BusInfo, BusQueryData } from '@/shared/types/response/bus-query'
+import { SCHOOL_BUS_KEY } from '@/shared/constant'
+import { isStorageEmpty, useSyncStorage } from '@/shared/hooks/use-syncStorage'
+
+const [getSchoolBusStorage, setSchoolBusStorage] = useSyncStorage<BusQueryData>(SCHOOL_BUS_KEY)
 
 export function useBusSchedule() {
   const busSchedule = ref<BusQueryData | null>(null)
@@ -54,21 +58,35 @@ export function useBusSchedule() {
       duration: 0,
     })
     getBusRequest().then(({ data }) => {
-      const busInfo = data.data[busScheduleType.value][0]
-      startCampus.value = busInfo.runRange[0]
-      endCampus.value = busInfo.runRange[1]
       Toast.clear()
       Toast.success({
         message: `加载完成\n${getRandomQAQ('happy')[0]}`,
       })
-      busSchedule.value = data.data
+      uni.stopPullDownRefresh()
+      setSchoolBusStorage(data.data)
+      initState(data.data)
     }).catch(() => {
       Toast.clear()
       Toast.fail({
         message: `加载失败\n${getRandomQAQ('sadness')[0]}`,
         duration: 1000,
       })
+      uni.stopPullDownRefresh()
     })
+  }
+  const initState = (data: BusQueryData) => {
+    const busInfo = data[busScheduleType.value][0]
+    startCampus.value = busInfo.runRange[0]
+    endCampus.value = busInfo.runRange[1]
+    busSchedule.value = data
+  }
+
+  const initData = () => {
+    if (isStorageEmpty(SCHOOL_BUS_KEY)) {
+      getBusSchedule()
+    } else {
+      initState(getSchoolBusStorage())
+    }
   }
 
   return {
@@ -82,5 +100,6 @@ export function useBusSchedule() {
     defaultIndex,
     getBusSchedule,
     calculateDefaultIndex,
+    initData,
   }
 }

@@ -169,7 +169,7 @@
           "style": {
             "navigationBarBackgroundColor": "#4981F9",
             "navigationBarTitleText": "校车查询",
-            "enablePullDownRefresh": false
+            "enablePullDownRefresh": true
           }
         },
         {
