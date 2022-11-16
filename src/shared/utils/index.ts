@@ -1,3 +1,6 @@
+import { getRandomQAQ } from 'qaq-font'
+import Toast from '@vant/weapp/dist/toast/toast'
+
 export const isObject = (val: unknown) =>
   val !== null && typeof val === 'object'
 
@@ -27,5 +30,11 @@ export const ascend = (arr: number[]) => {
 export const onNavigateClick = (path: string) => {
   uni.navigateTo({
     url: path,
+  })
+}
+
+export const handleError = (msg: string, err: any) => {
+  Toast.fail({
+    message: `加载失败\n${err.message}\n${getRandomQAQ('sadness')[0]}`,
   })
 }

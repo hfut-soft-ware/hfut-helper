@@ -15,6 +15,7 @@ const helpTitle: Record<HelpType, string> = {
   course: '课程表',
   login: '登录',
   score: '成绩',
+  grammar: '成绩换算',
 }
 
 const helpMessage = ref<TypeMessage[]>([])

@@ -203,6 +203,22 @@
             "navigationBarTitleText": "成绩换算",
             "enablePullDownRefresh": false
           }
+        },
+        {
+          "path": "pages/mine/survey/survey",
+          "style": {
+            "navigationBarBackgroundColor": "#4981F9",
+            "navigationBarTitleText": "教评",
+            "enablePullDownRefresh": true
+          }
+        },
+        {
+          "path": "pages/mine/survey/question/question",
+          "style": {
+            "navigationBarBackgroundColor": "#4981F9",
+            "navigationBarTitleText": "教评问答",
+            "enablePullDownRefresh": false
+          }
         }
       ]
     }

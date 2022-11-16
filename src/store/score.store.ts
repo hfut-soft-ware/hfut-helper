@@ -3,13 +3,12 @@ import { computed, ref } from 'vue'
 import Toast from '@vant/weapp/lib/toast/toast'
 import { getRandomQAQ } from 'qaq-font'
 import { isNumber } from 'lodash'
-import { getScoreRequest, getSingleScoreRequest, getSingleScoreSchoolRequest } from '@/server/api/score'
+import { getScoreRequest, getSingleScoreRequest } from '@/server/api/score'
 import { useRef } from '@/shared/hooks/useRef'
 import { useSyncStorage } from '@/shared/hooks/use-syncStorage'
 
 import type { ICompulsoryRank, IScoreData, Score5, Semester } from '@/shared/types/response/score'
 import type { ISingleScoreData, SingleScoreDto } from '@/shared/types/response/sing-score'
-import type { ISingleScoreSchoolData } from '@/shared/types/response/single-score-school'
 
 type TScore = {
   total: number
@@ -26,9 +25,7 @@ type SemesterScore = {
   index: number
 }
 
-type SingleScore = ISingleScoreData & {
-  schoolRank: ISingleScoreSchoolData
-}
+type SingleScore = ISingleScoreData
 
 export type ScoreCardActiveType = 'average' | 'gpa' | 'max'
 
@@ -164,10 +161,8 @@ export const useScoreStore = defineStore('scoreStore', () => {
 
     try {
       const { data: singleScoreRes } = await getSingleScoreRequest(singleScoreDto)
-      const { data: singleScoreSchoolRes } = await getSingleScoreSchoolRequest(singleScoreDto)
       setCurrentScoreData({
         ...singleScoreRes.data,
-        schoolRank: singleScoreSchoolRes.data,
       })
 
       Toast.clear()

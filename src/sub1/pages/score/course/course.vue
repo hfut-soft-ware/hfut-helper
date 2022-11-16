@@ -1,13 +1,18 @@
 <script lang='ts' setup>
 import { storeToRefs } from 'pinia'
-import { computed, ref } from 'vue'
+import { computed, ref, shallowRef, watchEffect } from 'vue'
 import { onPullDownRefresh } from '@dcloudio/uni-app'
+import Toast from '@vant/weapp/lib/toast/toast'
+import { getRandomQAQ } from 'qaq-font'
 import Tabs from './tabs.vue'
 import { formatScore, useScoreStore } from '@/store/score.store'
 import BounceBall from '@/components/BounceBall/BounceBall.vue'
 import RadarUCharts from '@/sub1/pages/score/course/radar-ucharts.vue'
 import { tabs } from '@/shared/constant'
+import { getSingleScoreSchoolRequest } from '@/server/api/score'
 import type { RankMode } from '@/shared/types'
+import type { ISingleScoreSchoolData } from '@/shared/types/response/single-score-school'
+import type { SingleScoreDto } from '@/shared/types/response/sing-score'
 
 const scoreStore = useScoreStore()
 
@@ -15,6 +20,7 @@ const {
   currentSelectedCourse,
   currentScoreData,
   homeActive,
+  selectedSemesterData,
 } = storeToRefs(scoreStore)
 
 onPullDownRefresh(() => {
@@ -23,13 +29,44 @@ onPullDownRefresh(() => {
 
 const headMode = ref<'head' | 'max'>('head')
 const rankMode = ref<RankMode>('major')
+// 初始化，防止报错
+const RankItem = {
+  rank: 0,
+  mine: 0,
+  max: 0,
+  avg: 0,
+  head: 0,
+  actualNum: 0,
+}
+const schoolRank = shallowRef<ISingleScoreSchoolData>({
+  details: [],
+  gpa: RankItem,
+  score: RankItem,
+  total: 0,
+})
+
+watchEffect(() => {
+  if (rankMode.value === 'school') {
+    const singleScoreDto: SingleScoreDto = {
+      lessonId: currentSelectedCourse.value.lessonId,
+      semesterId: selectedSemesterData.value.semesterInfo.semesterId,
+    }
+    getSingleScoreSchoolRequest(singleScoreDto).then(({ data }) => {
+      schoolRank.value = data.data
+    }).catch(() => {
+      Toast.fail({
+        message: `获取成绩信息失败，去交流群问问吧~\n${getRandomQAQ('sadness')[0]}`,
+      })
+    })
+  }
+})
 
 const currentCourseDetail = computed(() => {
   const data = rankMode.value === 'major'
     ? currentScoreData.value.majorRank
     : rankMode.value === 'class'
       ? currentScoreData.value.classRank
-      : currentScoreData.value.schoolRank
+      : schoolRank.value
 
   if (!data) {
     return {}
