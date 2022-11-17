@@ -2,6 +2,7 @@
 import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 import Toast from '@vant/weapp/lib/toast/toast'
+import { getRandomQAQ } from 'qaq-font'
 import { getSurvey, submitSurvey } from '@/server/api/survey'
 import { handleError } from '@/shared/utils/index'
 import type { BlankQuestion, RadioQuestion } from '@/shared/types/response/survey'
@@ -14,9 +15,11 @@ const blankQuestion = ref<BlankQuestion>({
   question: '',
 })
 const input = ref('')
+const studentId = ref('')
 
 onLoad((query) => {
   lessonSurveyTaskAssoc = +query.taskId!
+  studentId.value = query.studentId!
   getSurvey(query.taskId!).then(({ data }) => {
     const res = data.data
     surveyAssoc = res.surveyAssoc
@@ -44,18 +47,14 @@ const handleSubmitClick = () => {
       optionName: item.check,
     }
   })
-
-  console.log(JSON.stringify({
-    radioQuestionAnswers,
-    blankQuestionAnswers: [{
-      questionId: blankQuestion.value.id,
-      content: input.value,
-    }],
-    surveyAssoc,
-    lessonSurveyTaskAssoc,
-  }))
+  Toast.clear()
+  Toast.loading({
+    message: `正在提交...\n${getRandomQAQ('happy')[0]}`,
+    duration: 0,
+  })
 
   submitSurvey({
+    studentId: studentId.value,
     radioQuestionAnswers,
     blankQuestionAnswers: [{
       questionId: blankQuestion.value.id,
@@ -64,6 +63,7 @@ const handleSubmitClick = () => {
     surveyAssoc,
     lessonSurveyTaskAssoc,
   }).then(({ data }) => {
+    Toast.clear()
     Toast.success({
       message: data.content,
     })
@@ -71,6 +71,7 @@ const handleSubmitClick = () => {
       delta: 1,
     })
   }).catch((err) => {
+    Toast.clear()
     handleError('提交失败', err)
   })
 }

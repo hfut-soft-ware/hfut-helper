@@ -75,9 +75,9 @@ export const servicesButtonList: Service[] = [
     title: '帮助',
     url: 'help/help',
   },
-  // {
-  //   icon: 'help',
-  //   title: '教评',
-  //   url: 'survey/survey',
-  // },
+  {
+    icon: 'survey',
+    title: '教评',
+    url: 'survey/survey',
+  },
 ]

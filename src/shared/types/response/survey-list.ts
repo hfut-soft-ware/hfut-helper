@@ -12,6 +12,7 @@ export interface List {
 
 export interface Data {
   list: List[]
+  studentId: string
 }
 
 export interface ISurveyListResponse {

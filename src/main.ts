@@ -29,6 +29,7 @@ import '@/assets/icons/search-room.png'
 import '@/assets/icons/calendar.png'
 import '@/assets/icons/ipad.png'
 import '@/assets/icons/help.png'
+import '@/assets/icons/survey.png'
 
 // imgs
 // import '@/pages/mine/about/donate/donate.png'

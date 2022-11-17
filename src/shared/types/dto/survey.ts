@@ -1,4 +1,5 @@
 export interface SubmitSurveyDto {
+  studentId: string
   surveyAssoc: number
   lessonSurveyTaskAssoc: number
   radioQuestionAnswers: RadioQuestionAnswer[]

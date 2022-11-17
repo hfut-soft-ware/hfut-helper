@@ -7,18 +7,30 @@ import { getSurveyList } from '@/server/api/survey'
 import type { List } from '@/shared/types/response/survey-list'
 
 const surveyList = ref<List[]>([])
+const studentId = ref('')
 
-onLoad(() => requestSurveyList('加载成功'))
+let firstLoad = true
+onLoad(() => {
+  firstLoad = false
+  requestSurveyList('加载成功')
+})
 onPullDownRefresh(() => requestSurveyList('刷新成功'))
-onShow(() => requestSurveyList('刷新成功'))
+onShow(() => {
+  if (!firstLoad) {
+    requestSurveyList('加载成功')
+  }
+})
 
 const requestSurveyList = (successMsg: string) => {
+  Toast.clear()
   Toast.loading({
     message: `正在加载...\n${getRandomQAQ('happy')[0]}`,
     duration: 0,
   })
   getSurveyList().then(({ data }) => {
     surveyList.value = data.data.list
+    studentId.value = data.data.studentId
+    Toast.clear()
     Toast.success({
       message: `${successMsg}\n${getRandomQAQ('happy')[0]}`,
     })
@@ -34,7 +46,7 @@ const requestSurveyList = (successMsg: string) => {
 
 const handleTaskClick = (taskId: number) => {
   uni.navigateTo({
-    url: `/sub1/pages/mine/survey/question/question?taskId=${taskId}`,
+    url: `/sub1/pages/mine/survey/question/question?taskId=${taskId}&studentId=${studentId.value}`,
   })
 }
 </script>
