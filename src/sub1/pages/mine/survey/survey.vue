@@ -6,20 +6,19 @@ import Toast from '@vant/weapp/dist/toast/toast'
 import { getSurveyList } from '@/server/api/survey'
 import type { List } from '@/shared/types/response/survey-list'
 
-const surveyList = ref<List[]>([])
+const surveyList = ref<(List &{ submit: boolean })[]>([])
 const studentId = ref('')
 
 let firstLoad = true
-onLoad(() => {
-  firstLoad = false
-  requestSurveyList('加载成功')
-})
-onPullDownRefresh(() => requestSurveyList('刷新成功'))
 onShow(() => {
   if (!firstLoad) {
     requestSurveyList('加载成功')
   }
 })
+onLoad(() => {
+  requestSurveyList('加载成功')
+})
+onPullDownRefresh(() => requestSurveyList('刷新成功'))
 
 const requestSurveyList = (successMsg: string) => {
   Toast.clear()
@@ -28,7 +27,7 @@ const requestSurveyList = (successMsg: string) => {
     duration: 0,
   })
   getSurveyList().then(({ data }) => {
-    surveyList.value = data.data.list
+    surveyList.value = handleSurveyList(data.data.list)
     studentId.value = data.data.studentId
     Toast.clear()
     Toast.success({
@@ -40,6 +39,7 @@ const requestSurveyList = (successMsg: string) => {
       message: `加载失败\n${err.message}\n${getRandomQAQ('sadness')[0]}`,
     })
   }).finally(() => {
+    firstLoad = false
     uni.stopPullDownRefresh()
   })
 }
@@ -49,12 +49,21 @@ const handleTaskClick = (taskId: number) => {
     url: `/sub1/pages/mine/survey/question/question?taskId=${taskId}&studentId=${studentId.value}`,
   })
 }
+
+function handleSurveyList(list: List[]) {
+  return list.map((item) => {
+    return {
+      ...item,
+      submit: item.surveyTasks.every(val => val.submitted),
+    }
+  })
+}
 </script>
 
 <template>
   <van-toast id="van-toast" />
   <div class="w-screen min-h-screen pt-4 pb-8 flex flex-col gap-2">
-    <div v-for="survey in surveyList" :key="survey.courseName" class="w-[90vw] mx-auto p-3 card-shadow box-border rounded-lg">
+    <div v-for="survey in surveyList" :key="survey.courseName" class="w-[90vw] mx-auto p-3 card-shadow box-border rounded-lg" :class="survey.submit ? 'bg-gray-100' : ''">
       <div class="flex items-center justify-between mb-3">
         <h3 class=" flex-1 truncate">
           {{ survey.courseName }}

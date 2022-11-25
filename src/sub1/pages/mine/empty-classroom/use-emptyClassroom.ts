@@ -30,7 +30,7 @@ function handleClassroom(map: Map<number, Course>, fromIndex: number, toIndex: n
   }
   const layers = ascend(Array.from(set))
   const classrooms = Array.from<IClassroom[], IClassroom[]>({ length: layers.length ? layers.pop()! : 0 }, () => [])
-  for (const id of map.keys()) {
+  for (const id of ascend(Array.from(map.keys()))) {
     classrooms[Math.floor(id / 100) - 1].push({
       id,
       type: judgeRoomType(map.get(id)!.startPrefixs, fromIndex, toIndex),

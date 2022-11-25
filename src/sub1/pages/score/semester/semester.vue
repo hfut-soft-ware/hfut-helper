@@ -1,11 +1,14 @@
 <script lang='ts' setup>
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
-import { onPullDownRefresh } from '@dcloudio/uni-app'
+import { onLoad, onPullDownRefresh } from '@dcloudio/uni-app'
 import Toast from '@vant/weapp/lib/toast/toast'
+import Dialog from '@vant/weapp/lib/dialog/dialog'
+import { getRandomQAQ } from 'qaq-font'
 import { useScoreStore } from '@/store/score.store'
 import type { Score } from '@/shared/types/response/score'
 import { scrollHeight } from '@/shared/constant'
+import { getSurveyList } from '@/server/api/survey'
 
 const scoreStore = useScoreStore()
 const {
@@ -14,6 +17,20 @@ const {
 
 onPullDownRefresh(() => {
   scoreStore.getScoreStore(true)
+})
+
+onLoad(async() => {
+  const { data } = await getSurveyList()
+  const isNeedSurvey = !data.data.list.every((item) => {
+    return item.surveyTasks.every(val => val.submitted)
+  })
+  isNeedSurvey && Dialog.confirm({
+    message: `检测到你有未完成的教评，\n是否前去教${getRandomQAQ('happy')[0]}`,
+  }).then(() => {
+    uni.navigateTo({
+      url: '/sub1/pages/mine/survey/survey',
+    })
+  }).catch(() => {})
 })
 
 const semesterInfo = computed(() => selectedSemesterData.value.semesterInfo)
@@ -59,6 +76,7 @@ function handleCourseClick(item: Score) {
 
 <template>
   <van-toast id="van-toast" />
+  <van-dialog id="van-dialog" />
   <div class="absolute top-0 bottom-0 left-0 right-0 bg-[#F6F7F9]">
     <div class="w-[95vw] absolute top-5 bottom-5 left-[2.5vw] mx-auto bg-white p-3 flex flex-col gap-5 w-full rounded-lg box-border">
       <h3 class="font-semibold text-xl text-center">

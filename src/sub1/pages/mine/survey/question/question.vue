@@ -20,7 +20,13 @@ const studentId = ref('')
 onLoad((query) => {
   lessonSurveyTaskAssoc = +query.taskId!
   studentId.value = query.studentId!
+  Toast.clear()
+  Toast.loading({
+    message: `正在加载...\n${getRandomQAQ('happy')[0]}`,
+    duration: 0,
+  })
   getSurvey(query.taskId!).then(({ data }) => {
+    Toast.clear()
     const res = data.data
     surveyAssoc = res.surveyAssoc
     blankQuestion.value = res.blankQuestion
@@ -52,6 +58,17 @@ const handleSubmitClick = () => {
     message: `正在提交...\n${getRandomQAQ('happy')[0]}`,
     duration: 0,
   })
+
+  console.log(JSON.stringify({
+    studentId: studentId.value,
+    radioQuestionAnswers,
+    blankQuestionAnswers: [{
+      questionId: blankQuestion.value.id,
+      content: input.value,
+    }],
+    surveyAssoc,
+    lessonSurveyTaskAssoc,
+  }))
 
   submitSurvey({
     studentId: studentId.value,
