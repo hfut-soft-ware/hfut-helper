@@ -62,24 +62,29 @@ function handleSurveyList(list: List[]) {
 
 <template>
   <van-toast id="van-toast" />
-  <div class="w-screen min-h-screen pt-4 pb-8 flex flex-col gap-2">
-    <div v-for="survey in surveyList" :key="survey.courseName" class="w-[90vw] mx-auto p-3 card-shadow box-border rounded-lg" :class="survey.submit ? 'bg-gray-100' : ''">
-      <div class="flex items-center justify-between mb-3">
-        <h3 class=" flex-1 truncate">
-          {{ survey.courseName }}
-        </h3>
-        <p class="mx-3 text-xs text-slate-500/80">
-          {{ survey.endTime }}
-        </p>
-      </div>
-      <div v-for="task in survey.surveyTasks" :key="task.id">
-        <div v-if="task.submitted" class=" min-w-[70px] p-2 text-sm text-slate-500">
-          {{ task.teacherName }}
+  <template v-if="!surveyList.length">
+    <van-empty :description="`暂时没有需要教评的任务噢${getRandomQAQ('happy')[0]}`" />
+  </template>
+  <template v-else>
+    <div class="w-screen min-h-screen pt-4 pb-8 flex flex-col gap-2">
+      <div v-for="survey in surveyList" :key="survey.courseName" class="w-[90vw] mx-auto p-3 card-shadow box-border rounded-lg" :class="survey.submit ? 'bg-gray-100' : ''">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class=" flex-1 truncate">
+            {{ survey.courseName }}
+          </h3>
+          <p class="mx-3 text-xs text-slate-500/80">
+            {{ survey.endTime }}
+          </p>
         </div>
-        <div v-else class=" min-w-[60px] p-2 text-sm text-blue-500" @click="handleTaskClick(task.id)">
-          {{ task.teacherName }}
+        <div v-for="task in survey.surveyTasks" :key="task.id">
+          <div v-if="task.submitted" class=" min-w-[70px] p-2 text-sm text-slate-500">
+            {{ task.teacherName }}
+          </div>
+          <div v-else class=" min-w-[60px] p-2 text-sm text-blue-500" @click="handleTaskClick(task.id)">
+            {{ task.teacherName }}
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </template>
 </template>
