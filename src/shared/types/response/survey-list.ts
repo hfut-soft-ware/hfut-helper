@@ -6,7 +6,7 @@ export interface SurveyTask {
 
 export interface List {
   courseName: string
-  endTime: string
+  timeRange: string
   surveyTasks: SurveyTask[]
 }
 
