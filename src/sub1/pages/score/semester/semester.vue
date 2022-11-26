@@ -7,8 +7,9 @@ import Dialog from '@vant/weapp/lib/dialog/dialog'
 import { getRandomQAQ } from 'qaq-font'
 import { useScoreStore } from '@/store/score.store'
 import type { Score } from '@/shared/types/response/score'
-import { scrollHeight } from '@/shared/constant'
+import { SURVEY_PROMPTED, scrollHeight } from '@/shared/constant'
 import { getSurveyList } from '@/server/api/survey'
+import { isStorageEmpty, useSyncStorage } from '@/shared/hooks/use-syncStorage'
 
 const scoreStore = useScoreStore()
 const {
@@ -20,10 +21,18 @@ onPullDownRefresh(() => {
 })
 
 onLoad(async() => {
+  const [
+    setSurveyStorage,
+  ] = useSyncStorage(SURVEY_PROMPTED)
+  if (!isStorageEmpty(SURVEY_PROMPTED)) {
+    return
+  }
+
   const { data } = await getSurveyList()
   const isNeedSurvey = !data.data.list.every((item) => {
     return item.surveyTasks.every(val => val.submitted)
   })
+  setSurveyStorage(true)
   isNeedSurvey && Dialog.confirm({
     message: `检测到你有未完成的教评，\n是否前去教${getRandomQAQ('happy')[0]}`,
   }).then(() => {
