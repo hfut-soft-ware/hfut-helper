@@ -58,12 +58,18 @@ const getCourseSearch = () => {
   })
 }
 
+const handlePickerChange = (event: { detail: { value: string } }) => {
+  pickerIndex.value = +event.detail.value
+  getCourseSearch()
+}
+
 </script>
 
 <template>
+  <van-toast id="van-toast" />
   <div class="w-screen min-h-screen bg-gray-300/25">
     <div class="px-4 pt-2 pb-4 bg-white">
-      <picker :range="semesterNames" :value="pickerIndex">
+      <picker :range="semesterNames" :value="pickerIndex" @change="handlePickerChange">
         <div class="flex justify-center">
           <p class="py-2 px-4 rounded-full bg-zinc-50">
             {{ semesterNames[pickerIndex] }}
