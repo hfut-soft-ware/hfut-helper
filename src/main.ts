@@ -30,6 +30,7 @@ import '@/assets/icons/calendar.png'
 import '@/assets/icons/ipad.png'
 import '@/assets/icons/help.png'
 import '@/assets/icons/survey.png'
+import '@/assets/icons/Ingots.png'
 
 // imgs
 // import '@/pages/mine/about/donate/donate.png'

@@ -80,4 +80,9 @@ export const servicesButtonList: Service[] = [
     title: '教评',
     url: 'survey/survey',
   },
+  {
+    icon: 'Ingots',
+    title: '课程查询',
+    url: 'course-search/course-search',
+  },
 ]

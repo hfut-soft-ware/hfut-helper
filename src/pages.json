@@ -150,7 +150,7 @@
           }
         },
         {
-          "path": "pages/mine/course-search/course-search",
+          "path": "pages/mine/school-course/school-course",
           "style": {
             "navigationBarBackgroundColor": "#4981F9",
             "navigationBarTitleText": "全校课表"
@@ -217,6 +217,14 @@
           "style": {
             "navigationBarBackgroundColor": "#4981F9",
             "navigationBarTitleText": "教评问答",
+            "enablePullDownRefresh": false
+          }
+        },
+        {
+          "path": "pages/mine/course-search/course-search",
+          "style": {
+            "navigationBarBackgroundColor": "#4981F9",
+            "navigationBarTitleText": "课程查询",
             "enablePullDownRefresh": false
           }
         }
