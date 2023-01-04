@@ -9,7 +9,7 @@ export const servicesList: Service[] = [
   {
     icon: 'flyship',
     title: '全校课表',
-    url: 'course-search/course-search',
+    url: 'school-course/school-course',
   },
   {
     icon: 'telescope',
