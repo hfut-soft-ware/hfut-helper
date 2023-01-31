@@ -35,9 +35,9 @@ export function useCustom(store: ReturnType<typeof useScoreStore>) {
       Toast.success({
         message: `加载成功！\n${getRandomQAQ('happy')[0]}`,
       })
-    }).catch(() => {
+    }).catch((error) => {
       Toast.fail({
-        message: `加载失败！\n${getRandomQAQ('sadness')[0]}`,
+        message: `加载失败！\n${getRandomQAQ('sadness')[0]}\n${error.message}`,
       })
     }).finally(() => {
       setTimeout(() => {

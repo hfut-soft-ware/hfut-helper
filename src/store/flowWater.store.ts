@@ -41,9 +41,9 @@ export const useFlowWaterStore = defineStore('flowWaterStore', () => {
       })
       alreadyLoad.value = true
       uni.stopPullDownRefresh()
-    }).catch(() => {
+    }).catch((error) => {
       Toast.fail({
-        message: `校务网络好像出了点问题哦\n${getRandomQAQ('sadness')[0]}`,
+        message: `校务网络好像出了点问题哦\n${getRandomQAQ('sadness')[0]}\n${error.message}`,
       })
       uni.stopPullDownRefresh()
     })

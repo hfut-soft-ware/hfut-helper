@@ -159,10 +159,10 @@ export function useEmptyClassroom() {
     getClassroomRequest(params.value).then(({ data }) => {
       getClassroomData.value = data.data
       Toast.clear()
-    }).catch(() => {
+    }).catch((error) => {
       Toast.clear()
       Toast.fail({
-        message: `加载失败\n${getRandomQAQ('sadness')[0]}`,
+        message: `加载失败\n${getRandomQAQ('sadness')[0]}\n${error.message}`,
       })
     })
   }

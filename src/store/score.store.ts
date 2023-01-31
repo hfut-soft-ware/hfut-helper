@@ -136,12 +136,12 @@ export const useScoreStore = defineStore('scoreStore', () => {
       const data = res.data.data
       scoreData.value = data
       setScoreStorage(data)
-    }).catch(() => {
+    }).catch((error) => {
       Toast.clear()
       uni.stopPullDownRefresh()
       if (withTip) {
         Toast.fail({
-          message: `获取成绩信息失败，去交流群问问吧~\n${getRandomQAQ('sadness')[0]}`,
+          message: `获取成绩信息失败，去交流群问问吧~\n${getRandomQAQ('sadness')[0]}\n${error.message}`,
         })
       }
       throw new Error('cannot get data')
@@ -170,11 +170,11 @@ export const useScoreStore = defineStore('scoreStore', () => {
         message: `获取成绩信息成功！\n${getRandomQAQ('happy')[0]}`,
       })
       uni.stopPullDownRefresh()
-    } catch (error) {
+    } catch (error: any) {
       Toast.clear()
       uni.stopPullDownRefresh()
       Toast.fail({
-        message: `获取成绩信息失败，去交流群问问吧~\n${getRandomQAQ('sadness')[0]}`,
+        message: `获取成绩信息失败，去交流群问问吧~\n${getRandomQAQ('sadness')[0]}\n${error.message}`,
       })
     }
   }

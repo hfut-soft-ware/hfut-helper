@@ -49,10 +49,10 @@ const getCourseSearch = () => {
         ...item,
       }
     })
-  }).catch(() => {
+  }).catch((error) => {
     Toast.clear()
     Toast.fail({
-      message: `加载失败\n${getRandomQAQ('sadness')[0]}`,
+      message: `${error.message}\n${getRandomQAQ('sadness')[0]}`,
       duration: 1000,
     })
   })

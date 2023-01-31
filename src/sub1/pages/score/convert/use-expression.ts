@@ -70,14 +70,14 @@ export function useExpression() {
   getTokenTips().then(({ data }) => {
     trainPlansFuse = new Fuse(data.data.trainPlans, fuseOptions)
     mineFuse = new Fuse(data.data.mine, fuseOptions)
-  }).catch(() => {
-    Toast.fail(`糟糕，没有拿到课程信息\n ${getRandomQAQ('sadness')[0]}`)
+  }).catch((error) => {
+    Toast.fail(`糟糕，没有拿到课程信息\n ${getRandomQAQ('sadness')[0]}\n${error.message}`)
   })
 
   getStatements().then(({ data }) => {
     statements.value = data.data.statements
-  }).catch(() => {
-    Toast.fail(`糟糕，没有拿到表达式信息\n ${getRandomQAQ('sadness')[0]}`)
+  }).catch((error) => {
+    Toast.fail(`糟糕，没有拿到表达式信息\n ${getRandomQAQ('sadness')[0]}\n${error.message}`)
   })
 
   const handleTipClick = (courseName: string) => {
@@ -112,8 +112,8 @@ export function useExpression() {
       } else {
         Toast.fail(`语法校验失败\n ${getRandomQAQ('sadness')[0]}`)
       }
-    } catch (error) {
-      Toast.fail(`语法校验出错\n ${getRandomQAQ('sadness')[0]}`)
+    } catch (error: any) {
+      Toast.fail(`语法校验出错\n ${getRandomQAQ('sadness')[0]}\n${error.message}`)
     }
   }, 1000)
 
@@ -127,8 +127,8 @@ export function useExpression() {
       } else {
         Toast.fail(`${msg}\n ${getRandomQAQ('sadness')[0]}`)
       }
-    }).catch(() => {
-      Toast.fail(`提交出错\n ${getRandomQAQ('sadness')[0]}`)
+    }).catch((error) => {
+      Toast.fail(`提交出错\n ${getRandomQAQ('sadness')[0]}\n${error.message}`)
     })
   }, 1000)
 

@@ -100,9 +100,9 @@ export const useAuthStore = defineStore('authStore', () => {
       setUserInfo(data)
 
       return data
-    } catch (err) {
+    } catch (error: any) {
       Toast.fail({
-        message: `获取学生信息失败\n${getRandomQAQ('sadness')[0]}`,
+        message: `获取学生信息失败\n${getRandomQAQ('sadness')[0]}\n${error.message}`,
       })
     }
   }

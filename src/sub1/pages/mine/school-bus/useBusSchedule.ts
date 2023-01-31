@@ -65,10 +65,10 @@ export function useBusSchedule() {
       uni.stopPullDownRefresh()
       setSchoolBusStorage(data.data)
       initState(data.data)
-    }).catch(() => {
+    }).catch((error) => {
       Toast.clear()
       Toast.fail({
-        message: `加载失败\n${getRandomQAQ('sadness')[0]}`,
+        message: `加载失败\n${getRandomQAQ('sadness')[0]}\n${error.message}`,
         duration: 1000,
       })
       uni.stopPullDownRefresh()

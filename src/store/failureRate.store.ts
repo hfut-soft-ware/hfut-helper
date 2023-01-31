@@ -12,11 +12,11 @@ export const useFailureRateStore = defineStore('failureRateStore', () => {
   const getFailureRate = async() => {
     await getFailureRateRequest(courseName.value).then((res) => {
       failureRateData.value = res.data.data
-    }).catch((err) => {
-      const msg = err.data.msg
+    }).catch((error) => {
+      const msg = error.data.msg
       failureRateData.value = []
       Toast.fail({
-        message: `${msg}\n${getRandomQAQ('sadness')[0]}`,
+        message: `${msg}\n${getRandomQAQ('sadness')[0]}\n${error.message}`,
       })
     })
   }

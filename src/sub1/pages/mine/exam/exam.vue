@@ -19,10 +19,10 @@ onPullDownRefresh(async() => {
     Toast.success({
       message: `加载完成\n${getRandomQAQ('happy')[0]}`,
     })
-  }).catch(() => {
+  }).catch((error) => {
     Toast.clear()
     Toast.fail({
-      message: `加载失败\n${getRandomQAQ('sadness')[0]}`,
+      message: `加载失败\n${getRandomQAQ('sadness')[0]}\n${error.message}`,
     })
   }).finally(() => {
     uni.stopPullDownRefresh()

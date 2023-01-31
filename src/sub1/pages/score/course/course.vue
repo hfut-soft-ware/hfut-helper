@@ -53,9 +53,9 @@ watchEffect(() => {
     }
     getSingleScoreSchoolRequest(singleScoreDto).then(({ data }) => {
       schoolRank.value = data.data
-    }).catch(() => {
+    }).catch((error) => {
       Toast.fail({
-        message: `获取成绩信息失败，去交流群问问吧~\n${getRandomQAQ('sadness')[0]}`,
+        message: `获取成绩信息失败，去交流群问问吧~\n${getRandomQAQ('sadness')[0]}\n${error.message}`,
       })
     })
   }

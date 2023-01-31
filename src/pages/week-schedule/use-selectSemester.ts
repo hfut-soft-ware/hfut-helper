@@ -25,8 +25,8 @@ export function useSelectSemester() {
     getSemesters().then((res) => {
       semesters.value = res.data.data
       selectPickerLoading.value = false
-    }).catch((err) => {
-      Toast.fail('学期列表加载失败')
+    }).catch((error) => {
+      Toast.fail(`学期列表加载失败\n${error.message}`)
     })
   }
 
@@ -43,9 +43,9 @@ export function useSelectSemester() {
       showSelectSemester.value = false
       Toast.clear()
       Toast.success('数据加载完成')
-    }).catch((err) => {
+    }).catch((error) => {
       Toast.clear()
-      Toast.fail('数据加载完成')
+      Toast.fail(`数据加载完成\n${error.message}`)
     })
   }
 

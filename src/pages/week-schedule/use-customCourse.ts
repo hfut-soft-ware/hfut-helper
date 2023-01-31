@@ -83,14 +83,14 @@ export function useCustomCourse(
         Toast.success({
           message: '添加成功',
         })
-      }).catch(() => {
+      }).catch((error) => {
         Toast.fail({
-          message: '课表加载失败',
+          message: `课表加载失败\n${error.message}`,
         })
       })
-    }).catch(() => {
+    }).catch((error) => {
       Toast.fail({
-        message: '课表添加失败',
+        message: `课表添加失败\n${error.message}`,
       })
     })
   }
@@ -105,14 +105,14 @@ export function useCustomCourse(
         Toast.success({
           message: '课表加载成功',
         })
-      }).catch(() => {
+      }).catch((error) => {
         Toast.fail({
-          message: '课表加载失败',
+          message: `课表加载失败\n${error.message}`,
         })
       })
-    }).catch(() => {
+    }).catch((error) => {
       Toast.fail({
-        message: '日程更新失败',
+        message: `日程更新失败\n${error.message}`,
       })
     })
   }
@@ -143,14 +143,14 @@ export function useCustomCourse(
         Toast.success({
           message: '课表加载成功',
         })
-      }).catch(() => {
+      }).catch((error) => {
         Toast.fail({
-          message: '课表加载失败',
+          message: `课表加载失败\n${error.message}`,
         })
       })
-    }).catch(() => {
+    }).catch((error) => {
       Toast.fail({
-        message: '日程删除失败',
+        message: `日程删除失败\n${error.message}`,
       })
     })
   }

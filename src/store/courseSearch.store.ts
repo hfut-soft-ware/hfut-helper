@@ -103,9 +103,9 @@ export const useCourseSearchStore = defineStore('courseSearch', () => {
   const getAllCourseOptions = async() => {
     await getAllCourseOptionsRequest().then((res) => {
       options.value = res.data.data
-    }).catch(() => {
+    }).catch((error) => {
       Toast.fail({
-        message: `获取课表信息失败，求交流群问问吧\n${getRandomQAQ('sadness')[0]}`,
+        message: `获取课表信息失败，求交流群问问吧\n${getRandomQAQ('sadness')[0]}\n${error.message}`,
       })
     })
   }
@@ -129,9 +129,9 @@ export const useCourseSearchStore = defineStore('courseSearch', () => {
         message: `加载成功\n${getRandomQAQ('happy')[0]}`,
       })
       courseStore.initSearchStore(res.data.data)
-    }).catch((err) => {
+    }).catch((error) => {
       Toast.fail({
-        message: `${err.data.msg}\n${getRandomQAQ('sadness')[0]}`,
+        message: `${error.data.msg}\n${getRandomQAQ('sadness')[0]}\n${error.message}`,
       })
     })
   }
