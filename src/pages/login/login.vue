@@ -9,6 +9,7 @@ import { useFormValidate } from './use-formValidate'
 import { useAuthStore } from '@/store/auth.store'
 import StatusBar from '@/components/status-bar/status-bar.vue'
 import { uesLoverStore } from '@/store/lover.store'
+import { onNavigateClick } from '@/shared/utils'
 
 const { validate, form } = useFormValidate()
 
@@ -51,17 +52,6 @@ async function onLogin() {
   }
 }
 
-function toDisclaimers() {
-  uni.navigateTo({
-    url: '/sub1/pages/mine/about/disclaimers/disclaimers',
-  })
-}
-
-function onHelpClick() {
-  uni.navigateTo({
-    url: '/sub1/pages/mine/help/help?type=login',
-  })
-}
 </script>
 
 <template>
@@ -117,14 +107,20 @@ function onHelpClick() {
       <div class="mt-5 btn bg-blue-500 shadow-lg shadow-blue-500/50" @click="onLogin">
         登录
       </div>
+
+      <div class="flex justify-end mt-5">
+        <p class="link" @click="() => onNavigateClick('/sub1/pages/web-view/password-forget')">
+          忘记密码了？点我找回
+        </p>
+      </div>
     </div>
     <p class=" text-xs text-gray-500 mt-5">
       登录遇到了问题？可以加入交流群656140321问问 {{ getRandomQAQ('happy')[0] }}
     </p>
-    <p class="text-center text-blue-500 underline text-sm mt-5" @click="onHelpClick">
+    <p class="link underline mt-5" @click="() => onNavigateClick('/sub1/pages/mine/help/help?type=login')">
       帮助
     </p>
-    <p class="text-center text-blue-500 underline text-sm my-5" @click="toDisclaimers">
+    <p class="link underline my-5" @click="() => onNavigateClick('/sub1/pages/mine/about/disclaimers/disclaimers')">
       用户协议
     </p>
   </div>
@@ -133,6 +129,9 @@ function onHelpClick() {
 <style lang='scss' scoped>
 .lover-img {
   @apply w-[200px] h-[200px];
+}
+.link {
+  @apply text-center text-blue-500 text-sm;
 }
 .login-page {
   width: 95vw;

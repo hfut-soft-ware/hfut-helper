@@ -227,6 +227,14 @@
             "navigationBarTitleText": "课程查询",
             "enablePullDownRefresh": false
           }
+        },
+        {
+          "path": "pages/web-view/password-forget",
+          "style": {
+            "navigationBarBackgroundColor": "#b81d18",
+            "navigationBarTitleText": "找回密码",
+            "enablePullDownRefresh": false
+          }
         }
       ]
     }
