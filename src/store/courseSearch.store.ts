@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import Toast from '@vant/weapp/lib/toast/toast'
 import { getRandomQAQ } from 'qaq-font'
+import { handleError } from '@/shared/utils/index'
 import { getAllCourseOptionsRequest, getAllCourseQueryRequest } from '@/server/api/user'
 import type { IAllCourseOptionsData } from '@/shared/types/response/all-course-options'
 import type { IGetAllCourseDto } from '@/shared/types/dto/getAllCourse'
@@ -105,7 +106,7 @@ export const useCourseSearchStore = defineStore('courseSearch', () => {
       options.value = res.data.data
     }).catch((error) => {
       Toast.fail({
-        message: `获取课表信息失败，求交流群问问吧\n${getRandomQAQ('sadness')[0]}\n${error.message}`,
+        message: `获取课表信息失败，求交流群问问吧\n${getRandomQAQ('sadness')[0]}\n${error?.data?.msg}`,
       })
     })
   }
@@ -130,9 +131,7 @@ export const useCourseSearchStore = defineStore('courseSearch', () => {
       })
       courseStore.initSearchStore(res.data.data)
     }).catch((error) => {
-      Toast.fail({
-        message: `${error.data.msg}\n${getRandomQAQ('sadness')[0]}\n${error.message}`,
-      })
+      handleError(error, '加载失败')
     })
   }
 

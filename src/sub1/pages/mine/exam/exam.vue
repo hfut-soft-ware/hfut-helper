@@ -4,6 +4,7 @@ import { onPullDownRefresh } from '@dcloudio/uni-app'
 import Toast from '@vant/weapp/lib/toast/toast'
 import { getRandomQAQ } from 'qaq-font'
 import { format, formatDistanceToNow } from 'date-fns'
+import { handleError } from '@/shared/utils/index'
 import { useCourseListStore } from '@/store/courseList.store'
 
 const store = useCourseListStore()
@@ -20,10 +21,7 @@ onPullDownRefresh(async() => {
       message: `加载完成\n${getRandomQAQ('happy')[0]}`,
     })
   }).catch((error) => {
-    Toast.clear()
-    Toast.fail({
-      message: `加载失败\n${getRandomQAQ('sadness')[0]}\n${error.message}`,
-    })
+    handleError(error, '加载失败')
   }).finally(() => {
     uni.stopPullDownRefresh()
   })

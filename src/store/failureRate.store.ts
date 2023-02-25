@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import Toast from '@vant/weapp/lib/toast/toast'
-import { getRandomQAQ } from 'qaq-font'
+import { handleError } from '@/shared/utils/index'
 import { getFailureRateRequest } from '@/server/api/score'
 import type { IFailureRateData } from '@/shared/types/response/failure-rate'
 
@@ -13,11 +12,8 @@ export const useFailureRateStore = defineStore('failureRateStore', () => {
     await getFailureRateRequest(courseName.value).then((res) => {
       failureRateData.value = res.data.data
     }).catch((error) => {
-      const msg = error.data.msg
       failureRateData.value = []
-      Toast.fail({
-        message: `${msg}\n${getRandomQAQ('sadness')[0]}\n${error.message}`,
-      })
+      handleError(error)
     })
   }
 

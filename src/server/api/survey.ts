@@ -3,9 +3,12 @@ import type { ISurveyListResponse } from '@/shared/types/response/survey-list'
 import type { ISurveyResponse } from '@/shared/types/response/survey'
 import type { SubmitSurveyDto } from '@/shared/types/dto/survey'
 
-export function getSurveyList() {
+export function getSurveyList(semesterId?: number) {
   return request<ISurveyListResponse>({
     url: '/survey/getList',
+    params: {
+      semesterId,
+    },
   })
 }
 

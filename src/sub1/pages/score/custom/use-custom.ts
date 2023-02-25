@@ -3,6 +3,7 @@ import { storeToRefs } from 'pinia'
 import Toast from '@vant/weapp/lib/toast/toast'
 import { getRandomQAQ } from 'qaq-font'
 import { useDebounceFn } from '@vueuse/core'
+import { handleError } from '@/shared/utils/index'
 import { getCustomScoreRequest } from '@/server/api/score'
 import { formatScore } from '@/store/score.store'
 import type { ICustomScoreData } from '@/shared/types/response/score-custom'
@@ -36,9 +37,7 @@ export function useCustom(store: ReturnType<typeof useScoreStore>) {
         message: `加载成功！\n${getRandomQAQ('happy')[0]}`,
       })
     }).catch((error) => {
-      Toast.fail({
-        message: `加载失败！\n${getRandomQAQ('sadness')[0]}\n${error.message}`,
-      })
+      handleError(error, '加载失败')
     }).finally(() => {
       setTimeout(() => {
         Toast.clear()

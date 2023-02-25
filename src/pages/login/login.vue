@@ -107,12 +107,6 @@ async function onLogin() {
       <div class="mt-5 btn bg-blue-500 shadow-lg shadow-blue-500/50" @click="onLogin">
         登录
       </div>
-
-      <div class="flex justify-end mt-5">
-        <p class="link" @click="() => onNavigateClick('/sub1/pages/web-view/password-forget')">
-          忘记密码了？点我找回
-        </p>
-      </div>
     </div>
     <p class=" text-xs text-gray-500 mt-5">
       登录遇到了问题？可以加入交流群656140321问问 {{ getRandomQAQ('happy')[0] }}

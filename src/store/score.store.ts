@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 import Toast from '@vant/weapp/lib/toast/toast'
 import { getRandomQAQ } from 'qaq-font'
 import { isNumber } from 'lodash'
+import { handleError } from '@/shared/utils/index'
 import { getScoreRequest, getSingleScoreRequest } from '@/server/api/score'
 import { useRef } from '@/shared/hooks/useRef'
 import { useSyncStorage } from '@/shared/hooks/use-syncStorage'
@@ -140,9 +141,7 @@ export const useScoreStore = defineStore('scoreStore', () => {
       Toast.clear()
       uni.stopPullDownRefresh()
       if (withTip) {
-        Toast.fail({
-          message: `获取成绩信息失败，去交流群问问吧~\n${getRandomQAQ('sadness')[0]}\n${error.message}`,
-        })
+        handleError(error, '获取成绩信息失败，去交流群问问吧~')
       }
       throw new Error('cannot get data')
     })
@@ -171,11 +170,8 @@ export const useScoreStore = defineStore('scoreStore', () => {
       })
       uni.stopPullDownRefresh()
     } catch (error: any) {
-      Toast.clear()
       uni.stopPullDownRefresh()
-      Toast.fail({
-        message: `获取成绩信息失败，去交流群问问吧~\n${getRandomQAQ('sadness')[0]}\n${error.message}`,
-      })
+      handleError(error, '获取成绩信息失败，去交流群问问吧~')
     }
   }
 

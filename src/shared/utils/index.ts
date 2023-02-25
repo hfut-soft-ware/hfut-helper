@@ -33,8 +33,13 @@ export const onNavigateClick = (path: string) => {
   })
 }
 
-export const handleError = (msg: string, err: any) => {
+/**
+ * @description 处理请求错误
+ */
+export const handleError = (err: any, msg?: string) => {
+  Toast.clear()
   Toast.fail({
-    message: `加载失败\n${err.message}\n${getRandomQAQ('sadness')[0]}`,
+    message: `${msg ? `${msg}\n` : ''}${err?.data?.msg}\n${getRandomQAQ('sadness')[0]}`,
+    duration: 2000,
   })
 }

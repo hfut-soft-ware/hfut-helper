@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { reactive, ref } from 'vue'
 import Toast from '@vant/weapp/lib/toast/toast'
 import { getRandomQAQ } from 'qaq-font'
+import { handleError } from '@/shared/utils/index'
 import { getFlowWater } from '@/server/api/card'
 import type { IFlowWaterData } from '@/shared/types/response/flowWater'
 
@@ -42,9 +43,7 @@ export const useFlowWaterStore = defineStore('flowWaterStore', () => {
       alreadyLoad.value = true
       uni.stopPullDownRefresh()
     }).catch((error) => {
-      Toast.fail({
-        message: `校务网络好像出了点问题哦\n${getRandomQAQ('sadness')[0]}\n${error.message}`,
-      })
+      handleError(error, '校务网络好像出了点问题哦')
       uni.stopPullDownRefresh()
     })
   }

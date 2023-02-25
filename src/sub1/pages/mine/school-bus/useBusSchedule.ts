@@ -1,6 +1,7 @@
 import { computed, ref, watchEffect } from 'vue'
 import Toast from '@vant/weapp/dist/toast/toast'
 import { getRandomQAQ } from 'qaq-font'
+import { handleError } from '@/shared/utils/index'
 import { getBusRequest } from '@/server/api/others'
 import type { BusInfo, BusQueryData } from '@/shared/types/response/bus-query'
 import { SCHOOL_BUS_KEY } from '@/shared/constant'
@@ -66,11 +67,7 @@ export function useBusSchedule() {
       setSchoolBusStorage(data.data)
       initState(data.data)
     }).catch((error) => {
-      Toast.clear()
-      Toast.fail({
-        message: `加载失败\n${getRandomQAQ('sadness')[0]}\n${error.message}`,
-        duration: 1000,
-      })
+      handleError(error, '加载失败')
       uni.stopPullDownRefresh()
     })
   }

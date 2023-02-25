@@ -2,9 +2,8 @@
 import { storeToRefs } from 'pinia'
 import { computed, ref, shallowRef, watchEffect } from 'vue'
 import { onPullDownRefresh } from '@dcloudio/uni-app'
-import Toast from '@vant/weapp/lib/toast/toast'
-import { getRandomQAQ } from 'qaq-font'
 import Tabs from './tabs.vue'
+import { handleError } from '@/shared/utils/index'
 import { formatScore, useScoreStore } from '@/store/score.store'
 import BounceBall from '@/components/BounceBall/BounceBall.vue'
 import RadarUCharts from '@/sub1/pages/score/course/radar-ucharts.vue'
@@ -54,9 +53,7 @@ watchEffect(() => {
     getSingleScoreSchoolRequest(singleScoreDto).then(({ data }) => {
       schoolRank.value = data.data
     }).catch((error) => {
-      Toast.fail({
-        message: `获取成绩信息失败，去交流群问问吧~\n${getRandomQAQ('sadness')[0]}\n${error.message}`,
-      })
+      handleError(error, '获取成绩信息失败，去交流群问问吧~')
     })
   }
 })

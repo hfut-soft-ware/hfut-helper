@@ -5,7 +5,7 @@ import { campusInfo, courseStartTimePrefixs, lessonStartTimePrefixs } from './co
 import { getClassroomRequest } from '@/server/api/others'
 import { useCourseListStore } from '@/store/courseList.store'
 import { getUserData } from '@/store/auth.store'
-import { ascend } from '@/shared/utils/index'
+import { ascend, handleError } from '@/shared/utils/index'
 
 import type { IEmptyClassroomDto } from '@/shared/types/dto/empty-classroom'
 import type { Datum } from '@/shared/types/response/empty-classroom'
@@ -160,10 +160,7 @@ export function useEmptyClassroom() {
       getClassroomData.value = data.data
       Toast.clear()
     }).catch((error) => {
-      Toast.clear()
-      Toast.fail({
-        message: `加载失败\n${getRandomQAQ('sadness')[0]}\n${error.message}`,
-      })
+      handleError(error, '加载失败')
     })
   }
   return {

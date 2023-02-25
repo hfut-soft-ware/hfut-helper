@@ -37,7 +37,7 @@ onLoad((query) => {
       }
     })
   }).catch((err) => {
-    handleError('加载失败', err)
+    handleError(err, '加载失败')
   })
 })
 
@@ -89,7 +89,7 @@ const handleSubmitClick = () => {
     })
   }).catch((err) => {
     Toast.clear()
-    handleError('提交失败', err)
+    handleError(err, '提交失败')
   })
 }
 </script>

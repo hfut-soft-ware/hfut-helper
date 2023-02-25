@@ -4,6 +4,7 @@ import Dialog from '@vant/weapp/dist/dialog/dialog'
 import { getRandomQAQ } from 'qaq-font'
 import Fuse from 'fuse.js'
 import { useDebounceFn } from '@vueuse/core'
+import { handleError } from '@/shared/utils/index'
 import { confirmGrammer, getStatements, getTokenTips, grammerCheck } from '@/server/api/score'
 
 import type { Course } from '@/shared/types/response/token-tips'
@@ -71,13 +72,13 @@ export function useExpression() {
     trainPlansFuse = new Fuse(data.data.trainPlans, fuseOptions)
     mineFuse = new Fuse(data.data.mine, fuseOptions)
   }).catch((error) => {
-    Toast.fail(`糟糕，没有拿到课程信息\n ${getRandomQAQ('sadness')[0]}\n${error.message}`)
+    handleError(error, '糟糕，没有拿到课程信息')
   })
 
   getStatements().then(({ data }) => {
     statements.value = data.data.statements
   }).catch((error) => {
-    Toast.fail(`糟糕，没有拿到表达式信息\n ${getRandomQAQ('sadness')[0]}\n${error.message}`)
+    handleError(error, '糟糕，没有拿到表达式信息')
   })
 
   const handleTipClick = (courseName: string) => {
@@ -128,7 +129,7 @@ export function useExpression() {
         Toast.fail(`${msg}\n ${getRandomQAQ('sadness')[0]}`)
       }
     }).catch((error) => {
-      Toast.fail(`提交出错\n ${getRandomQAQ('sadness')[0]}\n${error.message}`)
+      handleError(error, '提交出错')
     })
   }, 1000)
 

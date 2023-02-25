@@ -2,6 +2,7 @@ import { computed, ref } from 'vue'
 import Toast from '@vant/weapp/lib/toast/toast'
 import { getCourseListRequest, getSemesters } from '@/server/api/user'
 import { useCourseListStore } from '@/store/courseList.store'
+import { handleError } from '@/shared/utils/index'
 import type { Semester } from '@/shared/types/response/semesters'
 
 export function useSelectSemester() {
@@ -26,7 +27,7 @@ export function useSelectSemester() {
       semesters.value = res.data.data
       selectPickerLoading.value = false
     }).catch((error) => {
-      Toast.fail(`学期列表加载失败\n${error.message}`)
+      handleError(error, '学期列表加载失败')
     })
   }
 
@@ -44,8 +45,7 @@ export function useSelectSemester() {
       Toast.clear()
       Toast.success('数据加载完成')
     }).catch((error) => {
-      Toast.clear()
-      Toast.fail(`数据加载完成\n${error.message}`)
+      handleError(error, '数据加载完成')
     })
   }
 

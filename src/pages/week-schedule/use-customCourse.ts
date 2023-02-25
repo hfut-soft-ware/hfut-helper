@@ -6,6 +6,7 @@ import type { IAddCourseDto } from '@/shared/types/dto/course'
 import { addCourseRequest, deleteCourseRequest, updateCourseRequest } from '@/server/api/user'
 import type { TColors } from '@/shared/constant'
 import { CARD_COLORS } from '@/shared/constant'
+import { handleError } from '@/shared/utils/index'
 import type { CreateCustomPageEmits } from '@/components/CreateCustomPage/CreateCustomPage.vue'
 import { LESSON_INDEX_TO_TIME } from '@/pages/week-schedule/constant'
 
@@ -89,9 +90,7 @@ export function useCustomCourse(
         })
       })
     }).catch((error) => {
-      Toast.fail({
-        message: `课表添加失败\n${error.message}`,
-      })
+      handleError(error, '课表添加失败')
     })
   }
 
@@ -111,9 +110,7 @@ export function useCustomCourse(
         })
       })
     }).catch((error) => {
-      Toast.fail({
-        message: `日程更新失败\n${error.message}`,
-      })
+      handleError(error, '日程更新失败')
     })
   }
 
@@ -149,9 +146,7 @@ export function useCustomCourse(
         })
       })
     }).catch((error) => {
-      Toast.fail({
-        message: `日程删除失败\n${error.message}`,
-      })
+      handleError(error, '日程删除失败')
     })
   }
 
