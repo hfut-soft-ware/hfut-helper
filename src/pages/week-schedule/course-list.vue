@@ -239,12 +239,12 @@ function onClose() {
               <span class="relative inline-flex rounded-full h-2 w-2 bg-sky-500" />
             </div>
             <template v-if="course.detail?.type === 'Exam' && course.course.height === 60">
-              <p class="font-bold">
+              <p class="font-bold break-all">
                 {{ formatCourseName(course.detail?.courseName) }}
               </p>
             </template>
             <template v-if="course.course.extraCourse.length === 1">
-              <p class="font-bold">
+              <p class="font-bold break-all">
                 {{ formatCourseName(course.detail?.courseName) }}
               </p>
               <p class="text-[11px]">
