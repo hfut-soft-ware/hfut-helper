@@ -22,6 +22,7 @@ import { useCourseSearchStore } from '@/store/courseSearch.store'
 
 interface Props {
   courseSearch: boolean
+  isLoading?: boolean
 }
 
 withDefaults(defineProps<Props>(), {
@@ -205,7 +206,7 @@ function onClose() {
       @cancel="closeSelectSemester"
     />
   </van-popup>
-  <Header />
+  <Header :is-loading="isUndefined(isLoading) ? false : isLoading" />
   <div
     class="w-screen overflow-hidden flex relative"
     :class="mode === 'normal' ? 'normal-mt' : 'search-mt'"

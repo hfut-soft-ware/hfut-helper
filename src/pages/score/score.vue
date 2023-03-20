@@ -17,6 +17,7 @@ const {
   homeActive,
   homeScoreData,
   semesterScoreData,
+  isLoading,
 } = storeToRefs(scoreStore)
 
 onMounted(async() => {
@@ -79,10 +80,14 @@ function changeMaxOrTop() {
             </div>
           </div>
         </div>
-        <div>
-          <h3 class="font-semibold text-2xl text-white">
+        <div class="flex items-center gap-2">
+          <span class="font-semibold text-2xl text-white">
             {{ homeScoreData.rank }} / {{ homeScoreData.total }}
-          </h3>
+          </span>
+          <!-- 加载图标 -->
+          <template v-if="isLoading">
+            <van-loading :size="20" color="#ffffff" />
+          </template>
         </div>
         <div
           class="bg-[#3F51B5] p-2 rounded-md flex"

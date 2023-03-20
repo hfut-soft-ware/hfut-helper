@@ -62,6 +62,7 @@ export const useScoreStore = defineStore('scoreStore', () => {
   const [selectedSemester, setSelectedSemester] = useRef<number>(0)
   const [currentSelectedCourse, setCurrentSelectedCourse] = useRef<Score5>({} as Score5)
   const [currentScoreData, setCurrentScoreData] = useRef<SingleScore>({} as SingleScore)
+  const isLoading = ref(false)
 
   const homeDetailMode = ref<'max' | 'top'>('top')
   const homeDetailInfo = computed(() => {
@@ -119,13 +120,8 @@ export const useScoreStore = defineStore('scoreStore', () => {
   })
 
   const getScoreStore = async(refresh = false, withTip = true) => {
-    if (withTip) {
-      Toast.loading({
-        duration: 0,
-        forbidClick: true,
-        message: `正在获取成绩信息...\n${getRandomQAQ('happy')[0]}`,
-      })
-    }
+    isLoading.value = true
+
     await getScoreRequest(refresh).then((res) => {
       if (withTip) {
         Toast.clear()
@@ -144,6 +140,8 @@ export const useScoreStore = defineStore('scoreStore', () => {
         handleError(error, '获取成绩信息失败，去交流群问问吧~')
       }
       throw new Error('cannot get data')
+    }).finally(() => {
+      isLoading.value = false
     })
   }
 
@@ -182,6 +180,7 @@ export const useScoreStore = defineStore('scoreStore', () => {
     homeActive,
     homeScoreRankDataType,
     homeScoreData,
+    isLoading,
     setHomeActive,
     getScoreStore,
     semesterScoreData,

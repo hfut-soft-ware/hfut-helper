@@ -14,6 +14,10 @@ const {
   mainInfo,
 } = storeToRefs(store)
 
+defineProps<{
+  isLoading: boolean
+}>()
+
 const loverStore = uesLoverStore()
 const { isLoverRelieved, isLover } = storeToRefs(loverStore)
 
@@ -51,7 +55,15 @@ function handleLoverClick() {
           <van-icon v-if="mode === 'normal'" name="like-o" :class="isLover ? 'text-red-500' : ''" class="text-lg" @click="handleLoverClick" />
           <div class="flex justify-center w-full">
             <div class="flex justify-center mx-[2.5vw]">
-              <p>第{{ weekSchedule.weekIdx + 1 }}周 {{ currentWeekIdx === weekSchedule.weekIdx ? '' : `${mainInfo === null ? '' : `(当前是第${mainInfo.curWeek}周)`}` }}</p>
+              <!-- 加载图标 -->
+              <template v-if="isLoading">
+                <span class="inline-block relative">
+                  <div class="absolute right-2">
+                    <van-loading :size="20" color="#1989fa" />
+                  </div>
+                </span>
+              </template>
+              <span>第{{ weekSchedule.weekIdx + 1 }}周 {{ currentWeekIdx === weekSchedule.weekIdx ? '' : `${mainInfo === null ? '' : `(当前是第${mainInfo.curWeek}周)`}` }}</span>
             </div>
           </div>
         </div>

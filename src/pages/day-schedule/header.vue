@@ -6,6 +6,10 @@ import { getCourseDate, useCourseListStore } from '@/store/courseList.store'
 import IconButton from '@/components/base/IconButton.vue'
 import { useSelectCourseList } from '@/shared/hooks/use-selectCourseList'
 
+defineProps<{
+  isLoading: boolean
+}>()
+
 const store = useCourseListStore()
 
 const { onPrev, onNext } = useSelectCourseList(store)
@@ -32,8 +36,14 @@ function handleActiveChange(idx: number) {
   <div v-if="todayCourse" class="header">
     <div class="flex flex-col">
       <div class="font-medium text-xl leading-8">
-        <div class="font-bold text-ls">
-          {{ visibleDate }}
+        <div class="flex items-center gap-2">
+          <div class="font-bold text-ls">
+            {{ visibleDate }}
+          </div>
+          <!-- 加载图标 -->
+          <template v-if="isLoading">
+            <van-loading :size="20" color="#1989fa" />
+          </template>
         </div>
         <div class="flex todo-list text-xs font-normal text-[#9499AA]">
           你今天有
