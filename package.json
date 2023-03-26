@@ -26,11 +26,11 @@
     "build:mp-lark": "uni build -p mp-lark",
     "build:mp-qq": "uni build -p mp-qq",
     "build:mp-toutiao": "uni build -p mp-toutiao",
-    "build": "uni build -p mp-weixin && node ./bin/fixFix.js",
+    "build": "uni build -p mp-weixin",
     "build:quickapp-webview": "uni build -p quickapp-webview",
     "build:quickapp-webview-huawei": "uni build -p quickapp-webview-huawei",
     "build:quickapp-webview-union": "uni build -p quickapp-webview-union",
-    "fix:dev": "node ./bin/fixFix.js -D"
+    "fix:dev": "node ./tool/bin/fixFix.js -D"
   },
   "dependencies": {
     "@dcloudio/uni-app": "3.0.0-alpha-3040420220402002",

@@ -5,6 +5,7 @@ import {
   postcssWeappTailwindcssRename,
   ViteWeappTailwindcssPlugin as vwt,
 } from 'weapp-tailwindcss-webpack-plugin'
+import fix from './tool/plugins/vite-plugin-fix'
 
 const isH5 = process.env.UNI_PLATFORM === 'h5'
 
@@ -30,7 +31,7 @@ function resolve(dir: string): string {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [uni(), vwt()],
+  plugins: [uni(), vwt(), fix()],
   resolve: {
     alias: {
       '@': resolve('src/'),
