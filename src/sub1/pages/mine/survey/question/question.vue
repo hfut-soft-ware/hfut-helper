@@ -59,17 +59,6 @@ const handleSubmitClick = () => {
     duration: 0,
   })
 
-  console.log(JSON.stringify({
-    studentId: studentId.value,
-    radioQuestionAnswers,
-    blankQuestionAnswers: [{
-      questionId: blankQuestion.value.id,
-      content: input.value,
-    }],
-    surveyAssoc,
-    lessonSurveyTaskAssoc,
-  }))
-
   submitSurvey({
     studentId: studentId.value,
     radioQuestionAnswers,

@@ -37,7 +37,6 @@ export function useExpression() {
       return
     }
     const matchRes = Array.from(newVal.matchAll(courseReg))
-    // console.log(matchRes)
     if (!matchRes) {
       return
     }
@@ -196,7 +195,6 @@ function isRegMatchEqual(prev: RegExpMatchArray[], current: RegExpMatchArray[]) 
 }
 
 function strReplace(str: string, searchVal: RegExpMatchArray, replaceVal: string) {
-  // console.log(str, searchVal, replaceVal)
   let index = searchVal.index!
   if (index > 0 && str[index - 1] === '`') {
     index--

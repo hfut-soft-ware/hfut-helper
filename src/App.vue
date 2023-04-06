@@ -1,25 +1,18 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { watchEffect } from 'vue'
 import { onLaunch } from '@dcloudio/uni-app'
 import { getRandomQAQ } from 'qaq-font'
-import { AuthStatus, useAuthStore } from '@/store/auth.store'
+import { getUserData } from '@/store/auth.store'
+import { useLoginRedirect } from '@/shared/hooks/use-loginRedirect'
 
-const authStore = useAuthStore()
+const { redirect } = useLoginRedirect()
 
-const { auth } = storeToRefs(authStore)
-
-watchEffect(() => {
-  if (auth.value.status === AuthStatus.LOGIN_IN) {
-    uni.switchTab({
-      url: '/pages/day-schedule/index',
-    })
-  } else {
-    uni.switchTab({
-      url: '/pages/login/login',
-    })
-  }
-})
+if (getUserData()?.campus === '宣城校区') {
+  uni.redirectTo({
+    url: 'pages/start-ad/index',
+  })
+} else {
+  redirect()
+}
 
 onLaunch(() => {
   const updateManager = uni.getUpdateManager()

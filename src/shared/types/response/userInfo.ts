@@ -6,4 +6,5 @@ export interface IUserInfo {
   major: string
   adminClass: string
   studyYears: string
+  campus: string
 }

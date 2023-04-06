@@ -4,6 +4,7 @@ import { cp } from 'fs/promises'
 import type { PluginOption } from 'vite'
 
 type Mode = 'development' | 'production'
+let firstLoading = true
 
 export default function viteFix(): PluginOption {
   let mode: Mode
@@ -13,6 +14,9 @@ export default function viteFix(): PluginOption {
       mode = env.mode as Mode
     },
     async closeBundle() {
+      if (!firstLoading) {
+        return
+      }
       const rootPath = cwd()
       const resolve = (...paths: string[]) => join(rootPath, ...paths)
 
@@ -33,6 +37,8 @@ export default function viteFix(): PluginOption {
           console.log(error)
         }
       }
+
+      firstLoading = false
       console.log('🍟 fix file finished!')
     },
   }

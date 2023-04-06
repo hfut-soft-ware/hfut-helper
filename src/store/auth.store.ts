@@ -19,7 +19,7 @@ export const enum AuthStatus {
   LOGIN_IN,
 }
 
-function checkIsLogin(): AuthStatus {
+export function checkIsLogin(): AuthStatus {
   const token = uni.getStorageSync(TOKEN_KEY) as string
   return token.length > 0 ? AuthStatus.LOGIN_IN : AuthStatus.UN_LOGIN
 }
