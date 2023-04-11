@@ -6,6 +6,7 @@ import type { CourseData } from '@/store/courseList.store'
 import { formatCourseName, formatRoom, getTeachers, useCourseListStore } from '@/store/courseList.store'
 import CoursePopup from '@/components/CoursePopup/course-popup.vue'
 import BounceBall from '@/components/BounceBall/BounceBall.vue'
+import { handleSpecialExamSchedule } from '@/pages/day-schedule/special-case'
 
 const store = useCourseListStore()
 
@@ -20,12 +21,13 @@ const courseData = ref<CourseData>()
 const conflictCourse = ref<CourseData[]>([])
 const conflictCourseShow = ref(false)
 
-const courseList = computed(() => dayHours.map((hour) => {
+const courseList = computed(() => handleSpecialExamSchedule(dayHours.map((hour) => {
   return {
     time: hour,
     course: store.getCourseByHourIndex(hour.index),
   }
-}))
+})),
+)
 
 function handleCourseClick(course: CourseData) {
   courseData.value = course
@@ -53,7 +55,7 @@ function closeConflictCourseShow() {
 </script>
 
 <template>
-  <course-popup v-if="show" :show="show" :is-custom="isCustom" :data="courseData" @close="onClose" />
+  <course-popup v-if="show" :show="show" :is-custom="isCustom" :data="courseData!" @close="onClose" />
   <van-popup
     :show="conflictCourseShow"
     round
@@ -115,6 +117,7 @@ function closeConflictCourseShow() {
               </div>
             </template>
             <template v-else>
+              <!-- 课程冲突的情况 -->
               <template v-if="list.course.length > 1">
                 <div class="card red flex-col justify-center mt-4 relative" @click="handleConflict(list.course)">
                   <bounce-ball class="top-2 right-0 absolute" />

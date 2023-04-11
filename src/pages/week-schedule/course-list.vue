@@ -142,7 +142,7 @@ function onClose() {
     <CustomCourse
       :current-day="currentDay"
       :start-index="startIndex"
-      :current-week="weekSchedule.weekIdx + 1"
+      :current-week="( weekSchedule as any ).weekIdx + 1"
       :close-popup="() => customCourseShow = false"
     />
   </van-popup>
@@ -150,7 +150,7 @@ function onClose() {
     v-if="show"
     :is-custom="isCustom"
     :show="show"
-    :data="courseData"
+    :data="courseData!"
     :weekday="weekday"
     @close="onClose"
   />
