@@ -8,6 +8,18 @@
 
 想了解更多直接点package.json
 
+## 设计
+
+小程序主要的代码在src下
+- App.vue 根组件，用来渲染页面
+- main.ts 入口文件
+- components 组件封装文件
+- assets 存放静态资源，如图标图片等
+- server 用来存放和服务端通信的逻辑
+- shared 一些工具函数
+- pages 小程序的主要页面
+- store 提供不同组件之间的状态共享
+
 # Q & A
 
 ## 为什么不是taro?
