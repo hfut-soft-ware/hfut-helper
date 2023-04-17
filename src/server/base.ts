@@ -1,15 +1,12 @@
 import type { AjaxInstance, AjaxRequestConfig } from 'uni-ajax'
 import ajax from 'uni-ajax'
 import { requestConfig } from '@/shared/config/request'
-import { TOKEN_KEY } from '@/shared/constant'
+import { SING_KEY, TOKEN_KEY, USER_ACCOUNT_KEY } from '@/shared/constant'
+import { createSign } from '@/shared/utils/auth'
 
-const getToken = () => {
-  return uni.getStorageSync(TOKEN_KEY)
+const getLocalStore = (key: string) => {
+  return uni.getStorageSync(key)
 }
-
-// const headers = {
-//   authorization: `Bearer ${getToken()}`,
-// }
 
 export function createInstance(config: AjaxRequestConfig) {
   return ajax.create(config)
@@ -21,8 +18,21 @@ const baseInstance = createInstance({
 
 baseInstance.interceptors.request.use((config: AjaxRequestConfig) => {
   config.header = {
-    authorization: `Bearer ${getToken()}`,
+    authorization: `Bearer ${getLocalStore(TOKEN_KEY)}`,
     ...config.header,
+  }
+  const signKey = getLocalStore(SING_KEY)
+  const key = createSign(config.url as string, getLocalStore(USER_ACCOUNT_KEY).studentId, signKey)
+  if (config.method === 'GET') {
+    config.params = {
+      key,
+      ...config.params,
+    }
+  } else {
+    config.data = {
+      key,
+      ...config.data as object,
+    }
   }
   return config
 })
@@ -33,11 +43,6 @@ baseInstance.interceptors.response.use(res => res, (err) => {
       title: '你的账号密码似乎已经改了哦~',
       content: err.data?.msg || '请重新登录',
       showCancel: false,
-      // success() {
-      //   uni.reLaunch({
-      //     url: '/pages/login/login',
-      //   })
-      // },
     })
   }
   throw err

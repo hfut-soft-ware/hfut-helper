@@ -5,12 +5,12 @@ import Toast from '@vant/weapp/lib/toast/toast'
 import { getRandomQAQ } from 'qaq-font'
 import { isFunction } from 'lodash'
 import { TOKEN_KEY, USER_ACCOUNT_KEY, USER_INFO_KEY } from '@/shared/constant'
-// import { loginRequest } from '@/server/api/auth'
 import { useAsync } from '@/shared/hooks/use-async'
 import type { IUserInfo } from '@/shared/types/response/userInfo'
 import { getUserInfo } from '@/server/api/user'
 import { useSyncStorage } from '@/shared/hooks/use-syncStorage'
 import { requestConfig } from '@/shared/config/request'
+import { handeLoginKey } from '@/shared/utils/auth'
 
 export const enum AuthStatus {
   // eslint-disable-next-line no-unused-vars
@@ -79,6 +79,7 @@ export const useAuthStore = defineStore('authStore', () => {
           await callback(token)
         } else {
           setToken(token)
+          handeLoginKey(state.data as any)
           setUserAccount({
             studentId,
             password,
