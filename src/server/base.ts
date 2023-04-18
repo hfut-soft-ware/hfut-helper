@@ -54,3 +54,7 @@ export function request<T>(config: AjaxRequestConfig, instance: AjaxInstance<any
   }
   return instance<T>(config)
 }
+
+export const loginInstance = createInstance({
+  baseURL: 'https://login.hfut-space.top',
+})

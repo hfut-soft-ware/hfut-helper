@@ -3,6 +3,6 @@ export interface ILoginResponse {
   msg: string
   data: {
     token: string
-    key: string
+    sign: string
   }
 }

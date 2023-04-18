@@ -12,5 +12,5 @@ export const createSign = (path: string, studentId: string, key: string) => {
 }
 
 export const handeLoginKey = (loginResponse: ILoginResponse) => {
-  uni.setStorageSync(SING_KEY, loginResponse.data.key)
+  uni.setStorageSync(SING_KEY, loginResponse.data.sign)
 }

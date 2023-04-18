@@ -1,16 +1,16 @@
 import { defineStore } from 'pinia'
 import { reactive } from 'vue'
-import type { AjaxResponse } from 'uni-ajax'
 import Toast from '@vant/weapp/lib/toast/toast'
 import { getRandomQAQ } from 'qaq-font'
 import { isFunction } from 'lodash'
 import { TOKEN_KEY, USER_ACCOUNT_KEY, USER_INFO_KEY } from '@/shared/constant'
 import { useAsync } from '@/shared/hooks/use-async'
-import type { IUserInfo } from '@/shared/types/response/userInfo'
 import { getUserInfo } from '@/server/api/user'
 import { useSyncStorage } from '@/shared/hooks/use-syncStorage'
-import { requestConfig } from '@/shared/config/request'
 import { handeLoginKey } from '@/shared/utils/auth'
+import type { IUserInfo } from '@/shared/types/response/userInfo'
+import { loginRequest } from '@/server/api/auth'
+import { handleError } from '@/shared/utils'
 
 export const enum AuthStatus {
   // eslint-disable-next-line no-unused-vars
@@ -53,43 +53,37 @@ export const useAuthStore = defineStore('authStore', () => {
   }
 
   const login = async({ studentId, password, callback }: LoginDto & { callback?: (token: string) => void | Promise<void> }) => {
-    uni.request({
-      url: `${requestConfig.baseURL}v2/login`,
-      method: 'POST',
-      data: {
-        studentId,
-        password,
-      },
-      async success(state) {
-        if (state.statusCode !== 200) {
-          Toast.fail({
-            message: `${(state as AjaxResponse).data.msg || '登录失败!'}\n${getRandomQAQ('sadness')[0]}`,
-          })
-
-          return
-        }
-
-        const token = (state as any).data.data.token as string
-
-        Toast.success({
-          message: `登录成功${getRandomQAQ('happy')[0]}`,
+    try {
+      const { data, statusCode } = await loginRequest({ studentId, password })
+      if (statusCode !== 200) {
+        Toast.fail({
+          message: `${data.msg} || '登录失败!'}\n${getRandomQAQ('sadness')[0]}`,
         })
+        return
+      }
 
-        if (isFunction(callback)) {
-          await callback(token)
-        } else {
-          setToken(token)
-          handeLoginKey(state.data as any)
-          setUserAccount({
-            studentId,
-            password,
-          } as any)
-        }
-        uni.reLaunch({
-          url: '/pages/day-schedule/index',
-        })
-      },
-    })
+      const token = data.data.token
+      Toast.clear()
+      Toast.success({
+        message: `登录成功${getRandomQAQ('happy')[0]}`,
+      })
+
+      if (isFunction(callback)) {
+        await callback(token)
+      } else {
+        setToken(token)
+        handeLoginKey(data)
+        setUserAccount({
+          studentId,
+          password,
+        } as any)
+      }
+      uni.reLaunch({
+        url: '/pages/day-schedule/index',
+      })
+    } catch (error) {
+      handleError(error)
+    }
   }
 
   const getUserData = async() => {
