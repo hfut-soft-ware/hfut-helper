@@ -81,8 +81,12 @@ export const useAuthStore = defineStore('authStore', () => {
       uni.reLaunch({
         url: '/pages/day-schedule/index',
       })
-    } catch (error) {
-      handleError(error)
+    } catch (error: any) {
+      if (error?.data?.msg) {
+        handleError(error)
+      } else {
+        handleError(error, '未知错误')
+      }
     }
   }
 

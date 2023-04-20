@@ -81,3 +81,7 @@ export const tabs: Tab[] = [
     name: '全校排名',
   },
 ]
+
+export const assetsUrl = {
+  advertise: 'https://hfut-space.top/static/images/imgs/ad.jpg',
+}
