@@ -100,7 +100,7 @@ const handleClick = () => {
           {{ survey.timeRange }}
         </p>
       </div>
-      <div class="flex">
+      <div class="flex flex-wrap">
         <div v-for="(task, index ) in survey.surveyTasks" :key="task.id" class="text-center text-sm" :class="task.submitted ? 'text-slate-500': 'text-blue-500'" @click="handleTaskClick(task)">
           {{ `${task.teacherName}${task.submitted ? '(已完成)': ''}${index === survey.surveyTasks.length - 1 ? '' : '/'}` }}
         </div>

@@ -11,6 +11,7 @@ import { useGetUserInfo } from '@/pages/mine/use-getUserInfo'
 import { useMineStore } from '@/store/mine.store'
 import BounceBall from '@/components/BounceBall/BounceBall.vue'
 import { useAvatar } from '@/pages/mine/use-avatar'
+import { assetsUrl } from '@/shared/constant'
 
 type TActive = 'commonServices' | 'settings'
 const active = ref<TActive>('commonServices')
@@ -56,7 +57,7 @@ getUserInfo()
     <div class="my-10 flex flex-col gap-5">
       <div class="border-box overflow-hidden rounded-xl card-shadow">
         <div class="relative flex justify-center items-center h-[200px] overflow-hidden">
-          <img mode="aspectFill" class="w-full bg" src="../../assets/imgs/mine-bg.jpg">
+          <img mode="aspectFill" class="w-full bg" :src="assetsUrl.mineBg">
           <div class="flex absolute flex-col items-center gap-2">
             <div class="w-[75px] h-[75px] border-2 border-white/50 rounded-full">
               <div class="relative" @click="onAvatarClick">

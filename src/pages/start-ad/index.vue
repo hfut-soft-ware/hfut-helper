@@ -1,7 +1,5 @@
 <script setup lang='ts'>
-import { format } from 'date-fns'
 import { useLoginRedirect } from '@/shared/hooks/use-loginRedirect'
-import { assetsUrl } from '@/shared/constant'
 
 const { redirect } = useLoginRedirect()
 
@@ -13,9 +11,9 @@ const handleClick = () => {
   })
 }
 
-const addDateQuery = (url: string) => {
-  return `${url}?date=${format(new Date(), 'yyyy-MM-dd')}`
-}
+// const addDateQuery = (url: string) => {
+//   return `${url}?date=${format(new Date(), 'yyyy-MM-dd')}`
+// }
 </script>
 
 <template>
@@ -30,7 +28,7 @@ const addDateQuery = (url: string) => {
         点我跳转 >>
       </p>
     </div>
-    <img class="w-full h-full" :src="addDateQuery(assetsUrl.advertise)" mode="aspectFit">
-    <!-- <img class="w-full h-full" src="../../assets/imgs/advertise.jpg" mode="aspectFit"> -->
+    <!-- <img class="w-full h-full" :src="addDateQuery(assetsUrl.advertise)" mode="aspectFit"> -->
+    <img class="w-full h-full" src="../../assets/imgs/advertise.jpg" mode="aspectFit">
   </div>
 </template>

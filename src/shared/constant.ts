@@ -84,4 +84,6 @@ export const tabs: Tab[] = [
 
 export const assetsUrl = {
   advertise: 'https://hfut-space.top/static/images/imgs/ad.jpg',
+  avatar: 'https://hfut-space.top/static/images/imgs/avatar.png',
+  mineBg: 'https://hfut-space.top/static/images/imgs/mine-bg.jpg',
 }

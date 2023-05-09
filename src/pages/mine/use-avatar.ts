@@ -1,5 +1,6 @@
 import { ref } from 'vue'
 import { isStorageEmpty, useSyncStorage } from '@/shared/hooks/use-syncStorage'
+import { assetsUrl } from '@/shared/constant'
 
 export const AvatarKey = '__AVATAR__'
 
@@ -13,7 +14,7 @@ export function useAvatar() {
   const hasAvatar = ref(!isStorageEmpty(AvatarKey))
   const avatarUrl = ref(hasAvatar.value
     ? getAvatarStorage()
-    : '../../assets/imgs/avatar.png')
+    : assetsUrl.avatar)
 
   const onAvatarClick = () => {
     uni.chooseImage({
