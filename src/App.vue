@@ -1,18 +1,11 @@
 <script setup lang="ts">
 import { onLaunch } from '@dcloudio/uni-app'
 import { getRandomQAQ } from 'qaq-font'
-import { getUserData } from '@/store/auth.store'
 import { useLoginRedirect } from '@/shared/hooks/use-loginRedirect'
 
 const { redirect } = useLoginRedirect()
 
-if (getUserData()?.campus === '宣城校区') {
-  uni.redirectTo({
-    url: 'pages/start-ad/index',
-  })
-} else {
-  redirect()
-}
+redirect()
 
 onLaunch(() => {
   const updateManager = uni.getUpdateManager()

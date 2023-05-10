@@ -1,14 +1,6 @@
 {
   "pages": [
     {
-      "path": "pages/start-ad/index",
-      "style": {
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false,
-        "navigationBarTextStyle": "black"
-      }
-    },
-    {
       "path": "pages/login/login",
       "style": {
         "navigationStyle": "custom",
