@@ -1,11 +1,25 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { onLaunch } from '@dcloudio/uni-app'
 import { getRandomQAQ } from 'qaq-font'
-import { useLoginRedirect } from '@/shared/hooks/use-loginRedirect'
+import { watchEffect } from 'vue'
+import { AuthStatus, useAuthStore } from '@/store/auth.store'
 
-const { redirect } = useLoginRedirect()
+const authStore = useAuthStore()
 
-redirect()
+const { auth } = storeToRefs(authStore)
+
+watchEffect(() => {
+  if (auth.value.status === AuthStatus.LOGIN_IN) {
+    uni.switchTab({
+      url: '/pages/day-schedule/index',
+    })
+  } else {
+    uni.switchTab({
+      url: '/pages/login/login',
+    })
+  }
+})
 
 onLaunch(() => {
   const updateManager = uni.getUpdateManager()
