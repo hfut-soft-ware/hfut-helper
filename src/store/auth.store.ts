@@ -21,7 +21,7 @@ export const enum AuthStatus {
 
 export function checkIsLogin(): AuthStatus {
   const token = uni.getStorageSync(TOKEN_KEY) as string
-  return token.length > 0 ? AuthStatus.LOGIN_IN : AuthStatus.UN_LOGIN
+  return token?.length > 0 ? AuthStatus.LOGIN_IN : AuthStatus.UN_LOGIN
 }
 
 export type LoginDto = { studentId: string; password: string }

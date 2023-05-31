@@ -21,6 +21,8 @@ watchEffect(() => {
   }
 })
 
+console.log(auth.value)
+
 onLaunch(() => {
   const updateManager = uni.getUpdateManager()
 
