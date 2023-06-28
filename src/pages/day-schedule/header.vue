@@ -69,7 +69,7 @@ function handleActiveChange(idx: number) {
     <div class="card-container">
       <div
         v-for="(card, index) in dayScheduleVisibleWeek.week"
-        :key="card.date"
+        :key="index"
         :class="`card flex flex-col text-slate-400 ${card.active?'card-active' : ''}`"
         @click="handleActiveChange(index)"
       >

@@ -32,6 +32,7 @@ type State = {
   daySchedule: VisibleSchedule
   weekSchedule: VisibleSchedule
   alreadyLoaded: boolean
+  currentSemester: number
 }
 
 export type TExam = {
@@ -156,6 +157,8 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
       dayIdx: 0,
     },
     alreadyLoaded: false,
+    // 先写死，等学期结束再改
+    currentSemester: 214,
   }),
 
   getters: {
@@ -207,14 +210,16 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
 
   actions: {
     async getCourseList(forceRefresh = false, isAvoidRefreshingScheduleDate = false) {
+      const currentSemester = this.currentSemester
       const { weekIdx: currentWeek, dayIdx: currentDay } = this.weekSchedule
       const { isLover: lover } = storeToRefs(uesLoverStore())
       const isLover = lover.value
 
-      const cachedCourseList = getWeekCourse()
-      if (isObject(cachedCourseList)) {
-        this.initStore(cachedCourseList)
-      }
+      // TODO 后面记得改回来
+      // const cachedCourseList = getWeekCourse()
+      // if (isObject(cachedCourseList)) {
+      //   this.initStore(cachedCourseList)
+      // }
 
       const initStore = (data: ICourse) => {
         // 判断是否刷新后要回到本周来
@@ -226,7 +231,7 @@ export const useCourseListStore = defineStore<'courseList', State, Getters, Acti
       }
 
       const fetchData = async() => {
-        await getCourseListRequest(isLover, forceRefresh).then((res) => {
+        await getCourseListRequest(isLover, forceRefresh, currentSemester).then((res) => {
           const data = res.data.data
           // 缓存课程信息
           if (isLover) {

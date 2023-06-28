@@ -40,6 +40,7 @@ export function useSelectSemester() {
     showSelectSemester.value = false
     Toast.loading('正在加载数据')
     getCourseListRequest(false, true, id).then((res) => {
+      courseListStore.currentSemester = id
       courseListStore.initStore(res.data.data)
       showSelectSemester.value = false
       Toast.clear()

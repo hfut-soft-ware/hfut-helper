@@ -9,7 +9,6 @@ import BounceBall from '@/components/BounceBall/BounceBall.vue'
 import { handleSpecialExamSchedule } from '@/pages/day-schedule/special-case'
 
 const store = useCourseListStore()
-
 const { todayCourse } = storeToRefs(store)
 
 const { dayHours } = useDayHours()
