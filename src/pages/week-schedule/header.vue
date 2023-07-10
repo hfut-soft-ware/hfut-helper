@@ -70,8 +70,8 @@ function handleLoverClick() {
         <div class="flex w-screen mt-2">
           <template v-if="weekScheduleVisibleWeek.course">
             <div
-              v-for="weekday in weekScheduleVisibleWeek.week"
-              :key="weekday.date"
+              v-for="( weekday, index ) in weekScheduleVisibleWeek.week"
+              :key="index"
               class="flex-1 text-xs text-center"
               :class="`${weekday.active ? 'active-day' : ''}`"
             >
