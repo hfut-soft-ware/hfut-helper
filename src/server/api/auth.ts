@@ -1,4 +1,4 @@
-import { loginInstance as request } from '../base'
+import { request } from '../base'
 
 import type { ILoginResponse } from '@/shared/types/response/auth'
 
