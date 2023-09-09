@@ -1,19 +1,22 @@
 <script setup lang='ts'>
+import { AuthStatus, checkIsLogin } from '@/store/auth.store'
 import { useLoginRedirect } from '@/shared/hooks/use-loginRedirect'
+
+const isLogin = checkIsLogin() === AuthStatus.LOGIN_IN
 
 const { redirect } = useLoginRedirect()
 
-setTimeout(redirect, 3000)
+// 如果未登陆就不注册setTimeout，防止再次跳转到登录页
+if (isLogin) {
+  setTimeout(redirect, 3000)
+}
 
 const handleClick = () => {
   uni.navigateToMiniProgram({
-    appId: 'wx996c3ddcd3a607c4',
+    appId: 'wx42f9784a84e731b4',
   })
 }
 
-// const addDateQuery = (url: string) => {
-//   return `${url}?date=${format(new Date(), 'yyyy-MM-dd')}`
-// }
 </script>
 
 <template>
@@ -28,7 +31,7 @@ const handleClick = () => {
         点我跳转 >>
       </p>
     </div>
-    <!-- <img class="w-full h-full" :src="addDateQuery(assetsUrl.advertise)" mode="aspectFit"> -->
+    <!-- <img class="w-full h-full" src="https://hfut-space.top/static/images/imgs/advertise.jpg" mode="aspectFit"> -->
     <img class="w-full h-full" src="../../assets/imgs/advertise.jpg" mode="aspectFit">
   </div>
 </template>
