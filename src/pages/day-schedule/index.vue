@@ -4,13 +4,13 @@ import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
 import CardList from './card-list.vue'
 import { useCourseRequest } from './use-courseRequest'
-import { usePlacard } from './use-placard'
+// import { usePlacard } from './use-placard'
 import Header from '@/pages/day-schedule/header.vue'
 import StatusBar from '@/components/status-bar/status-bar.vue'
 import { useTouchInteractive } from '@/shared/hooks/useTouchInteractive'
 import { useCourseListStore } from '@/store/courseList.store'
 import { useCourseSearchStore } from '@/store/courseSearch.store'
-import Placard from '@/components/Placard/Placard.vue'
+// import Placard from '@/components/Placard/Placard.vue'
 import { isStorageEmpty } from '@/shared/hooks/use-syncStorage'
 import { COURSE_KEY } from '@/shared/constant'
 
@@ -20,7 +20,7 @@ const store = useCourseListStore()
 
 const { onTouchStart, onTouchEnd } = useTouchInteractive(store)
 
-const { placard, onClose } = usePlacard()
+// const { placard, onClose } = usePlacard()
 
 onLoad((query) => {
   if (query.refresh) {
@@ -45,7 +45,8 @@ onShow(() => {
 <template>
   <van-toast id="van-toast" />
   <StatusBar :bg-color="'#F6F8FA'" />
-  <Placard :message="placard" title="公告" @close="onClose" />
+  <!-- 目前不开放 -->
+  <!-- <Placard :message="placard" title="公告" @close="onClose" /> -->
   <div
     class="w-screen bg-[#F6F8FA] pt-5 overflow-hidden"
     @touchstart="onTouchStart"

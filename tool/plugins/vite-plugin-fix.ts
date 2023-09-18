@@ -22,7 +22,7 @@ export default function viteFix(): PluginOption {
 
       const componentsPath = resolve('/fix/components/')
       const componentsDest = mode === 'development' ? resolve('/dist/dev/mp-weixin/components/') : resolve('/dist/build/mp-weixin/components/')
-      const storePath = resolve('/fix/store/')
+      // const storePath = resolve('/fix/store/')
 
       try {
         await cp(componentsPath, componentsDest, { recursive: true })
@@ -30,13 +30,14 @@ export default function viteFix(): PluginOption {
         console.log(error)
       }
 
-      if (mode === 'production') {
-        try {
-          await cp(storePath, resolve('/dist/build/mp-weixin/store/'), { recursive: true })
-        } catch (error) {
-          console.log(error)
-        }
-      }
+      // 现在不不需要修复了
+      // if (mode === 'production') {
+      //   try {
+      //     await cp(storePath, resolve('/dist/build/mp-weixin/store/'), { recursive: true })
+      //   } catch (error) {
+      //     console.log(error)
+      //   }
+      // }
 
       firstLoading = false
       console.log('🍟 fix file finished!')

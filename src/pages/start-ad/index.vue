@@ -31,7 +31,7 @@ const handleClick = () => {
         点我跳转 >>
       </p>
     </div>
-    <!-- <img class="w-full h-full" src="https://hfut-space.top/static/images/imgs/advertise.jpg" mode="aspectFit"> -->
-    <img class="w-full h-full" src="../../assets/imgs/advertise.jpg" mode="aspectFit">
+    <img class="w-full h-full" src="https://hfut-space.top/static/images/imgs/advertise.jpg" mode="aspectFit">
+    <!-- <img class="w-full h-full" src="../../assets/imgs/advertise.jpg" mode="aspectFit"> -->
   </div>
 </template>
