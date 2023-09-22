@@ -20,7 +20,7 @@ const handleClick = () => {
 </script>
 
 <template>
-  <div class="w-screen h-screen relative flex items-center justify-center bg-[#f0965b]">
+  <div class="w-screen h-screen relative flex items-center justify-center bg-[#8dd1fe]">
     <view class="absolute top-20 right-4 py-1 px-3 bg-black/50 rounded-full">
       <van-loading size="16px" text-size="12px" type="spinner">
         加载中
@@ -31,7 +31,7 @@ const handleClick = () => {
         点我跳转 >>
       </p>
     </div>
-    <img class="w-full h-full" src="https://hfut-space.top/static/images/imgs/advertise.jpg" mode="aspectFit">
-    <!-- <img class="w-full h-full" src="../../assets/imgs/advertise.jpg" mode="aspectFit"> -->
+    <!-- <img class="w-full h-full" src="https://hfut-space.top/static/images/imgs/advertise.jpg" mode="aspectFit"> -->
+    <img class="w-full h-full" src="../../assets/imgs/advertise.jpg" mode="aspectFit">
   </div>
 </template>
