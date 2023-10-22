@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { onLaunch } from '@dcloudio/uni-app'
 import { getRandomQAQ } from 'qaq-font'
-import { getUserData } from '@/store/auth.store'
 import { useLoginRedirect } from '@/shared/hooks/use-loginRedirect'
+import { useAdvertise } from '@/shared/hooks/useAdvertise'
+import { isStorageEmpty } from '@/shared/hooks/use-syncStorage'
+import { ADVERTISE } from '@/shared/constant'
+
+useAdvertise()
 
 const { redirect } = useLoginRedirect()
 
-if (getUserData()?.campus === '宣城校区') {
+if (!isStorageEmpty(ADVERTISE)) {
   uni.redirectTo({
     url: 'pages/start-ad/index',
   })

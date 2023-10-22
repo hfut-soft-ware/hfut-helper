@@ -3,6 +3,7 @@ import type { BusQueryResponse } from '@/shared/types/response/bus-query'
 import type { IEmptyClassroomResponse } from '@/shared/types/response/empty-classroom'
 import type { IEmptyClassroomDto } from '@/shared/types/dto/empty-classroom'
 import type { IClassmateAllResponse } from '@/shared/types/response/classmate-all'
+import type { IAdvertiseResponse } from '@/shared/types/response/advertise'
 
 export function getBusRequest() {
   return request<BusQueryResponse>({
@@ -23,5 +24,11 @@ export function getClassmatesAll(courseId: string) {
     params: {
       courseId,
     },
+  })
+}
+
+export function getAdvertise() {
+  return request<IAdvertiseResponse>({
+    url: '/api/ad',
   })
 }

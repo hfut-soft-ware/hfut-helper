@@ -1,6 +1,16 @@
 <script setup lang='ts'>
+import { ref } from 'vue'
 import { AuthStatus, checkIsLogin } from '@/store/auth.store'
 import { useLoginRedirect } from '@/shared/hooks/use-loginRedirect'
+import { useSyncStorage } from '@/shared/hooks/use-syncStorage'
+import { ADVERTISE } from '@/shared/constant'
+
+const [getStorage] = useSyncStorage(ADVERTISE)
+
+const advertiseData = ref<{
+  advertiseUrl: string
+  redirectUri: string
+  backgroundColor: string }>(getStorage())
 
 const isLogin = checkIsLogin() === AuthStatus.LOGIN_IN
 
@@ -13,14 +23,14 @@ if (isLogin) {
 
 const handleClick = () => {
   uni.navigateToMiniProgram({
-    appId: 'wx42f9784a84e731b4',
+    appId: advertiseData.value.redirectUri,
   })
 }
 
 </script>
 
 <template>
-  <div class="w-screen h-screen relative flex items-center justify-center bg-[#8dd1fe]">
+  <div class="w-screen h-screen relative flex items-center justify-center" :style="{backgroundColor: advertiseData.backgroundColor}">
     <view class="absolute top-20 right-4 py-1 px-3 bg-black/50 rounded-full">
       <van-loading size="16px" text-size="12px" type="spinner">
         加载中
@@ -31,7 +41,6 @@ const handleClick = () => {
         点我跳转 >>
       </p>
     </div>
-    <!-- <img class="w-full h-full" src="https://hfut-space.top/static/images/imgs/advertise.jpg" mode="aspectFit"> -->
-    <img class="w-full h-full" src="../../assets/imgs/advertise.jpg" mode="aspectFit">
+    <img class="w-full h-full" :src="advertiseData.advertiseUrl" mode="aspectFit">
   </div>
 </template>

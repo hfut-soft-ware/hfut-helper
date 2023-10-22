@@ -20,6 +20,8 @@ export const SURVEY_PROMPTED = '__SURVEY_PROMPTED__'
 
 export const SING_KEY = '__SING_KEY__'
 
+export const ADVERTISE = '__ADVERTISE__'
+
 export const dayHours = Array.from({ length: 8 }, (_, idx) => {
   let index: any = idx + 1
   let start
