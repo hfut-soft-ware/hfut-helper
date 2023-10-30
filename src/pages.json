@@ -1,7 +1,7 @@
 {
   "pages": [
     {
-      "path": "pages/start-ad/index",
+      "path": "pages/login/login",
       "style": {
         "navigationStyle": "custom",
         "enablePullDownRefresh": false,
@@ -9,7 +9,7 @@
       }
     },
     {
-      "path": "pages/login/login",
+      "path": "pages/start-ad/index",
       "style": {
         "navigationStyle": "custom",
         "enablePullDownRefresh": false,

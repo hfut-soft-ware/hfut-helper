@@ -10,12 +10,12 @@ useAdvertise()
 
 const { redirect } = useLoginRedirect()
 
-if (!isStorageEmpty(ADVERTISE)) {
+if (isStorageEmpty(ADVERTISE)) {
+  redirect()
+} else {
   uni.redirectTo({
     url: 'pages/start-ad/index',
   })
-} else {
-  redirect()
 }
 
 onLaunch(() => {

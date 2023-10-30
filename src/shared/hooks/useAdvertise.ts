@@ -7,7 +7,7 @@ import { ADVERTISE } from '@/shared/constant'
  */
 export const useAdvertise = () => {
   // eslint-disable-next-line no-unused-vars
-  const [_, setAdvertiseStorage] = useSyncStorage(ADVERTISE)
+  const [_, setAdvertiseStorage, removeAdvertiseStorage] = useSyncStorage(ADVERTISE)
 
   getAdvertise().then(({ data }) => {
     const { advertiseUrl, redirectUri, backgroundColor } = data.data
@@ -17,6 +17,8 @@ export const useAdvertise = () => {
         redirectUri,
         backgroundColor,
       })
+    } else {
+      removeAdvertiseStorage()
     }
   })
 }
