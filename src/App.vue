@@ -14,7 +14,7 @@ if (isStorageEmpty(ADVERTISE)) {
   redirect()
 } else {
   uni.redirectTo({
-    url: 'pages/start-ad/index',
+    url: '/sub1/pages/start-ad/index',
   })
 }
 

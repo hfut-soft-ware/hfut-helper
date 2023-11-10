@@ -8,14 +8,7 @@
         "navigationBarTextStyle": "black"
       }
     },
-    {
-      "path": "pages/start-ad/index",
-      "style": {
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false,
-        "navigationBarTextStyle": "black"
-      }
-    },
+
     {
       "path": "pages/week-schedule/index",
       "style": {
@@ -56,6 +49,14 @@
     {
       "root": "sub1",
       "pages": [
+        {
+          "path": "pages/start-ad/index",
+          "style": {
+            "navigationStyle": "custom",
+            "enablePullDownRefresh": false,
+            "navigationBarTextStyle": "black"
+          }
+        },
         {
           "path": "pages/score/custom/custom",
           "style": {

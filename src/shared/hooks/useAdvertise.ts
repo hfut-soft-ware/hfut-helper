@@ -10,12 +10,13 @@ export const useAdvertise = () => {
   const [_, setAdvertiseStorage, removeAdvertiseStorage] = useSyncStorage(ADVERTISE)
 
   getAdvertise().then(({ data }) => {
-    const { advertiseUrl, redirectUri, backgroundColor } = data.data
-    if (advertiseUrl && redirectUri && backgroundColor) {
+    const { advertiseUrl, redirectUri, backgroundColor, campusCode } = data.data
+    if (advertiseUrl && redirectUri && backgroundColor && campusCode) {
       setAdvertiseStorage({
         advertiseUrl,
         redirectUri,
         backgroundColor,
+        campusCode,
       })
     } else {
       removeAdvertiseStorage()
