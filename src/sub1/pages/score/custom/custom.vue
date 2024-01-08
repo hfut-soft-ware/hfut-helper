@@ -4,7 +4,7 @@ import { useCustom } from './use-custom'
 import Card from '@/components/Card/Card.vue'
 import { useScoreStore } from '@/store/score.store'
 import BounceBall from '@/components/BounceBall/BounceBall.vue'
-import type { Score5 } from '@/shared/types/response/score'
+import type { Score5 as Score } from '@/shared/types/response/score'
 
 const store = useScoreStore()
 const {
@@ -23,29 +23,29 @@ const checkedArr = computed<boolean[]>(() => {
   })
 })
 
-function toggle(course: any) {
-  const courseName = course.name as string
+function toggle(score: Score) {
+  const lessonId = score.lessonId
   const selectedScoreVal = Array.from(selectedScore.value)
-  if (selectedScoreVal.includes(courseName)) {
-    const idx = selectedScoreVal.findIndex(item => item === courseName)
+  if (selectedScoreVal.includes(lessonId)) {
+    const idx = selectedScoreVal.findIndex(item => item === lessonId)
     selectedScoreVal.splice(idx, 1)
   } else {
-    selectedScoreVal.push(courseName)
+    selectedScoreVal.push(lessonId)
   }
   selectedScore.value = selectedScoreVal
 }
 
-const onChange = (scores: Score5[], index: number) => {
+const onSemesterSelectToggle = (scores: Score[], index: number) => {
   const selectedScoreVal = Array.from(selectedScore.value)
   if (checkedArr.value[index]) {
     scores.forEach((score) => {
-      const index = selectedScoreVal.findIndex(item => item === score.name)
+      const index = selectedScoreVal.findIndex(item => item === score.lessonId)
       selectedScoreVal.splice(index, 1)
     })
   } else {
     scores.forEach((score) => {
-      if (!selectedScoreVal.includes(score.name)) {
-        selectedScoreVal.push(score.name)
+      if (!selectedScoreVal.includes(score.lessonId)) {
+        selectedScoreVal.push(score.lessonId)
       }
     })
   }
@@ -124,7 +124,7 @@ const onChange = (scores: Score5[], index: number) => {
             <p class="font-semibold">
               {{ item.semester }}
             </p>
-            <van-switch :checked="checkedArr[index]" size="20px" @change="onChange(item.scores,index)" />
+            <van-switch :checked="checkedArr[index]" size="20px" @change="onSemesterSelectToggle(item.scores,index)" />
           </h2>
           <van-cell-group>
             <div class="mt-5 flex flex-col gap-2">
@@ -140,7 +140,7 @@ const onChange = (scores: Score5[], index: number) => {
                 >
                   <div class="flex justify-end">
                     <van-checkbox
-                      :name="score.name"
+                      :name="score.lessonId"
                     />
                   </div>
                 </van-cell>

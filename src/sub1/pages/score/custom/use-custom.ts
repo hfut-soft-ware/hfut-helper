@@ -8,6 +8,7 @@ import { getCustomScoreRequest } from '@/server/api/score'
 import { formatScore } from '@/store/score.store'
 import type { ICustomScoreData } from '@/shared/types/response/score-custom'
 import type { useScoreStore } from '@/store/score.store'
+import type { Score5 as Score } from '@/shared/types/response/score'
 
 export const CUSTOM_SCORE_DEFAULT_DATA = {
   avg: 0,
@@ -18,6 +19,7 @@ export const CUSTOM_SCORE_DEFAULT_DATA = {
 }
 
 export function useCustom(store: ReturnType<typeof useScoreStore>) {
+  // 存课程 id
   const selectedScore = ref<string[]>([])
   const queryData = ref<ICustomScoreData>()
 
@@ -25,12 +27,24 @@ export function useCustom(store: ReturnType<typeof useScoreStore>) {
 
   const { homeActive, scoreData } = storeToRefs(store)
 
+  const lessons = computed(() => {
+    const lessons: Score[] = []
+    scoreData.value.semesters.forEach((semester) => {
+      semester.scores.forEach((lesson) => {
+        lessons.push(lesson)
+      })
+    })
+    return lessons
+  })
+
   const getCustomData = async() => {
     Toast.loading({
       duration: 0,
       message: `正在加载自定义排名数据中....\n${getRandomQAQ('happy')[0]}`,
     })
-    await getCustomScoreRequest(selectedScore.value).then((res) => {
+    const lessonIds = selectedScore.value.map(item => lessons.value.find(lesson => lesson.lessonId === item)!.lessonId)
+    // const lessonNames = selectedScore.value.map(item => lessons.value.find(lesson => lesson.lessonId === item)!.name)
+    await getCustomScoreRequest(lessonIds).then((res) => {
       queryData.value = res.data.data
 
       Toast.success({
@@ -98,21 +112,22 @@ export function useCustom(store: ReturnType<typeof useScoreStore>) {
     return res
   })
 
+  // 获取 semesters 并初始化，selectedScore
   const semesters = computed(() => {
-    const res = scoreData.value?.semesters
+    const semesters = scoreData.value?.semesters
     const payload: string[] = []
 
-    res!.forEach((item) => {
+    semesters!.forEach((item) => {
       item.scores.forEach((score) => {
         if (score.lessonId.endsWith('B') || score.lessonId.endsWith('0X')) {
-          payload.push(score.name)
+          payload.push(score.lessonId)
         }
       })
     })
 
     selectedScore.value = payload
 
-    return res
+    return semesters
   })
 
   const debouncedFn = useDebounceFn(() => {
