@@ -17,9 +17,10 @@ const {
   handleQueryClick,
 } = useCustom(store)
 
+// 全选
 const checkedArr = computed<boolean[]>(() => {
   return semesters.value.map((semester) => {
-    return semester.scores.every(score => selectedScore.value.includes(score.name))
+    return semester.scores.every(score => selectedScore.value.includes(score.lessonId))
   })
 })
 
