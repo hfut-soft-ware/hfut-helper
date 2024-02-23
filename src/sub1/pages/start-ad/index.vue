@@ -14,6 +14,9 @@ enum CampusCode {
   XuanCheng = '03', // 宣城
 }
 
+/**
+ * 宣城 appid wx42f9784a84e731b4
+ */
 const advertiseData = ref<{
   advertiseUrl: string
   redirectUri: string
