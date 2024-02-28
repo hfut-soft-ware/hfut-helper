@@ -24,11 +24,6 @@ const advertiseData = ref<{
   campusCode: CampusCode
 }>(getStorage())
 
-// 临时这么改，后面还是和后端对其
-if (advertiseData.value.campusCode === CampusCode.XuanCheng) {
-  advertiseData.value.backgroundColor = '#fff09f'
-}
-
 const isLogin = checkIsLogin() === AuthStatus.LOGIN_IN
 
 const { redirect } = useLoginRedirect()
