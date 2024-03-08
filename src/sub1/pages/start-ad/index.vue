@@ -24,6 +24,10 @@ const advertiseData = ref<{
   campusCode: CampusCode
 }>(getStorage())
 
+if (advertiseData.value.campusCode === CampusCode.XuanCheng) {
+  advertiseData.value.backgroundColor = '#fffdf1'
+}
+
 const isLogin = checkIsLogin() === AuthStatus.LOGIN_IN
 
 const { redirect } = useLoginRedirect()
@@ -54,7 +58,7 @@ const handleClick = () => {
       </p>
     </div>
     <template v-if="advertiseData.campusCode === CampusCode.XuanCheng">
-      <img class="w-full h-full" src="./advertise-xc.jpg" mode="aspectFit">
+      <img class="w-full h-full" src="./advertise-xc.png" mode="aspectFit">
     </template>
     <template v-else-if="advertiseData.campusCode === CampusCode.FeiCuiHu">
       <img class="w-full h-full" src="./advertise-fch.png" mode="aspectFit">
