@@ -2,21 +2,23 @@
 import { onLaunch } from '@dcloudio/uni-app'
 import { getRandomQAQ } from 'qaq-font'
 import { useLoginRedirect } from '@/shared/hooks/use-loginRedirect'
-import { useAdvertise } from '@/shared/hooks/useAdvertise'
-import { isStorageEmpty } from '@/shared/hooks/use-syncStorage'
-import { ADVERTISE } from '@/shared/constant'
+// import { useAdvertise } from '@/shared/hooks/useAdvertise'
+// import { isStorageEmpty } from '@/shared/hooks/use-syncStorage'
+// import { ADVERTISE } from '@/shared/constant'
 
-useAdvertise()
+// useAdvertise()
 
 const { redirect } = useLoginRedirect()
 
-if (isStorageEmpty(ADVERTISE)) {
-  redirect()
-} else {
-  uni.redirectTo({
-    url: '/sub1/pages/start-ad/index',
-  })
-}
+// if (isStorageEmpty(ADVERTISE)) {
+//   redirect()
+// } else {
+//   uni.redirectTo({
+//     url: '/sub1/pages/start-ad/index',
+//   })
+// }
+
+redirect()
 
 onLaunch(() => {
   const updateManager = uni.getUpdateManager()
