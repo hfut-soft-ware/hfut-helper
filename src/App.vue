@@ -25,8 +25,8 @@ onLaunch(() => {
 
   updateManager.onUpdateReady(() => {
     uni.showModal({
-      title: `HfutSpace更新啦~${getRandomQAQ('happy')[0]}`,
-      content: '是否重启加载最新版本的HfutSpace?',
+      title: `Space课表更新啦~${getRandomQAQ('happy')[0]}`,
+      content: '是否重启加载最新版本的Space课表?',
       success(res) {
         if (res.confirm) {
           // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
@@ -38,7 +38,7 @@ onLaunch(() => {
 
   updateManager.onUpdateFailed(() => {
     uni.showModal({
-      content: `HfutSpace更新失败了${getRandomQAQ('sadness')[0]}`,
+      content: `Space课表更新失败了${getRandomQAQ('sadness')[0]}`,
     })
   })
 })
