@@ -9,12 +9,14 @@ import { useFormValidate } from './use-formValidate'
 import { useAuthStore } from '@/store/auth.store'
 import StatusBar from '@/components/status-bar/status-bar.vue'
 import { uesLoverStore } from '@/store/lover.store'
+import { useMineStore } from '@/store/mine.store'
 import { onNavigateClick } from '@/shared/utils'
 
 const { validate, form } = useFormValidate()
 
 const authStore = useAuthStore()
 const loverStore = uesLoverStore()
+const mineStore = useMineStore()
 
 const isLover = ref(false)
 
@@ -42,7 +44,7 @@ async function onLogin() {
       forbidClick: true,
     })
 
-    const loginDto = { studentId: form.username, password: form.password }
+    const loginDto = { studentId: form.username, password: form.password, schoolId: mineStore.currentSchool.id }
 
     if (isLover.value) {
       await loverStore.loverLogin(loginDto)
@@ -102,6 +104,10 @@ async function onLogin() {
           :placeholder="fieldProps.password"
           @change="(e:any) => form.password = e.detail"
         />
+      </div>
+
+      <div class="mt-5 btn bg-blue-500 shadow-lg shadow-blue-500/50" @click="() => onNavigateClick('/sub1/pages/select-school/select-school')">
+        {{ mineStore.currentSchool.name }}
       </div>
 
       <div class="mt-5 btn bg-blue-500 shadow-lg shadow-blue-500/50" @click="onLogin">

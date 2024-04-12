@@ -24,7 +24,7 @@ export function checkIsLogin(): AuthStatus {
   return token?.length > 0 ? AuthStatus.LOGIN_IN : AuthStatus.UN_LOGIN
 }
 
-export type LoginDto = { studentId: string; password: string }
+export type LoginDto = { studentId: string; password: string; schoolId: number }
 
 export const [getUserData] = useSyncStorage(USER_INFO_KEY)
 

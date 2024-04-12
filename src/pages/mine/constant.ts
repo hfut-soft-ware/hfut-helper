@@ -85,10 +85,10 @@ export const servicesButtonList: Service[] = [
     title: '课程查询',
     url: 'course-search/course-search',
   },
-  {
-    icon: 'fries',
-    title: '校园外卖',
-    url: 'wx42f9784a84e731b4',
-    isAppIdUrl: true,
-  },
+  // {
+  //   icon: 'fries',
+  //   title: '校园外卖',
+  //   url: 'wx42f9784a84e731b4',
+  //   isAppIdUrl: true,
+  // },
 ]

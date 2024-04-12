@@ -236,6 +236,14 @@
             "navigationBarTitleText": "课程查询",
             "enablePullDownRefresh": false
           }
+        },
+        {
+          "path": "pages/select-school/select-school",
+          "style": {
+            "navigationBarBackgroundColor": "#4981F9",
+            "navigationBarTitleText": "选择学校",
+            "enablePullDownRefresh": false
+          }
         }
       ]
     }
