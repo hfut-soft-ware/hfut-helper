@@ -1,5 +1,5 @@
-import { ref } from 'vue'
-import { getPlacard } from '@/server/api/placard'
+import { onMounted, ref } from 'vue'
+// import { getPlacard } from '@/server/api/placard'
 import { isStorageEmpty, useSyncStorage } from '@/shared/hooks/use-syncStorage'
 import { PLACARD } from '@/shared/constant'
 
@@ -8,18 +8,23 @@ export interface Placard {
   state: boolean
 }
 
+interface PlacardMessage {
+  text: string
+  link?: string
+}
+
 export function usePlacard() {
   const [
     getPlacardStorage,
     setPlacardStorage,
   ] = useSyncStorage<Placard>(PLACARD)
 
-  const placard = ref<string>('')
+  const placard = ref<PlacardMessage>()
 
-  const initPlacard = (str: string) => {
-    placard.value = str
+  const initPlacard = (message: PlacardMessage) => {
+    placard.value = message
     setPlacardStorage({
-      data: str,
+      data: message,
       state: true,
     })
   }
@@ -31,17 +36,34 @@ export function usePlacard() {
     })
   }
 
-  getPlacard().then(({ data }) => {
+  // getPlacard().then(({ data }) => {
+  //   if (isStorageEmpty(PLACARD)) {
+  //     initPlacard(data.data)
+  //   } else {
+  //     const storagePlacard = getPlacardStorage()
+  //     if (storagePlacard.data !== data.data) {
+  //       initPlacard(data.data)
+  //     } else {
+  //       if (storagePlacard.state) {
+  //         placard.value = data.data
+  //       }
+  //     }
+  //   }
+  // })
+
+  onMounted(() => {
     if (isStorageEmpty(PLACARD)) {
-      initPlacard(data.data)
+      initPlacard({
+        text: '新版小肥书上线啦，快来体验一下吧！',
+        link: 'https://bilibili.com',
+      })
     } else {
       const storagePlacard = getPlacardStorage()
-      if (storagePlacard.data !== data.data) {
-        initPlacard(data.data)
-      } else {
-        if (storagePlacard.state) {
-          placard.value = data.data
-        }
+      if (storagePlacard.state) {
+        initPlacard({
+          text: '新版小肥书上线啦，快来体验一下吧！',
+          link: 'https://bilibili.com',
+        })
       }
     }
   })
