@@ -6,6 +6,7 @@ import { PLACARD } from '@/shared/constant'
 export interface Placard {
   data: string
   state: boolean
+  time: number
 }
 
 interface PlacardMessage {
@@ -26,6 +27,7 @@ export function usePlacard() {
     setPlacardStorage({
       data: message,
       state: true,
+      time: Date.now(),
     })
   }
 
@@ -51,20 +53,24 @@ export function usePlacard() {
   //   }
   // })
 
-  onMounted(() => {
+  const shouldInitPlacard = () => {
     if (isStorageEmpty(PLACARD)) {
-      initPlacard({
-        text: '新版小肥书上线啦，快来体验一下吧！',
-        link: 'https://bilibili.com',
-      })
+      return true
+    }
+    const storagePlacard = getPlacardStorage()
+    if (Date.now() - storagePlacard.time > 2 * 60 * 60 * 1000) {
+      return true
     } else {
-      const storagePlacard = getPlacardStorage()
-      if (storagePlacard.state) {
-        initPlacard({
-          text: '新版小肥书上线啦，快来体验一下吧！',
-          link: 'https://bilibili.com',
-        })
-      }
+      return false
+    }
+  }
+
+  onMounted(() => {
+    if (shouldInitPlacard()) {
+      initPlacard({
+        text: '小肥书App是space团队推出的新一代应用。它不仅继承了space的课表功能（数据同步），还增加了发布帖子和交流的功能。特别的是，小肥书还有一个专门的二手交易模块，方便大家发布和购买二手商品。相比space，使用体验更佳，功能更加丰富。强烈推荐同学们来试试小肥书吧！',
+        link: 'https://xq261aa61x.feishu.cn/file/IK5fbSt2uoleq2xS5NOc1UKunIh',
+      })
     }
   })
 
