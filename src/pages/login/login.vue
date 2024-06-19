@@ -106,10 +106,6 @@ async function onLogin() {
         />
       </div>
 
-      <div class="mt-5 btn bg-blue-500 shadow-lg shadow-blue-500/50" @click="() => onNavigateClick('/sub1/pages/select-school/select-school')">
-        {{ mineStore.currentSchool.name }}
-      </div>
-
       <div class="mt-5 btn bg-blue-500 shadow-lg shadow-blue-500/50" @click="onLogin">
         登录
       </div>

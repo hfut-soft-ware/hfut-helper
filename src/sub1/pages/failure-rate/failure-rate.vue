@@ -30,7 +30,7 @@ const computedFailureRateData = computed(() => failureRateData.value.map((item) 
     </h2>
     <div class="mt-5">
       <div class="not-prose relative bg-slate-50 rounded-xl overflow-hidden dark:bg-slate-800/25">
-        <div class="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-slate-700/25 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" style="background-position: 10px 10px;" /><div class="relative rounded-xl overflow-auto">
+        <div class="absolute inset-0 bg-grid-slate-100" style="background-position: 10px 10px;" /><div class="relative rounded-xl overflow-auto">
           <div class="shadow-sm overflow-hidden my-8">
             <div class="table border-collapse table-auto w-full text-sm">
               <div class="table-header-group">

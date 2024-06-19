@@ -27,7 +27,7 @@ export function usePlacard() {
     setPlacardStorage({
       data: message,
       state: true,
-      time: Date.now(),
+      time: 0,
     })
   }
 

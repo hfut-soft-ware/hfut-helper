@@ -45,7 +45,7 @@ onShow(() => {
 <template>
   <van-toast id="van-toast" />
   <StatusBar :bg-color="'#F6F8FA'" />
-  <Placard :message="placard" title="小肥书-工大校园交流平台上线啦" @close="onClose" />
+  <Placard :message="placard" title="小肥书-工大校园交流平台" @close="onClose" />
   <div
     class="w-screen bg-[#F6F8FA] pt-5 overflow-hidden"
     @touchstart="onTouchStart"
